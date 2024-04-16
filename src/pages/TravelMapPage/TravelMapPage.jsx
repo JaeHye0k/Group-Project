@@ -1,7 +1,7 @@
 import React from "react";
 import KakaoMap from "../../common/KakaoMap";
 
-const TravelMap = () => {
+const TravelMapPage = () => {
   return (
     <div>
       <KakaoMap />
@@ -9,4 +9,4 @@ const TravelMap = () => {
   );
 };
 
-export default TravelMap;
+export default TravelMapPage;
