@@ -11,6 +11,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 // 여행 지도 페이지 = /map
 // 관광지 모음 페이지 = /attractions
 // 관광지 디테일 페이지 = /attractions/:id
+// test
 
 function App() {
   return (
