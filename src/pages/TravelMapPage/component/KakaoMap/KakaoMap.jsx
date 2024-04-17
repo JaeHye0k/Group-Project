@@ -36,7 +36,7 @@ const KakaoMap = () => {
       },
     });
     const data = await response.json();
-    console.log(data);
+    return data;
   };
 
   const showMarker = (map, { lat, lon }) => {
@@ -54,8 +54,16 @@ const KakaoMap = () => {
       // 내 위치
       const location = await getCurrentLocaition();
       const map = getKakaoMap(location);
-      searchByCategory(map);
-      showMarker(map, location);
+      const categorizedData = await searchByCategory(map);
+      if (selectedCode) {
+        // 선택된 카테고리가 있다면 해당되는 곳에 마커 표시
+        categorizedData.documents.forEach(({ x, y }) => {
+          showMarker(map, { lat: y, lon: x });
+        });
+      } else {
+        // 선택된 카테고리가 없다면 현재 위치에 마커 표시
+        showMarker(map, location);
+      }
     };
     showKakaoMap();
   }, [selectedCode]);
