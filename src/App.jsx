@@ -6,6 +6,16 @@ import TravelMapPage from "./pages/TravelMapPage/TravelMapPage";
 import AttractionsPage from "./pages/AttractionsPage/AttractionsPage";
 import AttractionsDetailPage from "./pages/AttractionDetailPage/AttractionsDetailPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import UserSignUp from "./pages/UserSignUp/UserSignUp";
+import MyPage from "./pages/MyPage/MyPage";
+import UserProtected from "./pages/UserProtected/UserProtected";
+import UserSignIn from "./pages/UserSignIn/UserSignIn";
+
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { auth } from "./firebase";
+
+import { setUser, clearUser } from "./redux/auth/authSlice";
 
 // 홈페이지 = /
 // 여행 지도 페이지 = /map
@@ -13,6 +23,25 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 // 관광지 디테일 페이지 = /attractions/:id
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(
+          setUser({
+            uid: user.uid,
+            email: user.email,
+          })
+        );
+      } else {
+        dispatch(clearUser());
+      }
+    });
+
+    return () => unsubscribe();
+  }, [dispatch]);
+
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
@@ -22,6 +51,9 @@ function App() {
           <Route index element={<AttractionsPage />} />
           <Route path=":id" element={<AttractionsDetailPage />} />
         </Route>
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/signup" element={<UserSignUp />} />
+        <Route path="/signin" element={<UserSignIn />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
