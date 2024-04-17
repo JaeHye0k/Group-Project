@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { clickMyPosition } from "../../../../../redux/kakaoMapStore/reducers/kakaoMapSlice";
+import { clickMyPosition } from "../../../../../../redux/kakaoMapStore/reducers/kakaoMapSlice";
 import "./MyPositionButton.style.css";
 
 const MyPositionButton = () => {
