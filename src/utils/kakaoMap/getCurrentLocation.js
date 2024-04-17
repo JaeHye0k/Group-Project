@@ -5,7 +5,7 @@ export const getCurrentLocaition = async () => {
   });
   const data = await promise;
   const lat = data?.coords.latitude; // 위도 y (0~90)
-  const lon = data?.coords.longitude; // 경도 x (0~180)
+  const lng = data?.coords.longitude; // 경도 x (0~180)
 
-  return { lat, lon };
+  return { lat, lng };
 };
