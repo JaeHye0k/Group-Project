@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./KakaoMap.style.css";
-import { getCurrentMapArea } from "../../../../utils/getCurrentMapArea";
-import { getCurrentLocaition } from "../../../../utils/getCurrentLocation";
+import { getCurrentMapArea } from "../../../../utils/kakaoMap/getCurrentMapArea";
+import { getCurrentLocaition } from "../../../../utils/kakaoMap/getCurrentLocation";
 import { useSelector } from "react-redux";
 
 const { kakao } = window;
@@ -9,6 +9,7 @@ const baseUrl = `https://dapi.kakao.com/v2/local`;
 
 // latitude = 위도 (0 ~ 90) y축
 // longitude = 경도 (0 ~ 180) x축
+// selectedCode 가 변경될 때마다 리렌더링 된다.
 
 const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
@@ -39,22 +40,29 @@ const KakaoMap = () => {
     return data;
   };
 
-  const showMarker = (map, { lat, lon }) => {
+  const getMarker = ({ lat, lon }) => {
     // 마커를 표시할 위치
     const markerPostiion = new kakao.maps.LatLng(lat, lon);
     // 마커 생성
     const marker = new kakao.maps.Marker({
       position: markerPostiion,
     });
-    marker.setMap(map);
+    return marker;
   };
 
   // 지도 드래그 핸들러
   const mapDragHandler = async (map) => {
     const categorizedData = await searchByCategory(map);
     categorizedData.documents.forEach(({ x, y }) => {
-      showMarker(map, { lat: y, lon: x });
+      const marker = getMarker({ lat: y, lon: x });
+      marker.setMap(map);
     });
+  };
+
+  const markByClick = (e, map) => {
+    // 클릭한 곳의 위도, 경도 정보를 가져옴
+    const latlng = e.latLng;
+    getMarker({ lat: latlng.getLat(), lon: latlng.getLng() }).setMap(map);
   };
 
   useEffect(() => {
@@ -66,14 +74,15 @@ const KakaoMap = () => {
       if (selectedCode) {
         // 선택된 카테고리가 있다면 해당되는 곳에 마커 표시
         categorizedData.documents.forEach(({ x, y }) => {
-          showMarker(map, { lat: y, lon: x });
+          getMarker({ lat: y, lon: x }).setMap(map);
         });
       } else {
         // 선택된 카테고리가 없다면 현재 위치에 마커 표시
-        showMarker(map, location);
+        getMarker(location).setMap(map);
       }
       // 지도 드래그 이벤트 발생 시
       kakao.maps.event.addListener(map, "dragend", () => mapDragHandler(map));
+      kakao.maps.event.addListener(map, "click", (e) => markByClick(e, map));
     };
     showKakaoMap();
   }, [selectedCode]);
