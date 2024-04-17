@@ -1,7 +1,7 @@
 import React from "react";
 import "./MapSideBar.style.css";
 import { filterdCategoryCode } from "../../../../constants/categoryCode";
-import CategoryButton from "./component/CategoryButton";
+import CategoryButton from "./component/CategoryButton/CategoryButton";
 
 const MapSideBar = () => {
   return (
@@ -13,6 +13,8 @@ const MapSideBar = () => {
           </li>
         ))}
       </ul>
+      <hr />
+      <ul></ul>
     </div>
   );
 };
