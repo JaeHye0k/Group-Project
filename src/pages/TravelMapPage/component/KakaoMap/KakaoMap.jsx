@@ -3,7 +3,7 @@ import "./KakaoMap.style.css";
 import { getCurrentMapArea } from "../../../../utils/kakaoMap/getCurrentMapArea";
 import { getCurrentLocaition } from "../../../../utils/kakaoMap/getCurrentLocation";
 import { useSelector } from "react-redux";
-import MyPositionButton from "./component/MyPositionButton";
+import MyPositionButton from "./component/MyPositionButton/MyPositionButton";
 
 const { kakao } = window;
 const baseUrl = `https://dapi.kakao.com/v2/local`;
@@ -89,6 +89,8 @@ const KakaoMap = () => {
         categorizedData.documents.forEach(({ x, y }) => {
           showMarker(map, { lat: y, lng: x });
         });
+      } else {
+        showMarker(map, location);
       }
       // 지도 드래그 이벤트 발생 시
       kakao.maps.event.addListener(map, "dragend", () => mapDragHandler(map));
