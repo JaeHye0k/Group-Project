@@ -49,6 +49,14 @@ const KakaoMap = () => {
     marker.setMap(map);
   };
 
+  // 지도 드래그 핸들러
+  const mapDragHandler = async (map) => {
+    const categorizedData = await searchByCategory(map);
+    categorizedData.documents.forEach(({ x, y }) => {
+      showMarker(map, { lat: y, lon: x });
+    });
+  };
+
   useEffect(() => {
     const showKakaoMap = async () => {
       // 내 위치
@@ -64,6 +72,8 @@ const KakaoMap = () => {
         // 선택된 카테고리가 없다면 현재 위치에 마커 표시
         showMarker(map, location);
       }
+      // 지도 드래그 이벤트 발생 시
+      kakao.maps.event.addListener(map, "dragend", () => mapDragHandler(map));
     };
     showKakaoMap();
   }, [selectedCode]);
