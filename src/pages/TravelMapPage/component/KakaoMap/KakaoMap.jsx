@@ -15,7 +15,7 @@ const baseUrl = `https://dapi.kakao.com/v2/local`;
 // 1. 지도가 드래그 되었을 때
 // 2. 지도를 클릭했을 때
 // 3. 내 위치 버튼을 클릭했을 때
-
+// test
 const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const isClickMyPosition = useSelector(
