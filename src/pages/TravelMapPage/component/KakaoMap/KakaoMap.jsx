@@ -7,6 +7,9 @@ import { useSelector } from "react-redux";
 const { kakao } = window;
 const baseUrl = `https://dapi.kakao.com/v2/local`;
 
+// latitude = 위도 (0 ~ 90) y축
+// longitude = 경도 (0 ~ 180) x축
+
 const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
 
@@ -36,11 +39,23 @@ const KakaoMap = () => {
     console.log(data);
   };
 
+  const showMarker = (map, { lat, lon }) => {
+    // 마커를 표시할 위치
+    const markerPostiion = new kakao.maps.LatLng(lat, lon);
+    // 마커 생성
+    const marker = new kakao.maps.Marker({
+      position: markerPostiion,
+    });
+    marker.setMap(map);
+  };
+
   useEffect(() => {
     const showKakaoMap = async () => {
+      // 내 위치
       const location = await getCurrentLocaition();
       const map = getKakaoMap(location);
       searchByCategory(map);
+      showMarker(map, location);
     };
     showKakaoMap();
   }, [selectedCode]);
