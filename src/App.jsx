@@ -6,6 +6,8 @@ import TravelMapPage from "./pages/TravelMapPage/TravelMapPage";
 import AttractionsPage from "./pages/AttractionsPage/AttractionsPage";
 import AttractionsDetailPage from "./pages/AttractionDetailPage/AttractionsDetailPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import { Provider } from "react-redux";
+import { store as kakaoMapStore } from "./redux/kakaoMapStore/store";
 
 // 홈페이지 = /
 // 여행 지도 페이지 = /map
@@ -17,7 +19,14 @@ function App() {
     <Routes>
       <Route path="/" element={<AppLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="/map" element={<TravelMapPage />} />
+        <Route
+          path="/map"
+          element={
+            <Provider store={kakaoMapStore}>
+              <TravelMapPage />
+            </Provider>
+          }
+        />
         <Route path="/attractions">
           <Route index element={<AttractionsPage />} />
           <Route path=":id" element={<AttractionsDetailPage />} />
