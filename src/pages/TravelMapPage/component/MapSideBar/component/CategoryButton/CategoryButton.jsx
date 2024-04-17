@@ -1,7 +1,7 @@
 import React from "react";
 import "./CategoryButton.style.css";
 import { useDispatch } from "react-redux";
-import { selectCode } from "../../../../../redux/kakaoMapStore/reducers/kakaoMapSlice";
+import { selectCode } from "../../../../../../redux/kakaoMapStore/reducers/kakaoMapSlice";
 
 const CategoryButton = ({ categoryName, categoryCode }) => {
   const dispatch = useDispatch();
