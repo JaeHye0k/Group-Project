@@ -32,7 +32,8 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-right: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .white-circle {
@@ -72,6 +73,8 @@
   width: 40%;
   background-color: #fff;
   border-radius: 10px;
+    margin-right: 10px;
+      margin-left: 10px;
 }
 
 .mypage-title {
@@ -113,11 +116,11 @@
   margin-right: 10px;
   margin-bottom: 10px;
   height: 100px;
-  width: calc(45%);
+  width: calc(47%);
   box-sizing: border-box;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 780px) {
   .favorite-box {
     width: 100%;
   }
@@ -128,8 +131,16 @@
   margin-right: 10px;
   margin-bottom: 10px;
   text-align: center;
+  height: 100px;
+    width: calc(31%);
+    box-sizing: border-box;
 }
 
+@media screen and (max-width: 780px) {
+  .recent-content {
+    width: 100%;
+  }
+}
 .content-box {
   height: 100px;
   width: 100%;
@@ -138,10 +149,7 @@
   border-radius: 5px;
 }
 
-@media screen and (max-width: 480px) {
-  .recent-content {
-    width: 100%;
-  }}
+
 
 .recent-content span {
   display: block;
