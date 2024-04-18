@@ -17,19 +17,17 @@ const baseUrl = `https://dapi.kakao.com/v2/local`;
 // 2. 지도를 클릭했을 때
 // 3. 내 위치 버튼을 클릭했을 때
 const markers = [];
-let isListener = false;
+let listenerFlag = false;
 
 const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [map, setMap] = useState(null);
-  const [test, setTest] = useState({});
-  // const [markers, setMarkers] = useState([]);
   const isClickMyPosition = useSelector(
     (state) => state.kakaoMap.isClickMyPosition
   );
 
-  // 카카오 맵 객체를 생성하는 함수
+  // 카카오 맵 객체를 생성하는 함수입니다
   const getKakaoMap = ({ lat, lng }) => {
     const container = document.getElementById("kakao-map"); //지도를 담을 영역의 DOM 레퍼런스
     const options = {
@@ -41,7 +39,7 @@ const KakaoMap = () => {
     return map;
   };
 
-  // 카테고리를 기준으로 데이터를 호출하는 기능
+  // 현재 지도의 사각형 영역내에서 해당되는 카테고리 데이터를 호출하는 함수입니다
   const searchByCategory = async () => {
     const rect = getCurrentMapArea(map).join(","); // 지도의 사각형 영역 구하기
     const categoryGroupCode = selectedCode;
@@ -55,6 +53,7 @@ const KakaoMap = () => {
     return data;
   };
 
+  // 마커를 생성하고 해당 위치에 표시하는 함수입니다
   const showMarker = ({ lat, lng }) => {
     // 마커를 표시할 위치
     const markerPostiion = new kakao.maps.LatLng(lat, lng);
@@ -67,18 +66,18 @@ const KakaoMap = () => {
     marker.setMap(map);
   };
 
+  // 이전까지의 마커를 지우는 함수입니다
   const clearMarkers = () => {
     if (markers.length > 0) {
       markers.forEach((marker) => {
         marker.setMap(null);
       });
     }
+    markers.length = 0;
   };
   // 지도 드래그 핸들러
   const updateMarkers = async () => {
     const categorizedData = await searchByCategory();
-    setTest({ ...test, selectedCode: selectedCode });
-    console.log(test);
     clearMarkers();
     categorizedData?.documents.forEach(({ x, y }) => {
       showMarker({ lat: y, lng: x });
@@ -99,27 +98,29 @@ const KakaoMap = () => {
     showMarker(location);
   };
 
+  // 페이지에 처음 들어왔을 때 실행됩니다
   useEffect(() => {
     const showKakaoMap = async () => {
-      // 처음 페이지에 들어왔을 때
-      if (currentLocation === null) {
-        // 현재 위치 불러오기
-        const location = await getCurrentLocaition();
-        setCurrentLocation(location);
-        // kakao map 객체 생성
-        const map = getKakaoMap(location);
-        setMap(map);
-        // 마커 생성
-        const markerPostiion = new kakao.maps.LatLng(
-          location.lat,
-          location.lng
-        );
-        const marker = new kakao.maps.Marker({
-          position: markerPostiion,
-        });
-        markers.push(marker);
-        marker.setMap(map);
-      } else {
+      const location = await getCurrentLocaition();
+      setCurrentLocation(location);
+      // kakao map 객체 생성
+      const map = getKakaoMap(location);
+      setMap(map);
+      // 마커 생성
+      const markerPostiion = new kakao.maps.LatLng(location.lat, location.lng);
+      const marker = new kakao.maps.Marker({
+        position: markerPostiion,
+      });
+      markers.push(marker);
+      marker.setMap(map);
+    };
+    showKakaoMap();
+  }, []);
+
+  // 카테고리 코드가 변경될 때 마다 실행됩니다
+  useEffect(() => {
+    const showKakaoMap = async () => {
+      if (map !== null) {
         const categorizedData = await searchByCategory();
         // 이전 마커 지우기
         clearMarkers();
@@ -127,17 +128,20 @@ const KakaoMap = () => {
         categorizedData?.documents.forEach(({ x, y }) => {
           showMarker({ lat: y, lng: x });
         });
-      }
-      if (map !== null) {
-        kakao.maps.event.removeListener(map, "dragend", () => updateMarkers());
-        kakao.maps.event.removeListener(map, "click", (e) => markByClick(e));
         // 지도 이동시 마커 갱신
-        kakao.maps.event.addListener(map, "dragend", () => updateMarkers());
+        kakao.maps.event.addListener(map, "dragend", updateMarkers);
         // 지도 클릭시 마커 생성
         kakao.maps.event.addListener(map, "click", (e) => markByClick(e));
+        listenerFlag = true;
       }
     };
     showKakaoMap();
+    return () => {
+      if (listenerFlag) {
+        kakao.maps.event.removeListener(map, "dragend", updateMarkers);
+        kakao.maps.event.removeListener(map, "click", (e) => markByClick(e));
+      }
+    };
   }, [selectedCode]);
   return (
     <div id="kakao-map">
