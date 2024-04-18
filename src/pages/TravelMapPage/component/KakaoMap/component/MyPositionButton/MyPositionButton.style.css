@@ -1,6 +1,6 @@
 #my-position {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   right: 5rem;
   bottom: 5rem;
 }
