@@ -3,27 +3,31 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  min-height: 90vh;
   background-color: white;
+  padding: 20px;
 }
 
 .homepage-title {
   font-size: 20px;
   margin-bottom: 40px;
   color: #000;
+  text-align: center;
 }
 
 .login-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 500px;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
 }
 
 .login-title {
   font-size: 36px;
   margin-bottom: 10px;
   color: #000;
+  text-align: center;
 }
 
 .title-underline {
@@ -36,22 +40,31 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  width: 100%;
 }
 
 .form-group {
   margin-bottom: 20px;
-  width: 505px;
+  width: 100%;
 }
 
 .form-control {
-  width: 96%;
-  height: 25px;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
   color: #000;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .form-control {
+    max-width: 100%;
+  }
 }
 
 .login-button {
@@ -70,6 +83,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .find-links a {
@@ -83,9 +97,7 @@
 }
 
 @media (max-width: 600px) {
-
-  .form-group,
-  .login-button {
-    width: 90%;
+  .login-title {
+    font-size: 28px;
   }
 }
