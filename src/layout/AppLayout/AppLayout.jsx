@@ -1,5 +1,6 @@
+
 import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, Link } from "react-router-dom";
 import './AppLayout.style.css'
 import Button from "../../common/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,8 +24,8 @@ const AppLayout = () => {
   }
 
   return (
-    <div className="component">
-      <div className="navbar">
+    <div className="app-layout">
+      <nav className="app-navbar">
         <FontAwesomeIcon className="menu-button" size="lg" icon={faBars} onClick={toggleMenu} />
         <div>
           <img src="/img/logo.png" alt="logo" className="logo-image" onClick={() => navigateTo('/')}/>
@@ -54,11 +55,9 @@ const AppLayout = () => {
           <input className='input' placeholder="검색어를 입력하세요"></input>
           <FontAwesomeIcon icon={faMagnifyingGlass} onClick={onSearch}/>
           </div>   
-          <Button className="moblieLoginBtn">로그인</Button>
+          <Link to="/login" className="moblieLoginBtn">로그인</Link>
         </div>
-
-      </div>
-
+      </nav>
       <Outlet />
     </div>
   );

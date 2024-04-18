@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   selectedCode: null,
-  isClickMyPosition: false,
+  weather: null,
 };
 
 export const kakaoMapSlice = createSlice({
@@ -12,11 +12,11 @@ export const kakaoMapSlice = createSlice({
     selectCode: (state, action) => {
       state.selectedCode = action.payload.categoryCode;
     },
-    clickMyPosition: (state, action) => {
-      state.isClickMyPosition = true;
+    setWeather: (state, action) => {
+      state.weather = action.payload.weather;
     },
   },
 });
 
-export const { selectCode, clickMyPosition } = kakaoMapSlice.actions;
+export const { selectCode, setWeather } = kakaoMapSlice.actions;
 export default kakaoMapSlice.reducer;
