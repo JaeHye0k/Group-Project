@@ -1,9 +1,11 @@
-import React from "react";
-import "./BookmarkedPlaces.style.css";
-import { Container, Row, Col } from "react-bootstrap";
+import React from 'react'
 
 const BookmarkedPlaces = () => {
-  return <div></div>;
-};
+  return (
+    <div>
+      
+    </div>
+  )
+}
 
-export default BookmarkedPlaces;
+export default BookmarkedPlaces
