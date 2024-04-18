@@ -2,14 +2,6 @@ import React from "react";
 import "./LoginPage.style.css";
 
 const LoginPage = () => {
-  const onSubmit = (e) => {
-    e.preventDefault();
-    // 로그인 처리 로직 추가
-  };
-
-  const onChange = (e) => {
-    // 입력 필드 변경 처리 로직 추가
-  };
 
   return (
     <div className="login-page">
