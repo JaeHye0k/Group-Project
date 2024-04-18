@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./KakaoMap.style.css";
 import { getCurrentMapArea } from "../../../../utils/kakaoMap/getCurrentMapArea";
 import { getCurrentLocaition } from "../../../../utils/kakaoMap/getCurrentLocation";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import MyPositionButton from "./component/MyPositionButton/MyPositionButton";
+import { selectCode } from "../../../../redux/kakaoMapStore/reducers/kakaoMapSlice";
 
 const { kakao } = window;
 const baseUrl = `https://dapi.kakao.com/v2/local`;
@@ -16,16 +17,14 @@ const baseUrl = `https://dapi.kakao.com/v2/local`;
 // 1. 지도가 드래그 되었을 때
 // 2. 지도를 클릭했을 때
 // 3. 내 위치 버튼을 클릭했을 때
-const markers = [];
+const categoryMarkers = [];
 let listenerFlag = false;
 
 const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [map, setMap] = useState(null);
-  const isClickMyPosition = useSelector(
-    (state) => state.kakaoMap.isClickMyPosition
-  );
+  const dispatch = useDispatch();
 
   // 카카오 맵 객체를 생성하는 함수입니다
   const getKakaoMap = ({ lat, lng }) => {
@@ -41,9 +40,9 @@ const KakaoMap = () => {
 
   // 현재 지도의 사각형 영역내에서 해당되는 카테고리 데이터를 호출하는 함수입니다
   const searchByCategory = async () => {
+    if (selectedCode === null) return null;
     const rect = getCurrentMapArea(map).join(","); // 지도의 사각형 영역 구하기
-    const categoryGroupCode = selectedCode;
-    const url = `${baseUrl}/search/category?category_group_code=${categoryGroupCode}&rect=${rect}`;
+    const url = `${baseUrl}/search/category?category_group_code=${selectedCode}&rect=${rect}`;
     const response = await fetch(url, {
       headers: {
         Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY_REST}`,
@@ -62,21 +61,23 @@ const KakaoMap = () => {
       position: markerPostiion,
     });
 
-    markers.push(marker);
+    categoryMarkers.push(marker);
     marker.setMap(map);
   };
 
   // 이전까지의 마커를 지우는 함수입니다
   const clearMarkers = () => {
-    if (markers.length > 0) {
-      markers.forEach((marker) => {
+    if (categoryMarkers.length > 0) {
+      categoryMarkers.forEach((marker) => {
         marker.setMap(null);
       });
     }
-    markers.length = 0;
+    categoryMarkers.length = 0;
   };
+
   // 지도 드래그 핸들러
   const updateMarkers = async () => {
+    if (selectedCode === null) return null;
     const categorizedData = await searchByCategory();
     clearMarkers();
     categorizedData?.documents.forEach(({ x, y }) => {
@@ -90,12 +91,15 @@ const KakaoMap = () => {
     // 이전 마커 지우기
     clearMarkers();
     showMarker({ lat: latlng.getLat(), lng: latlng.getLng() });
+    dispatch(selectCode({ categoryCode: null }));
   };
 
   const onClickMyPosition = async () => {
-    const location = await getCurrentLocaition();
-    const map = getKakaoMap(location);
-    showMarker(location);
+    map.setCenter(
+      new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng)
+    );
+    clearMarkers();
+    showMarker(currentLocation);
   };
 
   // 페이지에 처음 들어왔을 때 실행됩니다
@@ -111,8 +115,21 @@ const KakaoMap = () => {
       const marker = new kakao.maps.Marker({
         position: markerPostiion,
       });
-      markers.push(marker);
+      categoryMarkers.push(marker);
       marker.setMap(map);
+      // 지도 클릭시 마커 생성
+      kakao.maps.event.addListener(map, "click", (e) => {
+        const latlng = e.latLng;
+        const lat = latlng.getLat();
+        const lng = latlng.getLng();
+        const markerPostiion = new kakao.maps.LatLng(lat, lng);
+        const marker = new kakao.maps.Marker({
+          position: markerPostiion,
+        });
+        clearMarkers();
+        categoryMarkers.push(marker);
+        marker.setMap(map);
+      });
     };
     showKakaoMap();
   }, []);
@@ -121,17 +138,19 @@ const KakaoMap = () => {
   useEffect(() => {
     const showKakaoMap = async () => {
       if (map !== null) {
-        const categorizedData = await searchByCategory();
-        // 이전 마커 지우기
-        clearMarkers();
-        // 현재 선택한 카테고리에 해당되는 위치에 마커 표시
-        categorizedData?.documents.forEach(({ x, y }) => {
-          showMarker({ lat: y, lng: x });
-        });
+        if (selectedCode !== null) {
+          const categorizedData = await searchByCategory();
+          // 이전 마커 지우기
+          clearMarkers();
+          // 현재 선택한 카테고리에 해당되는 위치에 마커 표시
+          categorizedData?.documents.forEach(({ x, y }) => {
+            showMarker({ lat: y, lng: x });
+          });
+        }
         // 지도 이동시 마커 갱신
         kakao.maps.event.addListener(map, "dragend", updateMarkers);
         // 지도 클릭시 마커 생성
-        kakao.maps.event.addListener(map, "click", (e) => markByClick(e));
+        kakao.maps.event.addListener(map, "click", markByClick);
         listenerFlag = true;
       }
     };
@@ -139,13 +158,14 @@ const KakaoMap = () => {
     return () => {
       if (listenerFlag) {
         kakao.maps.event.removeListener(map, "dragend", updateMarkers);
-        kakao.maps.event.removeListener(map, "click", (e) => markByClick(e));
+        kakao.maps.event.removeListener(map, "click", markByClick);
       }
     };
   }, [selectedCode]);
+
   return (
     <div id="kakao-map">
-      <MyPositionButton />
+      <MyPositionButton onClickMyPosition={onClickMyPosition} />
     </div>
   );
 };
