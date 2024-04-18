@@ -10,9 +10,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 1400px;
-  padding: 1rem;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1400px;
+  align-items: center;
+  margin: 0 auto; 
 }
 .search_login {
   display: flex;

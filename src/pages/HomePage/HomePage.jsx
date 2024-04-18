@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 import './HomePage.style.css'
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
@@ -22,7 +22,7 @@ const HomePage = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    autoplay: true,
+    // autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplaySpeed: 3000,
@@ -42,13 +42,15 @@ const HomePage = () => {
       <div>
         {/* <h2> Single Item</h2> */}
         <Slider {...settings}>
-          <div>
+           <div className="info">
+            <figure>
+              <img src="/img/banner/1.jpg" alt="banner1"/>
+            </figure>
             <div className="InfoBox">
               <div className="decoBox"/>
               <div className="InfoText">두근두근 설레는<br/>봄꽃여행지 추천</div>
-              <Link to='/'><div className="InfoLink">자세히 보기</div></Link>
+              <Link to='/'>자세히 보기</Link>
             </div>
-            <img src="/img/banner/1.jpg" alt="banner1"></img>
           </div>
 
           <div>
