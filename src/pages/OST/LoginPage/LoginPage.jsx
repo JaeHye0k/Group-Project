@@ -2,6 +2,12 @@ import React from "react";
 import "./LoginPage.style.css";
 
 const LoginPage = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const onChange = (e) => {
+  };
 
   return (
     <div className="login-page">
