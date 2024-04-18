@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { auth } from "../../firebase";
 
-const MyPage = () => {
+const MyPages = () => {
   const user = useSelector((state) => state.auth.currentUser);
   console.log(user);
   const logOut = () => {
@@ -12,7 +12,7 @@ const MyPage = () => {
     <div>
       {user ? (
         <div>
-          <p>{user.email} 님</p>
+          <p>{user.displayName} 님</p>
           <button onClick={logOut}>로그아웃</button>
         </div>
       ) : (
@@ -22,4 +22,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default MyPages;
