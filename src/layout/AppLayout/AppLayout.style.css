@@ -1,0 +1,4 @@
+#app-layout {
+  position: fixed;
+  z-index: 2;
+}
