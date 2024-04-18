@@ -1,11 +1,14 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import "./AppLayout.style.css";
 
 const AppLayout = () => {
   return (
-    <div id="app-layout">
-      AppNavBar
+    <div className="app-layout">
+      <nav className="app-navbar">
+        AppNavBar
+        <Link to="/login">Login</Link>
+      </nav>
       <Outlet />
     </div>
   );
