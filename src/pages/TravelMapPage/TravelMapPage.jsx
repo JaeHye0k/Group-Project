@@ -1,10 +1,13 @@
 import React from "react";
-import KakaoMap from "../../common/KakaoMap";
+import KakaoMap from "./component/KakaoMap/KakaoMap";
+import "./TravelMapPage.style.css";
+import MapSideBar from "./component/MapSideBar/MapSideBar";
 
 const TravelMapPage = () => {
   return (
-    <div>
+    <div id="travel-map-page">
       <KakaoMap />
+      <MapSideBar />
     </div>
   );
 };
