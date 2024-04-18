@@ -8,6 +8,7 @@ import AttractionsDetailPage from "./pages/AttractionDetailPage/AttractionsDetai
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import LoginPage from "./pages/OST/LoginPage/LoginPage";
 import MyPage from "./pages/OST/MyPage/MyPage";
+import LikedContent from "./pages/OST/LikedContent/LikedContent";
 
 // 홈페이지 = /
 // 여행 지도 페이지 = /map
@@ -26,6 +27,7 @@ function App() {
         </Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/mypage" element={<MyPage />}></Route>
+        <Route path="/likedcontent" element={<LikedContent />}></Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
