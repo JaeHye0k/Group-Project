@@ -4,7 +4,11 @@ import { getCurrentMapArea } from "../../../../utils/kakaoMap/getCurrentMapArea"
 import { getCurrentLocaition } from "../../../../utils/kakaoMap/getCurrentLocation";
 import { useSelector, useDispatch } from "react-redux";
 import MyPositionButton from "./component/MyPositionButton/MyPositionButton";
-import { selectCode } from "../../../../redux/kakaoMapStore/reducers/kakaoMapSlice";
+import {
+  selectCode,
+  setWeather,
+} from "../../../../redux/TravelMapStore/kakaoMapSlice";
+import { fetchAreaCode } from "../../../../utils/tourApi/tourApi";
 
 const { kakao } = window;
 const baseUrl = `https://dapi.kakao.com/v2/local`;
@@ -19,13 +23,14 @@ const baseUrl = `https://dapi.kakao.com/v2/local`;
 // 3. 내 위치 버튼을 클릭했을 때
 const categoryMarkers = [];
 let listenerFlag = false;
+let clickedLocation = null;
+let currentLocation = null;
 
 const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
-  const [currentLocation, setCurrentLocation] = useState(null);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
-
+  // fetchAreaCode();
   // 카카오 맵 객체를 생성하는 함수입니다
   const getKakaoMap = ({ lat, lng }) => {
     const container = document.getElementById("kakao-map"); //지도를 담을 영역의 DOM 레퍼런스
@@ -38,6 +43,14 @@ const KakaoMap = () => {
     return map;
   };
 
+  const getCurrentWeather = async () => {
+    if (clickedLocation === null) return null;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${clickedLocation.lat}&lon=${clickedLocation.lng}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    return data.weather[0].description;
+  };
   // 현재 지도의 사각형 영역내에서 해당되는 카테고리 데이터를 호출하는 함수입니다
   const searchByCategory = async () => {
     if (selectedCode === null) return null;
@@ -85,12 +98,19 @@ const KakaoMap = () => {
     });
   };
 
-  const markByClick = (e) => {
+  const markByClick = async (e) => {
     // 클릭한 곳의 위도, 경도 정보를 가져옴
     const latlng = e.latLng;
+    const location = {
+      lat: latlng.getLat(),
+      lng: latlng.getLng(),
+    };
     // 이전 마커 지우기
     clearMarkers();
-    showMarker({ lat: latlng.getLat(), lng: latlng.getLng() });
+    showMarker(location);
+    clickedLocation = location;
+    const weather = await getCurrentWeather();
+    dispatch(setWeather({ weather }));
     dispatch(selectCode({ categoryCode: null }));
   };
 
@@ -106,10 +126,8 @@ const KakaoMap = () => {
   useEffect(() => {
     const showKakaoMap = async () => {
       const location = await getCurrentLocaition();
-      setCurrentLocation(location);
       // kakao map 객체 생성
       const map = getKakaoMap(location);
-      setMap(map);
       // 마커 생성
       const markerPostiion = new kakao.maps.LatLng(location.lat, location.lng);
       const marker = new kakao.maps.Marker({
@@ -118,18 +136,29 @@ const KakaoMap = () => {
       categoryMarkers.push(marker);
       marker.setMap(map);
       // 지도 클릭시 마커 생성
-      kakao.maps.event.addListener(map, "click", (e) => {
+      kakao.maps.event.addListener(map, "click", async (e) => {
         const latlng = e.latLng;
-        const lat = latlng.getLat();
-        const lng = latlng.getLng();
-        const markerPostiion = new kakao.maps.LatLng(lat, lng);
+        const location = {
+          lat: latlng.getLat(),
+          lng: latlng.getLng(),
+        };
+        const markerPostiion = new kakao.maps.LatLng(
+          location.lat,
+          location.lng
+        );
         const marker = new kakao.maps.Marker({
           position: markerPostiion,
         });
         clearMarkers();
+        clickedLocation = location;
+        const weather = await getCurrentWeather();
+        dispatch(setWeather({ weather }));
         categoryMarkers.push(marker);
         marker.setMap(map);
       });
+      setMap(map);
+      currentLocation = location;
+      clickedLocation = location;
     };
     showKakaoMap();
   }, []);
