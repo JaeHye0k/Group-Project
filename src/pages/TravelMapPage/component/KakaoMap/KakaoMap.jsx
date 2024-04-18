@@ -7,7 +7,8 @@ import MyPositionButton from "./component/MyPositionButton/MyPositionButton";
 import {
   selectCode,
   setWeather,
-} from "../../../../redux/kakaoMapStore/reducers/kakaoMapSlice";
+} from "../../../../redux/TravelMapStore/kakaoMapSlice";
+import { fetchAreaCode } from "../../../../utils/tourApi/tourApi";
 
 const { kakao } = window;
 const baseUrl = `https://dapi.kakao.com/v2/local`;
@@ -22,14 +23,14 @@ const baseUrl = `https://dapi.kakao.com/v2/local`;
 // 3. 내 위치 버튼을 클릭했을 때
 const categoryMarkers = [];
 let listenerFlag = false;
-let markedLocation = null;
+let clickedLocation = null;
 let currentLocation = null;
 
 const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
-
+  // fetchAreaCode();
   // 카카오 맵 객체를 생성하는 함수입니다
   const getKakaoMap = ({ lat, lng }) => {
     const container = document.getElementById("kakao-map"); //지도를 담을 영역의 DOM 레퍼런스
@@ -43,8 +44,8 @@ const KakaoMap = () => {
   };
 
   const getCurrentWeather = async () => {
-    if (markedLocation === null) return null;
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${markedLocation.lat}&lon=${markedLocation.lng}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
+    if (clickedLocation === null) return null;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${clickedLocation.lat}&lon=${clickedLocation.lng}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
     const response = await fetch(url);
     const data = await response.json();
     console.log(data);
@@ -107,7 +108,7 @@ const KakaoMap = () => {
     // 이전 마커 지우기
     clearMarkers();
     showMarker(location);
-    markedLocation = location;
+    clickedLocation = location;
     const weather = await getCurrentWeather();
     dispatch(setWeather({ weather }));
     dispatch(selectCode({ categoryCode: null }));
@@ -149,7 +150,7 @@ const KakaoMap = () => {
           position: markerPostiion,
         });
         clearMarkers();
-        markedLocation = location;
+        clickedLocation = location;
         const weather = await getCurrentWeather();
         dispatch(setWeather({ weather }));
         categoryMarkers.push(marker);
@@ -157,7 +158,7 @@ const KakaoMap = () => {
       });
       setMap(map);
       currentLocation = location;
-      markedLocation = location;
+      clickedLocation = location;
     };
     showKakaoMap();
   }, []);
