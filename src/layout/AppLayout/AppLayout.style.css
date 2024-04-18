@@ -1,11 +1,9 @@
-
-
 .app-layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-    background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 .app-navbar {
@@ -16,47 +14,43 @@
   padding: 1rem;
   margin: 0 auto;
 }
-.search_login{
+.search_login {
   display: flex;
   align-items: center;
 }
-.searchbox{
-    display: flex;
-    justify-content: space-around;
-    width: 250px;
-    height: 20px;
-    padding: 10px;
-    background: white;
-    box-Shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-    border-Radius: 8px;
-    border: 1px #E0E0E0 solid;
-    justify-Content: flex-start;
-    align-Items: center;
-    
-    
+.searchbox {
+  display: flex;
+  justify-content: space-around;
+  width: 250px;
+  height: 20px;
+  padding: 10px;
+  background: white;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  border: 1px #e0e0e0 solid;
+  justify-content: flex-start;
+  align-items: center;
 }
 .logo-image {
   width: 110px;
   height: auto;
 }
-.logo-image:hover{
+.logo-image:hover {
   opacity: 50%;
 }
-.meuntext:hover{
-    color: #FF9900;
+.meuntext:hover {
+  color: #ff9900;
 }
-.menu-button { 
-    display: none; 
-    position: absolute;
-    right: 20px;
-    top: 20px;
-
+.menu-button {
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
-.menubar{
+.menubar {
   display: flex;
   flex-direction: row;
   justify-content: center;
-
 }
 .menu-item {
   display: none; /* 기본적으로 숨김 */
@@ -64,8 +58,8 @@
   cursor: pointer; /* 클릭 가능 표시 */
 }
 
-.menu-item:hover{
-  color: #FF9900; /* 마우스 오버 시 색상 변경 */
+.menu-item:hover {
+  color: #ff9900; /* 마우스 오버 시 색상 변경 */
 }
 .menu-texts {
   display: flex;
@@ -77,7 +71,7 @@
 }
 
 .menu-text:hover {
-  color: #FF9900;
+  color: #ff9900;
 }
 
 .mobile-menu-item {
@@ -87,9 +81,9 @@
 }
 
 .mobile-menu-item:hover {
-  color: #FF9900;
+  color: #ff9900;
 }
-.input{
+.input {
   width: 250px;
   height: 25px;
   border: none;
@@ -99,18 +93,17 @@
 @media (max-width: 600px) {
   .logo-image {
     width: 100px;
-    margin: 20px auto; 
-    
+    margin: 20px auto;
   }
-  .moblieLoginBtn{
+  .moblieLoginBtn {
     display: none;
   }
-  .navbar{
+  .app-navbar {
     width: 100%;
-     justify-content: center;
-     flex-direction: column;
-  }  
-  .searchbox{
+    justify-content: center;
+    flex-direction: column;
+  }
+  .searchbox {
     margin-bottom: 15px;
     width: 100%;
   }
@@ -125,46 +118,43 @@
     display: block;
   }
 
- .menu-button {
-        display: block;
-        z-index: 100;
-        /* 메뉴 버튼 스타일 */
-        
-    }
-    .close-button{
-      background-color: #FF9900;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 100px;
-      position: absolute;
-      right: 20px;
-      top: 20px;
-      
-    }
-    .close-button:hover{
-      background-color: #ffe7c4;
- 
-    }
-    .menu {
-        z-index: 100;
-        position: fixed;
-        top: 0;
-        right: -100%; /* 기본적으로 메뉴를 화면 오른쪽 밖으로 숨긴다 */
-        width: 60%;
-        height: 100%;
-        background-color: #F5F5F5;
-        transition: right 0.3s;
-    }
+  .menu-button {
+    display: block;
+    z-index: 100;
+    /* 메뉴 버튼 스타일 */
+  }
+  .close-button {
+    background-color: #ff9900;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+  .close-button:hover {
+    background-color: #ffe7c4;
+  }
+  .menu {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    right: -100%; /* 기본적으로 메뉴를 화면 오른쪽 밖으로 숨긴다 */
+    width: 60%;
+    height: 100%;
+    background-color: #f5f5f5;
+    transition: right 0.3s;
+  }
 
-    .menu.open {
-        right: 0; /* 메뉴가 열리면 화면 왼쪽 끝으로 */
-    }
-    
-    /* .menubar{
+  .menu.open {
+    right: 0; /* 메뉴가 열리면 화면 왼쪽 끝으로 */
+  }
+
+  /* .menubar{
       display: flex;
       flex-direction: column;
     } */
-  }
+}
