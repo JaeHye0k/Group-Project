@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import "./AppLayout.style.css";
-import Button from '../../common/Button'
+import Button from "../../common/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faTimes,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
+import ChatBot from "./../../common/ChatBot/ChatBot";
 
 const AppLayout = () => {
   const navigate = useNavigate();
@@ -81,6 +82,7 @@ const AppLayout = () => {
         </div>
       </nav>
       <Outlet />
+      <ChatBot />
     </div>
   );
 };
