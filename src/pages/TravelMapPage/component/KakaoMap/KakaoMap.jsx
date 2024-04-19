@@ -9,7 +9,6 @@ import {
   setWeather,
   setCenter,
   setInitialMap,
-  setClickedLocation,
 } from "../../../../redux/TravelMapStore/kakaoMapSlice";
 
 const { kakao } = window;
@@ -25,7 +24,7 @@ const baseUrl = `https://dapi.kakao.com/v2/local`;
 // 3. 내 위치 버튼을 클릭했을 때
 const categoryMarkers = [];
 let listenerFlag = false;
-// let clickedLocation = null;
+let clickedLocation = null;
 let currentLocation = null;
 
 const KakaoMap = () => {
@@ -110,11 +109,11 @@ const KakaoMap = () => {
     // 이전 마커 지우기
     clearMarkers();
     showMarker(location);
-    dispatch(setClickedLocation(location));
+    clickedLocation = location;
     const weather = await getCurrentWeather();
     dispatch(setWeather({ weather }));
     dispatch(selectCode({ categoryCode: null }));
-    // dispatch(setCenter(location));
+    dispatch(setCenter(location));
   };
 
   const onClickMyPosition = async () => {
@@ -155,7 +154,7 @@ const KakaoMap = () => {
           position: markerPostiion,
         });
         clearMarkers();
-        dispatch(setClickedLocation(location));
+        clickedLocation = location;
         const weather = await getCurrentWeather();
         dispatch(setWeather({ weather }));
         dispatch(setCenter(location));
@@ -164,7 +163,7 @@ const KakaoMap = () => {
       });
       setMap(map);
       currentLocation = location;
-      dispatch(setClickedLocation(location));
+      clickedLocation = location;
       const centerLocation = {
         lat: map.getCenter().getLat(),
         lng: map.getCenter().getLng(),

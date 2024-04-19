@@ -14,10 +14,9 @@ const LocationBasedList = ({ center }) => {
   const lat = center?.getLat();
   const lng = center?.getLng();
   // const dispatch = useDispatch();
-  const { data, isLoading, isError, error, isFetched } = useQuery({
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["location-based"],
     queryFn: () => fetchLocationBasedList(lng, lat),
-    // enabled: !!Object.keys(center).length, // center 값이 있을때만 fetch
   });
 
   // const datas = data?.response?.body.items.item;
@@ -25,11 +24,9 @@ const LocationBasedList = ({ center }) => {
   //   dispatch(setLocationName(datas[0]?.addr1.split(" ").slice(0, 3).join(" ")));
   // }
 
-  // useEffect(() => {
-  //   if (!!Object.keys(center).length) {
-  //     refetch();
-  //   }
-  // }, [center]);
+  useEffect(() => {
+    refetch();
+  }, [center]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -37,19 +34,17 @@ const LocationBasedList = ({ center }) => {
   if (isError) {
     return <div>{error.message}</div>;
   }
-  if (isFetched) {
-    const datas = data?.response?.body.items.item;
-    return (
-      <ul className="location-based-list">
-        {datas?.map((item, key) => {
-          // 썸네일이 있을 경우에만 표시
-          if (item.firstimage || item.firstimage2) {
-            return <LocationItem key={key} item={item} />;
-          }
-        })}
-      </ul>
-    );
-  }
+  const datas = data?.response?.body.items.item;
+  return (
+    <ul className="location-based-list">
+      {datas?.map((item, key) => {
+        // 썸네일이 있을 경우에만 표시
+        if (item.firstimage || item.firstimage2) {
+          return <LocationItem key={key} item={item} />;
+        }
+      })}
+    </ul>
+  );
 };
 
 export default LocationBasedList;
