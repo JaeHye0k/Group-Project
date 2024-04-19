@@ -69,6 +69,7 @@ const HomePage = () => {
               <div className="InfoLink">자세히 보기</div>
             </Link>
           </div>
+
           <img src="/images/banner/2.jpg" alt="banner2"></img>
         </div>
 
@@ -84,6 +85,7 @@ const HomePage = () => {
               <div className="InfoLink">자세히 보기</div>
             </Link>
           </div>
+
           <img src="/images/banner/3.jpg" alt="banner3"></img>
         </div>
 
@@ -99,6 +101,7 @@ const HomePage = () => {
               <div className="InfoLink">자세히 보기</div>
             </Link>
           </div>
+
           <img src="/images/banner/4.jpg" alt="banner4"></img>
         </div>
       </Slider>
