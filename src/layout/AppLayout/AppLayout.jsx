@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import "./AppLayout.style.css";
-import Button from "../../common/Button";
+import Button from '../../common/Button'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,

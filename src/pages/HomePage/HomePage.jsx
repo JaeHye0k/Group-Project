@@ -20,7 +20,7 @@ const HomePage = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    autoplay: true,
+    // autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplaySpeed: 3000,
@@ -37,20 +37,18 @@ const HomePage = () => {
   };
 
   return (
-    <div>
-      {/* <h2> Single Item</h2> */}
-      <Slider {...settings}>
-        <div>
-          <div className="InfoBox">
-            <div className="decoBox" />
-            <div className="InfoText">
-              두근두근 설레는
-              <br />
-              봄꽃여행지 추천
+      <div>
+        {/* <h2> Single Item</h2> */}
+        <Slider {...settings}>
+           <div className="info">
+            <figure>
+              <img src="/img/banner/1.jpg" alt="banner1"/>
+            </figure>
+            <div className="InfoBox">
+              <div className="decoBox"/>
+              <div className="InfoText">두근두근 설레는<br/>봄꽃여행지 추천</div>
+              <Link to='/'>자세히 보기</Link>
             </div>
-            <Link to="/">
-              <div className="InfoLink">자세히 보기</div>
-            </Link>
           </div>
           <img src="/images/banner/1.jpg" alt="banner1"></img>
         </div>
