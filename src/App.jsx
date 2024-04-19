@@ -9,7 +9,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { auth } from "./firebase";
-import { setUser, clearUser } from "./redux/auth/authSlice";
+import { setUser, clearUser } from "./redux/user/auth/authSlice";
 import MyPages from "./pages/MyPages/MyPages";
 import UserSignUp from "./pages/UserSignUp/UserSignUp";
 // 홈페이지 = /

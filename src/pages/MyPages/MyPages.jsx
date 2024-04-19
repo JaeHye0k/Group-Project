@@ -6,6 +6,7 @@ import "./style/MyPages.style.css";
 const MyPages = () => {
   const user = useSelector((state) => state.auth.currentUser);
   console.log(user);
+
   const logOut = () => {
     auth.signOut();
   };
