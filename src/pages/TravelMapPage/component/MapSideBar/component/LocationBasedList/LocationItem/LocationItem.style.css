@@ -2,6 +2,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+.location-item:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
 
 .location-item :is(.thumbnail, .overview) {
   padding: 10px;
@@ -11,7 +15,26 @@
   font-size: 0.9rem;
   font-weight: bold;
 }
+.location-item .name-contentType {
+  display: flex;
+  flex-wrap: wrap;
 
-.location-item .overview .from-here {
+  & .content-type {
+    margin-left: 5px;
+    color: #ff9900;
+  }
+}
+.location-item .overview :is(.from-here, .address) {
   font-size: 0.7rem;
+}
+.location-item .thumbnail {
+  height: 150px;
+  & img {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+}
+.location-item .address {
+  margin-top: 5px;
 }
