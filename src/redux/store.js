@@ -1,11 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./user/auth/authSlice";
+import kakaoMapSlice from "./TravelMapStore/kakaoMapSlice";
 import attractionsSlice from './AttractionPage/attractionsSlice';
 
-const store = configureStore({
-    reducer:{
-        attraction:attractionsSlice
-    }
 
-})
-
-export default store;
+export const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    kakaoMap: kakaoMapSlice,
+    attraction:attractionsSlice
+  },
+});
