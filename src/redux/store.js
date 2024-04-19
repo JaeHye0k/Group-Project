@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import attractionsSlice from './reducers/attractionsSlice';
+import attractionsSlice from './AttractionPage/attractionsSlice';
 
 const store = configureStore({
     reducer:{
