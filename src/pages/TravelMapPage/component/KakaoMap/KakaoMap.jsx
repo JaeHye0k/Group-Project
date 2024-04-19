@@ -8,6 +8,7 @@ import {
   selectCode,
   setWeather,
   setCenter,
+  setInitialMap,
 } from "../../../../redux/TravelMapStore/kakaoMapSlice";
 
 const { kakao } = window;
@@ -27,6 +28,7 @@ let clickedLocation = null;
 let currentLocation = null;
 
 const KakaoMap = () => {
+  // console.log("render");
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
@@ -48,7 +50,7 @@ const KakaoMap = () => {
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${clickedLocation.lat}&lon=${clickedLocation.lng}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
     const response = await fetch(url);
     const data = await response.json();
-    return data.weather[0].description;
+    return data;
   };
   // 현재 지도의 사각형 영역내에서 해당되는 카테고리 데이터를 호출하는 함수입니다
   const searchByCategory = async () => {
@@ -129,6 +131,7 @@ const KakaoMap = () => {
       const location = await getCurrentLocaition();
       // kakao map 객체 생성
       const map = getKakaoMap(location);
+      dispatch(setInitialMap(map));
       // 마커 생성
       const markerPostiion = new kakao.maps.LatLng(location.lat, location.lng);
       const marker = new kakao.maps.Marker({

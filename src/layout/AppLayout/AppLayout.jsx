@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import "./AppLayout.style.css";
-import Button from '../../common/Button'
+import Button from "../../common/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faTimes,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
+import ChatBot from "./../../common/ChatBot/ChatBot";
 
 const AppLayout = () => {
-
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const currentUser = useSelector((state) => state.auth.currentUser); // 현재 사용자 상태를 가져온다.
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -45,36 +43,14 @@ const AppLayout = () => {
           />
         </div>
         <div className="menu-texts">
-          <div className="menu-text" onClick={() => navigateTo("/attractions")}>
+          <div className="menu-text" onClick={() => navigateTo("/")}>
             여행정보
           </div>
           <div className="menu-text" onClick={() => navigateTo("/map")}>
             여행지도
           </div>
         </div>
-        <div className="search_login">
-          <div className="searchbox">
-            <input className="input" placeholder="검색어를 입력하세요"></input>
-            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={onSearch} />
-          </div>
-          <div className="moblieLoginBtn"> {/* 모바일때 메뉴 안보이게 하는 css */}
-            {/* <Link to="/login">로그인</Link> PC화면 로그인 자리*/} 
-            {currentUser ? (
-              <Button onClick={() => {
-                // dispatch(clearUser());
-                navigateTo("/"); // 로그아웃 후 홈으로 이동
-              }}>로그아웃</Button>
-            ) : (
-              <Button onClick={() => navigateTo("/signup")}>로그인</Button>
-            )}
-          </div>
-        
 
-         
-            
-
-
-        {/* 모바일 화면 */}
         <div className={`menu ${isMenuOpen ? "open" : ""}`}>
           {isMenuOpen && (
             <div>
@@ -90,16 +66,23 @@ const AppLayout = () => {
               >
                 여행지도
               </p>
-              <Button onClick={() => navigateTo("/signup")}>로그인</Button>
+              <Button>로그인</Button>
             </div>
           )}
         </div>
-        {/* 모바일 화면 */}
-        
+
+        <div className="search_login">
+          <div className="searchbox">
+            <input className="input" placeholder="검색어를 입력하세요"></input>
+            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={onSearch} />
+          </div>
+          <button className="moblieLoginBtn">
+            <Link to="/signin">로그인</Link>
+          </button>
         </div>
       </nav>
       <Outlet />
-    
+      <ChatBot />
     </div>
   );
 };
