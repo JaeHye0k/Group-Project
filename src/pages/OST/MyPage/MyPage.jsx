@@ -1,10 +1,9 @@
 import React from "react";
 import "./MyPage.style.css";
-import { styled } from "styled-components";
 
 const MyPage = () => {
   return (
-    <Wrapper className="mypage-background">
+    <div className="mypage-background">
       <div className="mypage-container">
         <div className="black-box">
           <div className="white-circle">
@@ -53,7 +52,7 @@ const MyPage = () => {
           </div>
         </div>
       </div>
-    </Wrapper>
+    </div>
   );
 };
 

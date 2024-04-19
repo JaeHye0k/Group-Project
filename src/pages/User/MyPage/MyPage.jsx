@@ -1,39 +1,42 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { auth } from "../../firebase";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../../firebase";
 import "./style/MyPages.style.css";
+import { Container, Content, Items, SubTitle, Wrapper } from "./styled";
 
-const MyPages = () => {
+const MyPage = () => {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.currentUser);
-  console.log(user);
 
   const logOut = () => {
     auth.signOut();
   };
   return (
-    <div className="container">
-      <div className="wrapper">
-        <div className="my-content">
-          <div className="black-box items">
-            <div className="my-title">
+    <Container>
+      <Wrapper>
+        <Content>
+          <Items className="left">
+            <div className="l-title">
               <figure>
                 <img src="/images/ico/ico-user.png" alt="기본프로필이미지" />
               </figure>
               <em></em>
             </div>
-            <div className="my-txt">
+            <div className="l-txt">
               <span>반가워요</span>
+
               <strong>{user && user.displayName} 님</strong>
             </div>
-          </div>
+          </Items>
 
-          <div className="white-box items">
+          <Items className="right">
             <div className="title">
               <h2>마이페이지</h2>
             </div>
 
             <div className="info">
-              <strong className="sub-title">기본정보</strong>
+              <SubTitle>기본정보</SubTitle>
 
               <div className="input-box">
                 <input
@@ -54,10 +57,13 @@ const MyPages = () => {
             </div>
 
             <div className="bookmark">
-              <strong className="sub-title">즐겨찾기</strong>
+              <SubTitle>즐겨찾기</SubTitle>
 
               <div className="content">
-                <div className="favorite-box">
+                <div
+                  className="favorite-box"
+                  onClick={() => navigate("/likes")}
+                >
                   <figure>
                     <img
                       src="/images/ico/ico-like.png"
@@ -79,7 +85,7 @@ const MyPages = () => {
             </div>
 
             <div className="recent">
-              <strong className="sub-title">최근 본 컨텐츠</strong>
+              <SubTitle>최근 본 컨텐츠</SubTitle>
 
               <div className="content">
                 <div className="recent-item">
@@ -120,10 +126,10 @@ const MyPages = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </Items>
+        </Content>
+      </Wrapper>
+    </Container>
     // <div>
     //   {user ? (
     //     <div>
@@ -137,4 +143,4 @@ const MyPages = () => {
   );
 };
 
-export default MyPages;
+export default MyPage;

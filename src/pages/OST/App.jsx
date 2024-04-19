@@ -6,21 +6,17 @@ import TravelMapPage from "./pages/TravelMapPage/TravelMapPage";
 import AttractionsPage from "./pages/AttractionsPage/AttractionsPage";
 import AttractionsDetailPage from "./pages/AttractionDetailPage/AttractionsDetailPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { auth } from "./firebase";
-import { setUser, clearUser } from "./redux/user/auth/authSlice";
-
+import { setUser, clearUser } from "./redux/auth/authSlice";
+import MyPages from "./pages/MyPages/MyPages";
+import UserSignUp from "./pages/UserSignUp/UserSignUp";
+import LoginPage from "./pages/OST/LoginPage/LoginPage";
+import MyPage from "./pages/OST/MyPage/MyPage";
+import LikedContent from "./pages/OST/LikedContent/LikedContent";
 import BookmarkedPlaces from "./pages/OST/BookmarkedPlaces/BookmarkedPlaces";
 
-// signUp, In
-import UserSignUp from "./pages/User/UserSignUp/UserSignUp";
-import UserSignIn from "./pages/User/UserSignIn/UserSignIn";
-
-// Mypage
-import MyPage from "./pages/User/MyPage/MyPage";
-import UserLikes from "./pages/User/UserLikes/UserLikes";
 
 // 홈페이지 = /
 // 여행 지도 페이지 = /map
@@ -57,14 +53,12 @@ function App() {
           <Route path=":id" element={<AttractionsDetailPage />} />
         </Route>
 
-        {/* user */}
-        <Route path="/signup" element={<UserSignUp />} />
-        <Route path="/signin" element={<UserSignIn />} />
-
-        {/* mypage */}
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/likes" element={<UserLikes />} />
-
+        {/* <Route path="my" element={<MyPage />} /> */}
+        <Route path="signup" element={<UserSignUp />} />
+        <Route path="mypage" element={<MyPages />} />
+        <Route path="ost-login" element={<LoginPage />} />
+        <Route path="ost-mypage" element={<MyPage />} />
+        <Route path="ost-likedcontent" element={<LikedContent />} />
         <Route path="ost-bookmarkedplaces" element={<BookmarkedPlaces />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />

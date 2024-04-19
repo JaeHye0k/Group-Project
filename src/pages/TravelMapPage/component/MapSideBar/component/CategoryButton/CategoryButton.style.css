@@ -1,0 +1,10 @@
+.category-button {
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+}
+.category-name {
+  text-align: center;
+  font-size: 0.7rem;
+}
