@@ -2,6 +2,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+.location-item:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
 
 .location-item :is(.thumbnail, .overview) {
   padding: 10px;
@@ -14,4 +18,12 @@
 
 .location-item .overview .from-here {
   font-size: 0.7rem;
+}
+.location-item .thumbnail {
+  height: 150px;
+  & img {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
 }

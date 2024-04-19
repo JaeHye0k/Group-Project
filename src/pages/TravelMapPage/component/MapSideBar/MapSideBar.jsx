@@ -6,13 +6,14 @@ import { useSelector } from "react-redux";
 import LocationBasedList from "./component/LocationBasedList/LocationBasedList";
 
 const MapSideBar = () => {
+  // console.log("render");
   const weather = useSelector((state) => state.kakaoMap.weather);
   const locationName = useSelector((state) => state.kakaoMap.locationName);
   const initialMap = useSelector((state) => state.kakaoMap.initialMap);
-  console.log(initialMap?.getCenter());
+  const center = initialMap?.getCenter();
   const [isFolded, setIsFolded] = useState(false);
 
-  useEffect(() => {}, [locationName]);
+  // useEffect(() => {}, [locationName]);
   return (
     <div id="map-sidebar" className={`${isFolded ? "folded" : ""}`}>
       <div className="top">
@@ -24,7 +25,7 @@ const MapSideBar = () => {
         </div>
       </div>
       <div className="bottom">
-        <LocationBasedList />
+        {initialMap ? <LocationBasedList center={center} /> : ""}
       </div>
       <ul className="category-list">
         {Object.entries(filterdCategoryCode).map(([code, name], idx) => (
