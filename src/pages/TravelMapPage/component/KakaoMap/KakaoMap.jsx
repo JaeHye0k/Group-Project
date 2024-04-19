@@ -28,7 +28,8 @@ let clickedLocation = null;
 let currentLocation = null;
 
 const KakaoMap = () => {
-  // console.log("render");
+  console.log("render");
+  console.log(currentLocation);
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
