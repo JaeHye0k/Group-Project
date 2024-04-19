@@ -72,7 +72,10 @@ const MyPage = () => {
                   </figure>
                   <span>컨텐츠하트</span>
                 </div>
-                <div className="favorite-box">
+                <div
+                  className="favorite-box"
+                  onClick={() => navigate("/books")}
+                >
                   <figure>
                     <img
                       src="/images/ico/ico-bookmark.png"

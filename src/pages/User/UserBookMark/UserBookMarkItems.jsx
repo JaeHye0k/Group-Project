@@ -64,7 +64,7 @@ const Txt = styled.div`
   }
 `;
 
-const UserLikesItems = () => {
+const UserBookMarkItems = () => {
   return (
     <>
       <Item>
@@ -136,4 +136,4 @@ const UserLikesItems = () => {
   );
 };
 
-export default UserLikesItems;
+export default UserBookMarkItems;
