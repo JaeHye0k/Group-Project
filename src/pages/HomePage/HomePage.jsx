@@ -6,15 +6,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// const InfoBox = styled.div`
-//   position: absolute;
-//   background-color: white;
-//   bottom: 0;
-//   width: 2.5%;
-//   height: 40%;
-//   margin-left: 1.5%;
-// `
-
 const HomePage = () => {
   const settings = {
     dots: true,
@@ -25,16 +16,9 @@ const HomePage = () => {
     slidesToScroll: 1,
     autoplaySpeed: 3000,
     cssEase: "linear",
-    //    responsive: [ // 반응형 옵션
-    // {
-    // 		breakpoint: 480, // (숫자)px 이하일 경우
-    //       settings: {
-    //         slidesToShow: 1,
-    //         arrows:true,
-    // 	}
-    // }
-    // ]
-  };
+
+ 
+  }
 
   return (
     <div>
@@ -120,24 +104,6 @@ const HomePage = () => {
   );
 };
 
-//   return <div>
 
-//       <div className="imgBanner"></div>
-//       <div className="textBanner">
-//         두근두근 설레는<br/>봄꽃 여행지 추천<br/>
-//         <Link>자세히보기</Link>
-//       </div>
-//       <div>
-//         <h2>함께 떠나는 힐링테마 여행</h2>
-//         이미지카드 와르르
-//       </div>
-//       <div>
-//         <h2>이번엔 어디로 떠나볼까?</h2>
-//         <div>지도넣자</div>
-//       </div>
-//       푸터는 따로 만들자
-
-//   </div>;
-// };
 
 export default HomePage;
