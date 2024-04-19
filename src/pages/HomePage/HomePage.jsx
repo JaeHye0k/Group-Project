@@ -3,8 +3,17 @@ import styled from "styled-components";
 import "./HomePage.style.css";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
+<<<<<<< HEAD
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+=======
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Footer from "../Footer/Footer";
+import HomeCard from "./homecard/HomeCard";
+import HomeMap from "./homemap/HomeMap";
+
+>>>>>>> 348c99a (메인페이지 추가작업 및 푸터작업)
 
 // const InfoBox = styled.div`
 //   position: absolute;
@@ -53,6 +62,7 @@ const HomePage = () => {
           <img src="/images/banner/1.jpg" alt="banner1"></img>
         </div>
 
+<<<<<<< HEAD
         <div>
           <div className="InfoBox">
             <div className="decoBox" />
@@ -96,6 +106,47 @@ const HomePage = () => {
             </Link>
           </div>
           <img src="/images/banner/4.jpg" alt="banner4"></img>
+=======
+          <div className="info">
+            <figure>
+              <img src="/img/banner/2.jpg" alt="banner2"/>
+            </figure>
+            <div className="InfoBox">
+              <div className="decoBox"/>
+              <div className="InfoText">사랑하는 가족들과<br/>함께하는 추억 만들기</div>
+              <Link to='/'>자세히 보기</Link>
+            </div>
+          </div>
+          
+          <div className="info">
+            <figure>
+              <img src="/img/banner/3.jpg" alt="banner3"/>
+            </figure>
+            <div className="InfoBox">
+              <div className="decoBox"/>
+              <div className="InfoText">매력적인 도시<br/>부산으로 가자</div>
+              <Link to='/'>자세히 보기</Link>
+            </div>
+          </div>
+
+          <div className="info">
+            <figure>
+              <img src="/img/banner/4.jpg" alt="banner"/>
+            </figure>
+            <div className="InfoBox">
+              <div className="decoBox"/>
+              <div className="InfoText">보라색으로 물든<br/>안성 팜랜드</div>
+              <Link to='/'>자세히 보기</Link>
+            </div>
+          </div>
+               
+        </Slider>
+
+        <HomeCard />
+        <HomeMap />
+        <Footer />
+          
+>>>>>>> 348c99a (메인페이지 추가작업 및 푸터작업)
         </div>
       </Slider>
       <br />
