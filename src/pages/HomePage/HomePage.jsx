@@ -37,20 +37,24 @@ const HomePage = () => {
   };
 
   return (
-      <div>
-        {/* <h2> Single Item</h2> */}
-        <Slider {...settings}>
-           <div className="info">
+    <div>
+      {/* <h2> Single Item</h2> */}
+      <Slider {...settings}>
+        <div>
+          <div className="info">
             <figure>
-              <img src="/img/banner/1.jpg" alt="banner1"/>
+              <img src="/images/banner/1.jpg" alt="banner1" />
             </figure>
             <div className="InfoBox">
-              <div className="decoBox"/>
-              <div className="InfoText">두근두근 설레는<br/>봄꽃여행지 추천</div>
-              <Link to='/'>자세히 보기</Link>
+              <div className="decoBox" />
+              <div className="InfoText">
+                두근두근 설레는
+                <br />
+                봄꽃여행지 추천
+              </div>
+              <Link to="/">자세히 보기</Link>
             </div>
           </div>
-          <img src="/images/banner/1.jpg" alt="banner1"></img>
         </div>
 
         <div>
