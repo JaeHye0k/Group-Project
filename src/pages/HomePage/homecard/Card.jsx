@@ -13,7 +13,7 @@ const ImgBox = styled.img`
 const Card = () => {
     return (
         <div>
-            <ImgBox src='/img/banner/2.jpg'></ImgBox>
+            <ImgBox src='/images/banner/2.jpg'></ImgBox>
             <h4>오래된 나무</h4>
             <h6>충청남도 어쩌구시</h6>
         </div>

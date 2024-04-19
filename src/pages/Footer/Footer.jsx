@@ -14,8 +14,8 @@ const Footer = () => {
                 </div>
 
                 <div className='footer_logos'>
-                <img className='footerLogo' src='/img/logo.png' alt='로고'></img>
-                <img className='footerLogo3' src='/img/3종.png' alt='3종'></img>
+                <img className='footerLogo' src='/images/logo.png' alt='로고'></img>
+                <img className='footerLogo3' src='/images/3종.png' alt='3종'></img>
                 </div>
                 
                 <div className='footerText'>경기도 원주시 세계로 10   TEL. 031-406-1607 사업자등록번호: 202-81-50707 통신판매업신고: 제209-경기안산-1234호</div>
