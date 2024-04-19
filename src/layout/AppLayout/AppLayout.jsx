@@ -35,7 +35,7 @@ const AppLayout = () => {
         />
         <div>
           <img
-            src="/img/logo.png"
+            src="./images/logo.png"
             alt="logo"
             className="logo-image"
             onClick={() => navigateTo("/")}

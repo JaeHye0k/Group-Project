@@ -11,5 +11,19 @@ export const fetchAreaCode = async (
   const url = `${baseUrl}/areaCode1?serviceKey=${API_KEY}&numOfRows=${numOfRows}&pageNo=${pageNo}&MobileOS=${MobileOS}&MobileApp=${MobileApp}&_type=json`;
   const response = await fetch(url);
   const data = await response.json();
-  console.log(data);
+  return data;
+};
+
+export const fetchLocationBasedList = async (
+  mapX,
+  mapY,
+  radius = 20000,
+  MobileOS = "WIN",
+  MobileApp = "Trip-Korea"
+) => {
+  console.log(mapX, mapY);
+  const url = `${baseUrl}/locationBasedList1?serviceKey=${API_KEY}&mapX=${mapX}&mapY=${mapY}&radius=${radius}&MobileOS=${MobileOS}&MobileApp=${MobileApp}&_type=json`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
 };

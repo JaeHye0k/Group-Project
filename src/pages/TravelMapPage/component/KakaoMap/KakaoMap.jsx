@@ -7,8 +7,8 @@ import MyPositionButton from "./component/MyPositionButton/MyPositionButton";
 import {
   selectCode,
   setWeather,
+  setCenter,
 } from "../../../../redux/TravelMapStore/kakaoMapSlice";
-import { fetchAreaCode } from "../../../../utils/tourApi/tourApi";
 
 const { kakao } = window;
 const baseUrl = `https://dapi.kakao.com/v2/local`;
@@ -30,7 +30,7 @@ const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
-  // fetchAreaCode();
+
   // 카카오 맵 객체를 생성하는 함수입니다
   const getKakaoMap = ({ lat, lng }) => {
     const container = document.getElementById("kakao-map"); //지도를 담을 영역의 DOM 레퍼런스
@@ -48,7 +48,6 @@ const KakaoMap = () => {
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${clickedLocation.lat}&lon=${clickedLocation.lng}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
     return data.weather[0].description;
   };
   // 현재 지도의 사각형 영역내에서 해당되는 카테고리 데이터를 호출하는 함수입니다
@@ -112,12 +111,14 @@ const KakaoMap = () => {
     const weather = await getCurrentWeather();
     dispatch(setWeather({ weather }));
     dispatch(selectCode({ categoryCode: null }));
+    dispatch(setCenter(location));
   };
 
   const onClickMyPosition = async () => {
     map.setCenter(
       new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng)
     );
+    map.setLevel(3);
     clearMarkers();
     showMarker(currentLocation);
   };
@@ -153,12 +154,18 @@ const KakaoMap = () => {
         clickedLocation = location;
         const weather = await getCurrentWeather();
         dispatch(setWeather({ weather }));
+        dispatch(setCenter(location));
         categoryMarkers.push(marker);
         marker.setMap(map);
       });
       setMap(map);
       currentLocation = location;
       clickedLocation = location;
+      const centerLocation = {
+        lat: map.getCenter().getLat(),
+        lng: map.getCenter().getLng(),
+      };
+      dispatch(setCenter(centerLocation));
     };
     showKakaoMap();
   }, []);
