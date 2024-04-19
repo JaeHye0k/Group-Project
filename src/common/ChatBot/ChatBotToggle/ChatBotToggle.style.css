@@ -1,0 +1,35 @@
+.chat-button-box {
+  position: fixed;
+  bottom: 20px;
+  right: 50px;
+}
+
+.chatbot-btn {
+  cursor: pointer;
+  border-radius: 50%;
+  background-image: url("https://cdn.pixabay.com/photo/2016/11/22/12/24/backpack-1849132_1280.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70px;
+  width: 70px;
+  height: 70px;
+  transition: all 0.33s ease;
+  -webkit-transition: all 0.33s ease;
+  -moz-transition: all 0.33s ease;
+}
+
+.chatbot-bubble {
+  font-size: 0.8rem;
+  position: absolute;
+  left: calc(-100% - 80px);
+  top: calc(50% - 25px);
+  z-index: 1000;
+  border-radius: 10px 10px 0 10px;
+  border: 1px solid rgba(230, 222, 222, 0.33);
+  box-shadow: 0px 0px 20px 6px rgba(230, 222, 222, 0.33);
+  padding: 8px 8px;
+  background-color: initial;
+  color: black;
+  width: auto;
+  min-width: 120px;
+}
