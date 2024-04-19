@@ -1,0 +1,17 @@
+.location-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.location-item :is(.thumbnail, .overview) {
+  padding: 10px;
+}
+
+.location-item .name {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.location-item .overview .from-here {
+  font-size: 0.7rem;
+}

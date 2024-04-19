@@ -11,8 +11,9 @@ const CategoryButton = ({ categoryName, categoryCode }) => {
       <button
         className="category-button"
         onClick={() => dispatch(selectCode({ categoryCode }))}
-      ></button>
-      <div className="category-name">{categoryName}</div>
+      >
+        <span className="category-name">{categoryName}</span>
+      </button>
     </div>
   );
 };

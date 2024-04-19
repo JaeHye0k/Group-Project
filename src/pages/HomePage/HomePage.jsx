@@ -20,7 +20,7 @@ const HomePage = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    autoplay: true,
+    // autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplaySpeed: 3000,
@@ -41,18 +41,20 @@ const HomePage = () => {
       {/* <h2> Single Item</h2> */}
       <Slider {...settings}>
         <div>
-          <div className="InfoBox">
-            <div className="decoBox" />
-            <div className="InfoText">
-              두근두근 설레는
-              <br />
-              봄꽃여행지 추천
+          <div className="info">
+            <figure>
+              <img src="/images/banner/1.jpg" alt="banner1" />
+            </figure>
+            <div className="InfoBox">
+              <div className="decoBox" />
+              <div className="InfoText">
+                두근두근 설레는
+                <br />
+                봄꽃여행지 추천
+              </div>
+              <Link to="/">자세히 보기</Link>
             </div>
-            <Link to="/">
-              <div className="InfoLink">자세히 보기</div>
-            </Link>
           </div>
-          <img src="/img/banner/1.jpg" alt="banner1"></img>
         </div>
 
         <div>
@@ -67,7 +69,7 @@ const HomePage = () => {
               <div className="InfoLink">자세히 보기</div>
             </Link>
           </div>
-          <img src="/img/banner/2.jpg" alt="banner2"></img>
+          <img src="/images/banner/2.jpg" alt="banner2"></img>
         </div>
 
         <div>
@@ -82,7 +84,7 @@ const HomePage = () => {
               <div className="InfoLink">자세히 보기</div>
             </Link>
           </div>
-          <img src="/img/banner/3.jpg" alt="banner3"></img>
+          <img src="/images/banner/3.jpg" alt="banner3"></img>
         </div>
 
         <div>
@@ -97,7 +99,7 @@ const HomePage = () => {
               <div className="InfoLink">자세히 보기</div>
             </Link>
           </div>
-          <img src="/img/banner/4.jpg" alt="banner4"></img>
+          <img src="/images/banner/4.jpg" alt="banner4"></img>
         </div>
       </Slider>
       <br />
