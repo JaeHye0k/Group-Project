@@ -15,8 +15,16 @@
   font-size: 0.9rem;
   font-weight: bold;
 }
+.location-item .name-contentType {
+  display: flex;
+  flex-wrap: wrap;
 
-.location-item .overview .from-here {
+  & .content-type {
+    margin-left: 5px;
+    color: #ff9900;
+  }
+}
+.location-item .overview :is(.from-here, .address) {
   font-size: 0.7rem;
 }
 .location-item .thumbnail {
@@ -26,4 +34,7 @@
     object-fit: cover;
     height: 100%;
   }
+}
+.location-item .address {
+  margin-top: 5px;
 }
