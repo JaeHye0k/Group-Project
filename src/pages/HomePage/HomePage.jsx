@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Loading from "../../common/Loading";
 
 // const InfoBox = styled.div`
 //   position: absolute;
@@ -54,7 +55,6 @@ const HomePage = () => {
           </div>
           <img src="/img/banner/1.jpg" alt="banner1"></img>
         </div>
-
         <div>
           <div className="InfoBox">
             <div className="decoBox" />
@@ -69,7 +69,6 @@ const HomePage = () => {
           </div>
           <img src="/img/banner/2.jpg" alt="banner2"></img>
         </div>
-
         <div>
           <div className="InfoBox">
             <div className="decoBox" />
@@ -84,7 +83,6 @@ const HomePage = () => {
           </div>
           <img src="/img/banner/3.jpg" alt="banner3"></img>
         </div>
-
         <div>
           <div className="InfoBox">
             <div className="decoBox" />
