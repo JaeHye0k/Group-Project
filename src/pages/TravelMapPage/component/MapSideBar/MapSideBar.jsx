@@ -14,13 +14,24 @@ const MapSideBar = () => {
   const [isFolded, setIsFolded] = useState(false);
 
   // useEffect(() => {}, [locationName]);
+  console.log(weather);
   return (
     <div id="map-sidebar" className={`${isFolded ? "folded" : ""}`}>
       <div className="top">
         <div className="location-info">
           <div className="location-name">{locationName}</div>
           <div className="weather">
-            <div className="temperature">{weather?.weather[0].description}</div>
+            <div className="description">
+              현재 날씨{weather?.weather[0].description}
+            </div>
+            <img
+              className="weather-image"
+              src={`https://openweathermap.org/img/wn/${weather?.weather[0].icon}@2x.png`}
+            ></img>
+            <div>{weather?.main.temp}℃</div>
+            <div>
+              {weather?.main.temp_max} / {weather?.main.temp_min}{" "}
+            </div>
           </div>
         </div>
       </div>

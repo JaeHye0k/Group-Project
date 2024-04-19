@@ -72,3 +72,7 @@
   background-position: 0 -104px;
   border: 0;
 }
+
+#map-sidebar .weather-image {
+  width: 30px;
+}
