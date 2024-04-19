@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../firebase";
+import { auth } from "../../../firebase";
+import { Form, Logo, Wrapper } from "./styled";
+import UserTitle from "../components/UserTitle";
+
 const UserSignUp = () => {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const onChange = (e) => {
     const {
       target: { name, value },
@@ -28,6 +32,7 @@ const UserSignUp = () => {
     if (name === "" || email === "" || password === "") return;
 
     try {
+      setIsLoading(true);
       const create = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -38,35 +43,56 @@ const UserSignUp = () => {
       });
       navigate("/");
       console.log(create.user);
-    } catch (e) {}
+    } catch (e) {
+      if (e.code === "auth/email-already-in-use") {
+        setError("이 이메일은 이미 사용 중입니다.");
+      } else if (e.code === "auth/weak-password") {
+        setError("비밀번호는 최소 6자 이상이어야 합니다.");
+      } else {
+        setError("계정 생성 중 오류가 발생했습니다.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
-    <div className="wrap">
-      <form action="" onSubmit={onSubmit}>
+    <Wrapper>
+      <Logo onClick={() => navigate("/")}>
+        <img src="/img/logo.png" alt="" />
+      </Logo>
+      <UserTitle title={"회원가입"} />
+      <Form action="" onSubmit={onSubmit}>
         <input
           onChange={onChange}
           type="text"
           name="name"
-          placeholder="name"
+          placeholder="닉네임을 입력해주세요."
           required
         />
         <input
           onChange={onChange}
           type="email"
           name="email"
-          placeholder="email"
+          placeholder="이메일을 입력해주세요."
           required
         />
         <input
           onChange={onChange}
           type="password"
           name="password"
-          placeholder="password"
+          placeholder="비밀번호를 입력해주세요."
           required
         />
-        <input type="submit" />
-      </form>
-    </div>
+
+        <input
+          type="submit"
+          value={isLoading ? "회원가입 중입니다.." : "회원가입"}
+        />
+      </Form>
+      {error && (
+        <p style={{ color: "#e92b2b", textAlign: "center" }}>{error}</p>
+      )}{" "}
+    </Wrapper>
   );
 };
 

@@ -76,7 +76,7 @@ const AppLayout = () => {
             <FontAwesomeIcon icon={faMagnifyingGlass} onClick={onSearch} />
           </div>
           <button className="moblieLoginBtn">
-            <Link to="/login">로그인</Link>
+            <Link to="/signin">로그인</Link>
           </button>
         </div>
       </nav>
