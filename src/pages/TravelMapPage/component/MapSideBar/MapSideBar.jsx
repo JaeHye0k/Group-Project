@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MapSideBar.style.css";
 import { filterdCategoryCode } from "../../../../constants/categoryCode";
 import CategoryButton from "./component/CategoryButton/CategoryButton";
@@ -7,14 +7,19 @@ import LocationBasedList from "./component/LocationBasedList/LocationBasedList";
 
 const MapSideBar = () => {
   const weather = useSelector((state) => state.kakaoMap.weather);
+  const locationName = useSelector((state) => state.kakaoMap.locationName);
+  const initialMap = useSelector((state) => state.kakaoMap.initialMap);
+  console.log(initialMap?.getCenter());
   const [isFolded, setIsFolded] = useState(false);
+
+  useEffect(() => {}, [locationName]);
   return (
     <div id="map-sidebar" className={`${isFolded ? "folded" : ""}`}>
       <div className="top">
         <div className="location-info">
-          <div className="location-name"></div>
+          <div className="location-name">{locationName}</div>
           <div className="weather">
-            <div className="temperature"> {weather}</div>
+            <div className="temperature">{weather?.weather[0].description}</div>
           </div>
         </div>
       </div>
