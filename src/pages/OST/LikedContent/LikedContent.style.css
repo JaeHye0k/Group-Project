@@ -1,42 +1,42 @@
-.wrapper {
+#liked-content .wrapper {
   display: flex;
   justify-content: center;
   max-width: 100%;
   background-color: white;
 }
 
-.container {
+#liked-content .container {
   font-family: 'Noto Sans KR', sans-serif;
   max-width: 1000px;
   background-color: white;
 }
 
-.title {
+#liked-content .title {
   font-size: 24px;
   margin-bottom: 20px;
   font-weight: bold;
 }
 
-.line {
+#liked-content .line {
   border: none;
   border-top: 1px solid #ccc;
   margin: 10px 0;
   width: 100%;
 }
 
-.subtitle {
+#liked-content .subtitle {
   font-size: 16px;
   margin-bottom: 20px;
   color: #808080;
 }
 
-.row {
+#liked-content .row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.item {
+#liked-content .item {
   background-color: #ffff;
   border-radius: 4px;
   margin-bottom: 50px;
@@ -44,7 +44,7 @@
   margin-right: 30px;
 }
 
-.item-box {
+#liked-content .item-box {
   background-color: #eee;
   border-radius: 10px;
   aspect-ratio: 1/1;
@@ -53,120 +53,82 @@
   position: relative;
 }
 
-@media (max-width: 1600px) {
-  .container {
-    font-family: 'Noto Sans KR', sans-serif;
-    max-width: 900px;
-    background-color: white;
-  }
-}
-
-@media (max-width: 1280px) {
-  .container {
-    font-family: 'Noto Sans KR', sans-serif;
-    max-width: 70%;
-    background-color: white;
-  }
-}
-
-@media (max-width: 900px) {
-  .container {
-    font-family: 'Noto Sans KR', sans-serif;
-    max-width: 80%;
-    background-color: white;
-  }
-}
-
-.heart {
+#liked-content .heart-img {
   position: absolute;
   top: 10px;
   right: 10px;
   width: 20px;
   height: 20px;
-  background-color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-image: url('./heart-img.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.heart::before {
-  content: '♥';
-  color: pink;
-}
-
-.item-content {
+#liked-content .item-content {
   margin-top: 20px;
 }
 
-.item-title {
+#liked-content .item-title {
   font-size: 16px;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.item-subtitle {
+#liked-content .item-subtitle {
   font-size: 12px;
   color: #666;
 }
 
+@media (max-width: 1600px) {
+  #liked-content .container {
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 1280px) {
+  #liked-content .container {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 900px) {
+  #liked-content .container {
+    max-width: 80%;
+  }
+}
 
 @media (max-width: 600px) {
-  .container {
-    font-family: 'Noto Sans KR', sans-serif;
+  #liked-content .container {
     max-width: 80%;
-    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
-  .item {
-    background-color: #ffff;
-    border-radius: 4px;
-    margin-bottom: 50px;
-    width: 160px;
+  #liked-content .item {
     margin-right: 20px;
     margin-left: 20px;
-
   }
 
-  .item-box {
-    background-color: #eee;
-    border-radius: 10px;
-    aspect-ratio: 1/1;
-    margin-bottom: 20px;
-    width: 160px;
-    position: relative;
-  }
-
-  .title {
+  #liked-content .title {
     font-size: 20px;
-    display: flex;
     justify-content: center;
   }
 
-  .subtitle {
+  #liked-content .subtitle {
     font-size: 14px;
-    display: flex;
     justify-content: center;
     margin-bottom: 50px;
   }
 
-  .row {
-    justify-content: center;
-  }
-
-  .item-title {
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .item-subtitle {
-    font-size: 12px;
-    display: flex;
+  #liked-content .item-title,
+  #liked-content .item-subtitle {
     justify-content: center;
     text-align: center;
+  }
+
+  #liked-content .item-title {
+    font-size: 14px;
   }
 }
