@@ -12,8 +12,6 @@ import { useEffect } from "react";
 import { auth } from "./firebase";
 import { setUser, clearUser } from "./redux/user/auth/authSlice";
 
-import BookmarkedPlaces from "./pages/OST/BookmarkedPlaces/BookmarkedPlaces";
-
 // signUp, In
 import UserSignUp from "./pages/User/UserSignUp/UserSignUp";
 import UserSignIn from "./pages/User/UserSignIn/UserSignIn";
@@ -21,6 +19,7 @@ import UserSignIn from "./pages/User/UserSignIn/UserSignIn";
 // Mypage
 import MyPage from "./pages/User/MyPage/MyPage";
 import UserLikes from "./pages/User/UserLikes/UserLikes";
+import UserBookMark from "./pages/User/UserBookMark/UserBookMark";
 
 // 홈페이지 = /
 // 여행 지도 페이지 = /map
@@ -64,8 +63,7 @@ function App() {
         {/* mypage */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/likes" element={<UserLikes />} />
-
-        <Route path="ost-bookmarkedplaces" element={<BookmarkedPlaces />} />
+        <Route path="/books" element={<UserBookMark />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
