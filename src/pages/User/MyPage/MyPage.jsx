@@ -25,8 +25,10 @@ const MyPage = () => {
             </div>
             <div className="l-txt">
               <span>반가워요</span>
-
               <strong>{user && user.displayName} 님</strong>
+              <h2 styled={{ cursor: "point" }} onClick={logOut}>
+                로그아웃
+              </h2>
             </div>
           </Items>
 
