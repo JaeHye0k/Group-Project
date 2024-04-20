@@ -31,16 +31,6 @@ const AttractionsPage = () => {
     getCurrentLocation((lat, lon));
   }, []);
 
-<<<<<<< HEAD
-  // //query
-  // const getQueryAttraction = () => {
-  //   if (query == "") {
-  //     return dispatch(fetchAttractions());
-  //   } else if (query !== "" && query !== undefined) {
-  //     return dispatch(fetchQueryAttraction(query));
-  //   }
-  // };
-=======
   //query // 준영님 코드
   const getQueryAttraction = () => {
     if (query == "") {
@@ -49,7 +39,6 @@ const AttractionsPage = () => {
       return dispatch(fetchQueryAttraction(query));
     }
   };
->>>>>>> 3ed3ca3c890a7a13661b9332a0b10087fe36a3f1
 
   //위치 가져오기 비동기 함수이므로 비동기처리.
   const getCurrentLocation = async () => {
