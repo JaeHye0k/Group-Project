@@ -13,7 +13,7 @@ const TravelMapPage = () => {
     <div id="travel-map-page" className={pathname ? "overflow-hidden" : ""}>
       <KakaoMap />
       <MapSideBar />
-      {width > 700 ? <CategoryButtons /> : ""}
+      {width > 1000 ? <CategoryButtons /> : ""}
     </div>
   );
 };
