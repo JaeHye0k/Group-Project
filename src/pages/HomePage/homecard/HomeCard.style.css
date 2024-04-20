@@ -11,9 +11,9 @@
 
 }
 .mid-title{
-    
     position: absolute;
     left: 0;
+    
 }
 .homeCards{
     width: 100%;
@@ -29,5 +29,8 @@
     .cards{ 
         width: 75%;
         flex-wrap: wrap;
+    }
+    .cardPosition{
+        width: 80%;
     }
 }
