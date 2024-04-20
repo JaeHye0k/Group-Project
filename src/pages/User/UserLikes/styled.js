@@ -14,6 +14,11 @@ export const Title = styled.div`
   align-items: center;
   border-bottom: 1px solid #ccc;
   padding-bottom: 25px;
+  .map-link {
+    &:hover {
+      opacity: 0.5;
+    }
+  }
 
   strong {
     font-size: 32px;

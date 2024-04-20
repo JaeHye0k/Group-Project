@@ -6,8 +6,10 @@ const AttractionCard = ({item}) => {
     
       <div className="common-card">
         <img className="attraction-img" src={item?.firstimage} alt="" />
+        <div className="attraction-card-box">
         <strong>{item?.title}</strong>
-        <span>{item?.addr1}</span>
+        <span className="attraction-card-text">{item?.addr1}</span>
+        </div>
       </div>
      
     
