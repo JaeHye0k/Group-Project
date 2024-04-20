@@ -55,7 +55,7 @@ function App() {
           <Route path="/map" element={<TravelMapPage />} />
           <Route path="/attractions">
             <Route index element={<AttractionsPage />} />
-            <Route path=":id" element={<AttractionsDetailPage />} />
+            <Route path=":contentId" element={<AttractionsDetailPage />} />
           </Route>
 
           {/* user */}
