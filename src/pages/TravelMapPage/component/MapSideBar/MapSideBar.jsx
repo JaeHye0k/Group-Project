@@ -41,11 +41,13 @@ const MapSideBar = () => {
 
   useEffect(() => {
     const datas = locationBasedList?.response?.body.items.item;
-    console.log("useEffect", datas, locationBasedList);
+    // console.log("useEffect", datas, locationBasedList);
     // refetchLocation();
     if (datas) {
-      locationName.current = datas[0].addr1?.split(" ").slice(0, 3).join(" ");
+      locationName.current = datas[0].addr1?.split(" ").slice(0, 3);
+      console.log(locationName.current);
     }
+
     if (clickedLocation) {
       refetch();
     }
@@ -59,24 +61,30 @@ const MapSideBar = () => {
     <div id="map-sidebar" className={`${isFolded ? "folded" : ""}`}>
       <div className="top">
         <div className="location-info">
-          <div className="location-name">{locationName.current}</div>
-          <div className="weather">
-            <div className="weather-rt">
-              <div className="description">현재 날씨</div>
-              <img
-                className="weather-image"
-                src={`https://openweathermap.org/img/wn/${weather?.weather[0].icon}@2x.png`}
-              ></img>
-              <div>{weather?.main.temp.toFixed(1)}℃</div>
+          <div className="location-name1">{locationName?.current?.[0]}</div>
+          <div className="location-name2">
+            {locationName?.current?.[1]} {locationName?.current?.[2]}
+          </div>
+        </div>
+        <div className="weather">
+          <div className="weather-content">
+            <div className="description">
+              현재 온도 {weather?.main.temp.toFixed(1)}℃
             </div>
+
+            <img
+              className="weather-image"
+              src={`https://openweathermap.org/img/wn/${weather?.weather[0].icon}@2x.png`}
+            ></img>
             <div className="weather-min-max">
-              {weather?.main.temp_max.toFixed(1)}℃ /{" "}
-              {weather?.main.temp_min.toFixed(1)} ℃
+              <div>최고온도</div> <div>최저온도</div>
+              <div>{weather?.main.temp_max.toFixed(1)} ℃</div>
+              <div>{weather?.main.temp_min.toFixed(1)} ℃</div>
             </div>
           </div>
         </div>
         <div className="category-buttons-wrapper">
-          {width <= 700 ? <CategoryButtons /> : ""}
+          {width <= 1000 ? <CategoryButtons /> : ""}
         </div>
       </div>
       <div className="bottom">

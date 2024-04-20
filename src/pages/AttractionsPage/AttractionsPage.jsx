@@ -6,9 +6,7 @@ import { fetchQueryAttraction } from "../../redux/AttractionPage/attractionsSlic
 import { fetchLocationAttraction } from "../../redux/AttractionPage/attractionsSlice";
 import "./attractionsPage.style.css";
 import { Form } from "react-bootstrap";
-import { useSearchParams } from "react-router-dom";
 import AttractionCard from "../../common/attractionCard/AttractionCard";
-import { render } from "react-dom";
 import Loading from "../../common/Loading";
 import useIntersectionObserver from "../../common/attractionCard/Intersection/UseIntersection";
 const AttractionsPage = () => {
@@ -25,6 +23,7 @@ const AttractionsPage = () => {
   //All
   const getAttraction = () => {
     dispatch(fetchAttractions());
+    console.log(attractionList);
   };
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const AttractionsPage = () => {
     getCurrentLocation((lat, lon));
   }, []);
 
-  //query
+  //query // 준영님 코드
   const getQueryAttraction = () => {
     if (query == "") {
       return dispatch(fetchAttractions());
@@ -73,7 +72,6 @@ const AttractionsPage = () => {
         }
       }
     }
-    
   }, [sortSelect]);
 
   if (sortSelect) {
@@ -96,7 +94,7 @@ const AttractionsPage = () => {
   }, [attractionList?.response]);
   // // 값이 변경될때마다 리렌더링
   useEffect(() => {
-    if(query){
+    if (query) {
       getQueryAttraction();
     }
     console.log("ddd", filterData);
@@ -149,8 +147,8 @@ const AttractionsPage = () => {
       </div>
       <section className="card-container">
         {/* {data?.map((item=><AttractionCard />))} */}
-        {filterData?.map((item) => (
-          <AttractionCard item={item} />
+        {filterData?.map((item, index) => (
+          <AttractionCard item={item} key={index} />
         ))}
       </section>
     </div>
