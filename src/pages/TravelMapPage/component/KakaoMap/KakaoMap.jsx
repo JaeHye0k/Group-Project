@@ -24,12 +24,11 @@ const baseUrl = `https://dapi.kakao.com/v2/local`;
 // 3. 내 위치 버튼을 클릭했을 때
 const categoryMarkers = [];
 let listenerFlag = false;
-let clickedLocation = null;
+export let clickedLocation = null;
 let currentLocation = null;
 
 const KakaoMap = () => {
   console.log("render");
-  console.log(currentLocation);
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
