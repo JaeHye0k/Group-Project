@@ -22,7 +22,7 @@ const ChatBot = () => {
   }, []);
 
   return (
-    <>
+    <div className="chatbot-all">
       {visible && (
         <div className="modal-overlay">
           <ChatBotModal visible={visible} ref={modalRef} />
@@ -31,7 +31,7 @@ const ChatBot = () => {
       <ChatBotToggle
         onClick={() => setVisible((prevVisible) => !prevVisible)}
       />
-    </>
+    </div>
   );
 };
 
