@@ -26,8 +26,8 @@ const CategoryButtons = () => {
       </li>
       <div className="category-buttons">
         {Object.entries(filterdCategoryCode).map(([code, name], idx) => (
-          <div>
-            <li key={idx}>
+          <div key={idx}>
+            <li>
               <img
                 src={category_images[code]}
                 alt={`${name} 아이콘`}
