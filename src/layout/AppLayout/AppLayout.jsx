@@ -68,12 +68,7 @@ const AppLayout = () => {
               <Button onClick={() => navigateTo("/signup")}>로그인</Button>
             )}
           </div>
-        
-
-         
-            
-
-
+    
         {/* 모바일 화면 */}
         <div className={`menu ${isMenuOpen ? "open" : ""}`}>
           {isMenuOpen && (
@@ -84,10 +79,7 @@ const AppLayout = () => {
               <p className="mobile-menu-item" onClick={() => navigateTo("/")}>
                 여행정보
               </p>
-              <p
-                className="mobile-menu-item"
-                onClick={() => navigateTo("/map")}
-              >
+              <p className="mobile-menu-item" onClick={() => navigateTo("/map")}>
                 여행지도
               </p>
               <Button onClick={() => navigateTo("/signup")}>로그인</Button>
