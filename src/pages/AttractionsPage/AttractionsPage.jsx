@@ -6,9 +6,11 @@ import { fetchQueryAttraction } from "../../redux/AttractionPage/attractionsSlic
 import { fetchLocationAttraction } from "../../redux/AttractionPage/attractionsSlice";
 import "./attractionsPage.style.css";
 import { Form } from "react-bootstrap";
-import { useSearchParams } from "react-router-dom";
 import AttractionCard from "../../common/attractionCard/AttractionCard";
+
 import Button from "../../common/Button";
+
+
 import Loading from "../../common/Loading";
 import useIntersectionObserver from "../../common/attractionCard/Intersection/UseIntersection";
 const AttractionsPage = () => {
@@ -72,13 +74,13 @@ const AttractionsPage = () => {
   }, []);
 
   //query
-  const getQueryAttraction = () => {
-    if (query == "") {
-      return dispatch(fetchAttractions());
-    } else if (query !== "" && query !== undefined) {
-      return dispatch(fetchQueryAttraction(query));
-    }
-  };
+  // const getQueryAttraction = () => {
+  //   if (query == "") {
+  //     return dispatch(fetchAttractions());
+  //   } else if (query !== "" && query !== undefined) {
+  //     return dispatch(fetchQueryAttraction(query));
+  //   }
+  // };
 
   //위치 가져오기 비동기 함수이므로 비동기처리.
   const getCurrentLocation = async () => {
@@ -206,8 +208,8 @@ const AttractionsPage = () => {
       </div>
       <section className="card-container">
         {/* {data?.map((item=><AttractionCard />))} */}
-        {filterData?.map((item) => (
-          <AttractionCard item={item} />
+        {filterData?.map((item,index) => (
+          <AttractionCard item={item} key={index} />
         ))}
       </section>
     </div>
