@@ -8,7 +8,6 @@ import {
   selectCode,
   setWeather,
   setCenter,
-  setInitialMap,
 } from "../../../../redux/TravelMapStore/kakaoMapSlice";
 
 const { kakao } = window;
@@ -131,7 +130,6 @@ const KakaoMap = () => {
       const location = await getCurrentLocaition();
       // kakao map 객체 생성
       const map = getKakaoMap(location);
-      dispatch(setInitialMap(map));
       // 마커 생성
       const markerPostiion = new kakao.maps.LatLng(location.lat, location.lng);
       const marker = new kakao.maps.Marker({
