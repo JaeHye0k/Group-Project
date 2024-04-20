@@ -15,9 +15,7 @@ const MapSideBar = () => {
   let weather = useSelector((state) => state.kakaoMap.weather);
   const { height, width } = useWindowDimensions();
   const locationName = useRef(null);
-  // console.log("locationName", locationName);
-  const initialMap = useSelector((state) => state.kakaoMap.initialMap);
-  const center = initialMap?.getCenter();
+
   const [isFolded, setIsFolded] = useState(false);
   // 내 위치를 불러옵니다.
   const { data: currentLocation } = useQuery({
@@ -34,7 +32,7 @@ const MapSideBar = () => {
     queryFn: () =>
       fetchLocationBasedList(clickedLocation.lng, clickedLocation.lat),
   });
-
+  console.log("currentLocation", currentLocation);
   useEffect(() => {
     const datas = locationBasedList?.response?.body.items.item;
     console.log("useEffect", datas);
@@ -74,7 +72,11 @@ const MapSideBar = () => {
         </div>
       </div>
       <div className="bottom">
-        {initialMap ? <LocationBasedList center={center} /> : ""}
+        {locationBasedList ? (
+          <LocationBasedList locationBasedList={locationBasedList} />
+        ) : (
+          ""
+        )}
       </div>
       <button className="btn-fold" onClick={() => setIsFolded(!isFolded)}>
         {isFolded ? "펼치기" : "접기"}
