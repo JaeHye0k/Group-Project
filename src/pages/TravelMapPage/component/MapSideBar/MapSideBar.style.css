@@ -27,7 +27,19 @@
 }
 #map-sidebar .bottom {
   overflow-y: scroll;
-  height: 83vh;
+  height: 87vh;
+}
+
+.bottom::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.bottom::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #abadac;
+}
+.bottom::-webkit-scrollbar-track-piece {
+  background: #e5e5e5;
 }
 
 #map-sidebar .btn-fold {

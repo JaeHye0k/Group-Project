@@ -18,15 +18,17 @@ const MapSideBar = () => {
   const [isFolded, setIsFolded] = useState(false);
 
   // 내 위치를 불러옵니다.
-  const { data: currentLocation } = useQuery({
+  const { data: currentLocation, refetch: refetchLocation } = useQuery({
     queryKey: ["current-Location"],
     queryFn: () => getCurrentLocaition(),
+    refetchOnReconnect: false,
   });
 
   // 내 위치의 날씨를 불러옵니다
   const { data: currentWeather } = useQuery({
     queryKey: ["current-weather"],
     queryFn: () => getCurrentWeather(currentLocation.lat, currentLocation.lng),
+    refetchOnReconnect: false,
   });
 
   // 위치 기반 근처 관광지 정보를 불러옵니다
@@ -34,15 +36,19 @@ const MapSideBar = () => {
     queryKey: ["location-based-list"],
     queryFn: () =>
       fetchLocationBasedList(clickedLocation.lng, clickedLocation.lat),
+    refetchOnReconnect: false,
   });
 
   useEffect(() => {
     const datas = locationBasedList?.response?.body.items.item;
     console.log("useEffect", datas, locationBasedList);
+    // refetchLocation();
     if (datas) {
       locationName.current = datas[0].addr1?.split(" ").slice(0, 3).join(" ");
     }
-    refetch();
+    if (clickedLocation) {
+      refetch();
+    }
   }, [clickedLocation]);
 
   if (!weather) {
