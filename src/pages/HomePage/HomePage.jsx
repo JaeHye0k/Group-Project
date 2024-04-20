@@ -7,6 +7,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Footer from "../Footer/Footer";
 import HomeCard from "./homecard/HomeCard";
 import HomeMap from "./homemap/HomeMap";
+import Loading from "../../common/Loading";
 
 const HomePage = () => {
   const settings = {
@@ -35,8 +36,6 @@ const HomePage = () => {
               <Link to='/'>자세히 보기</Link>
             </div>
           </div>
-
-         
           <div className="info">
             <figure>
               <img src="/images/banner/2.jpg" alt="banner2"/>
@@ -47,7 +46,7 @@ const HomePage = () => {
               <Link to='/'>자세히 보기</Link>
             </div>
           </div>
-          
+
           <div className="info">
             <figure>
               <img src="/images/banner/3.jpg" alt="banner3"/>

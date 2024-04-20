@@ -1,7 +1,7 @@
 .chat-button-box {
   position: fixed;
   bottom: 20px;
-  right: 50px;
+  right: 45px;
 }
 
 .chatbot-btn {
@@ -28,8 +28,20 @@
   border: 1px solid rgba(230, 222, 222, 0.33);
   box-shadow: 0px 0px 20px 6px rgba(230, 222, 222, 0.33);
   padding: 8px 8px;
-  background-color: initial;
+  background-color: #fff;
   color: black;
   width: auto;
   min-width: 120px;
+}
+@media (max-width: 768px) {
+  .chat-button-box {
+    right: 20px;
+    bottom: 80px;
+  }
+
+  .chatbot-btn {
+    width: 60px;
+    height: 60px;
+    background-size: 60px;
+  }
 }

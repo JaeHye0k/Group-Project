@@ -7,10 +7,8 @@
   height: 100%;
   background-color: #ffffff;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 8px 0px 6px -5px rgba(0, 0, 0, 0.2);
 }
 #map-sidebar.folded {
   transform: translateX(-100%);
@@ -21,24 +19,41 @@
   margin: 0;
   padding: 0;
 }
-#map-sidebar .category-list {
-  width: 20vw;
-  overflow-x: hidden;
-}
-
 #map-sidebar .location-info {
-  height: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & .location-name1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  & .location-name2 {
+    font-size: 1.5rem;
+  }
+}
+#map-sidebar .top {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
-}
-#map-sidebar .category-list {
-  position: absolute;
-  display: flex;
-  left: 400px;
+  padding-bottom: 1rem;
 }
 #map-sidebar .bottom {
   overflow-y: scroll;
+  height: 87vh;
+}
+
+.bottom::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.bottom::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #abadac;
+}
+.bottom::-webkit-scrollbar-track-piece {
+  background: #e5e5e5;
 }
 
 #map-sidebar .btn-fold {
@@ -73,6 +88,65 @@
   border: 0;
 }
 
-#map-sidebar .weather-image {
-  width: 30px;
+#map-sidebar .weather {
+  padding-right: 10px;
+  & .weather-content {
+    display: grid;
+    grid-template-rows: 30px auto auto;
+    grid-template-columns: repeat(1, auto);
+    justify-items: center;
+
+    & .description {
+      grid-column: 1 / 2;
+    }
+
+    & .weather-image {
+      grid-column: 1 / 2;
+      max-height: 100px;
+      height: 20vw;
+    }
+
+    & .weather-min-max {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      justify-content: space-around;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #map-sidebar {
+    bottom: 0;
+    width: 100%;
+    height: 45%;
+    max-width: none;
+  }
+  #map-sidebar .btn-fold {
+    transform: rotate(-90deg) translateY(50%);
+    width: 59px;
+    height: 104px;
+    top: -81px;
+    right: 50%;
+  }
+  #map-sidebar.folded .btn-fold {
+    transform: rotate(-90deg) translateY(50%);
+    width: 59px;
+    height: 104px;
+    top: -81px;
+    right: 50%;
+  }
+  #map-sidebar.folded {
+    transform: translateY(100%);
+  }
+  #map-sidebar .top {
+    grid-template-rows: 1fr auto;
+  }
+  #map-sidebar .category-buttons-wrapper {
+    width: 100vw;
+    padding: 0 20px;
+    grid-column: 1/3;
+  }
 }

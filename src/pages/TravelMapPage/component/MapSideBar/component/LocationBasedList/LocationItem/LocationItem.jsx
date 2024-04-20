@@ -11,18 +11,18 @@ const LocationItem = ({ item }) => {
     queryKey: ["category-type"],
     queryFn: () => fetchContentType(item.contenttypeid),
     enabled: !!item,
+    refetchOnReconnect: false,
   });
-  //   useEffect(() => {
-  //     refetch();
-  //   }, [item]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
   if (isError) {
     return <div>{error.message}</div>;
   }
+  console.log("locationItem");
   const contentType = data?.response?.body.items.item[0].name;
-  console.log(item.title, contentType);
+  // console.log(item.title, contentType);
   return (
     <li
       className="location-item"
