@@ -32,13 +32,13 @@ const AttractionsPage = () => {
   }, []);
 
   //query // 준영님 코드
-  // const getQueryAttraction = () => {
-  //   if (query == "") {
-  //     return dispatch(fetchAttractions());
-  //   } else if (query !== "" && query !== undefined) {
-  //     return dispatch(fetchQueryAttraction(query));
-  //   }
-  // };
+  const getQueryAttraction = () => {
+    if (query == "") {
+      return dispatch(fetchAttractions());
+    } else if (query !== "" && query !== undefined) {
+      return dispatch(fetchQueryAttraction(query));
+    }
+  };
 
   //위치 가져오기 비동기 함수이므로 비동기처리.
   const getCurrentLocation = async () => {
