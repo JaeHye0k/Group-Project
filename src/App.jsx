@@ -6,7 +6,7 @@ import TravelMapPage from "./pages/TravelMapPage/TravelMapPage";
 import AttractionsPage from "./pages/AttractionsPage/AttractionsPage";
 import AttractionsDetailPage from "./pages/AttractionDetailPage/AttractionsDetailPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-
+import ChatBot from "./common/ChatBot/ChatBot";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { auth } from "./firebase";
@@ -25,6 +25,7 @@ import UserBookMark from "./pages/User/UserBookMark/UserBookMark";
 // 여행 지도 페이지 = /map
 // 관광지 모음 페이지 = /attractions
 // 관광지 디테일 페이지 = /attractions/:id
+// 준영
 
 function App() {
   const dispatch = useDispatch();
@@ -47,26 +48,29 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Routes>
-      <Route path="/" element={<AppLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="/map" element={<TravelMapPage />} />
-        <Route path="/attractions">
-          <Route index element={<AttractionsPage />} />
-          <Route path=":id" element={<AttractionsDetailPage />} />
+    <div>
+      <Routes>
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/map" element={<TravelMapPage />} />
+          <Route path="/attractions">
+            <Route index element={<AttractionsPage />} />
+            <Route path=":id" element={<AttractionsDetailPage />} />
+          </Route>
+
+          {/* user */}
+          <Route path="/signup" element={<UserSignUp />} />
+          <Route path="/signin" element={<UserSignIn />} />
+
+          {/* mypage */}
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/likes" element={<UserLikes />} />
+          <Route path="/books" element={<UserBookMark />} />
         </Route>
-
-        {/* user */}
-        <Route path="/signup" element={<UserSignUp />} />
-        <Route path="/signin" element={<UserSignIn />} />
-
-        {/* mypage */}
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/likes" element={<UserLikes />} />
-        <Route path="/books" element={<UserBookMark />} />
-      </Route>
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+      <ChatBot />
+    </div>
   );
 }
 

@@ -1,0 +1,33 @@
+.cardPosition{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    padding-top: 60px;
+    margin: auto;
+    position: relative; 
+    /* border: 1px solid black; */
+
+}
+.mid-title{
+    
+    position: absolute;
+    left: 0;
+}
+.homeCards{
+    width: 100%;
+    height: 500px;   
+    background-color: rgb(212, 212, 212);
+}
+.cards{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+@media (max-width: 600px) {
+    .cards{ 
+        width: 75%;
+        flex-wrap: wrap;
+    }
+}

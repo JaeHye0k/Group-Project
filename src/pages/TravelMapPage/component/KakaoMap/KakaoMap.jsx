@@ -8,6 +8,8 @@ import {
   selectCode,
   setWeather,
   setCenter,
+  setCurrentLocation,
+  setIsClickMyPosition,
 } from "../../../../redux/TravelMapStore/kakaoMapSlice";
 
 const { kakao } = window;
@@ -23,13 +25,20 @@ const baseUrl = `https://dapi.kakao.com/v2/local`;
 // 3. 내 위치 버튼을 클릭했을 때
 const categoryMarkers = [];
 let listenerFlag = false;
-let clickedLocation = null;
+export let clickedLocation = null;
 let currentLocation = null;
 
 const KakaoMap = () => {
+  console.log("render");
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
+  // const currentLocationState = useSelector(
+  //   (state) => state.kakaoMap.currentLocation
+  // );
+  const isClickMyPosition = useSelector(
+    (state) => state.kakaoMap.isClickMyPosition
+  );
 
   // 카카오 맵 객체를 생성하는 함수입니다
   const getKakaoMap = ({ lat, lng }) => {
@@ -48,7 +57,7 @@ const KakaoMap = () => {
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${clickedLocation.lat}&lon=${clickedLocation.lng}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
     const response = await fetch(url);
     const data = await response.json();
-    return data.weather[0].description;
+    return data;
   };
   // 현재 지도의 사각형 영역내에서 해당되는 카테고리 데이터를 호출하는 함수입니다
   const searchByCategory = async () => {
@@ -114,7 +123,7 @@ const KakaoMap = () => {
     dispatch(setCenter(location));
   };
 
-  const onClickMyPosition = async () => {
+  const onClickMyPosition = () => {
     map.setCenter(
       new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng)
     );
@@ -190,7 +199,9 @@ const KakaoMap = () => {
         listenerFlag = true;
       }
     };
-    showKakaoMap();
+    if (currentLocation) {
+      showKakaoMap();
+    }
     return () => {
       if (listenerFlag) {
         kakao.maps.event.removeListener(map, "dragend", updateMarkers);
@@ -199,6 +210,10 @@ const KakaoMap = () => {
     };
   }, [selectedCode]);
 
+  if (isClickMyPosition) {
+    onClickMyPosition();
+    dispatch(setIsClickMyPosition(false));
+  }
   return (
     <div id="kakao-map">
       <MyPositionButton onClickMyPosition={onClickMyPosition} />
