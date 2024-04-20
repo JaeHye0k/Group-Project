@@ -22,7 +22,7 @@ const LocationItem = ({ item }) => {
     return <div>{error.message}</div>;
   }
   const contentType = data?.response?.body.items.item[0].name;
-  console.log(item.title, contentType);
+  // console.log(item.title, contentType);
   return (
     <li
       className="location-item"

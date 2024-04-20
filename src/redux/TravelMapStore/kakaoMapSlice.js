@@ -6,7 +6,6 @@ const initialState = {
   center: {},
   locationName: null,
   initialMap: null,
-  clickedLocation: null,
 };
 
 export const kakaoMapSlice = createSlice({
@@ -28,9 +27,6 @@ export const kakaoMapSlice = createSlice({
     setInitialMap: (state, action) => {
       state.initialMap = action.payload;
     },
-    setClickedLocation: (state, action) => {
-      state.clickedLocation = action.payload;
-    },
   },
 });
 
@@ -40,6 +36,5 @@ export const {
   setCenter,
   setLocationName,
   setInitialMap,
-  setClickedLocation,
 } = kakaoMapSlice.actions;
 export default kakaoMapSlice.reducer;
