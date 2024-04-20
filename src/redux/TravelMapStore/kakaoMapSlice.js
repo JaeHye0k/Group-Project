@@ -4,6 +4,8 @@ const initialState = {
   selectedCode: null,
   weather: null,
   center: {},
+  locationName: null,
+  initialMap: null,
 };
 
 export const kakaoMapSlice = createSlice({
@@ -19,8 +21,20 @@ export const kakaoMapSlice = createSlice({
     setCenter: (state, action) => {
       state.center = action.payload;
     },
+    setLocationName: (state, action) => {
+      state.currentLocation = action.payload;
+    },
+    setInitialMap: (state, action) => {
+      state.initialMap = action.payload;
+    },
   },
 });
 
-export const { selectCode, setWeather, setCenter } = kakaoMapSlice.actions;
+export const {
+  selectCode,
+  setWeather,
+  setCenter,
+  setLocationName,
+  setInitialMap,
+} = kakaoMapSlice.actions;
 export default kakaoMapSlice.reducer;
