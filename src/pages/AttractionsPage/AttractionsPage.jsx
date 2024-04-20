@@ -23,7 +23,7 @@ const AttractionsPage = () => {
   //All
   const getAttraction = () => {
     dispatch(fetchAttractions());
-    console.log(attractionList)
+    console.log(attractionList);
   };
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const AttractionsPage = () => {
     getCurrentLocation((lat, lon));
   }, []);
 
-  //query
+  //query // 준영님 코드
   const getQueryAttraction = () => {
     if (query == "") {
       return dispatch(fetchAttractions());
@@ -72,7 +72,6 @@ const AttractionsPage = () => {
         }
       }
     }
-    
   }, [sortSelect]);
 
   if (sortSelect) {
@@ -95,7 +94,7 @@ const AttractionsPage = () => {
   }, [attractionList?.response]);
   // // 값이 변경될때마다 리렌더링
   useEffect(() => {
-    if(query){
+    if (query) {
       getQueryAttraction();
     }
     console.log("ddd", filterData);
@@ -148,7 +147,7 @@ const AttractionsPage = () => {
       </div>
       <section className="card-container">
         {/* {data?.map((item=><AttractionCard />))} */}
-        {filterData?.map((item,index) => (
+        {filterData?.map((item, index) => (
           <AttractionCard item={item} key={index} />
         ))}
       </section>
