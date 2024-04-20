@@ -50,6 +50,7 @@ const KakaoMap = () => {
     };
     const map =
       kakao && kakao.maps ? new kakao.maps.Map(container, options) : null;
+    return map;
   };
 
   const getCurrentWeather = async () => {
