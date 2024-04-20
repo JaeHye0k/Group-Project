@@ -1,5 +1,5 @@
 const API_KEY = process.env.REACT_APP_TOUR_API_KEY;
-const baseUrl = "http://apis.data.go.kr/B551011/KorService1";
+const baseUrl = "https://apis.data.go.kr/B551011/KorService1";
 const MobileOS = "ETC";
 const MobileApp = "test";
 
