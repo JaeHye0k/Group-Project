@@ -92,8 +92,8 @@ export const Items = styled.div`
       cursor: pointer;
       &:hover {
        color: #ff9900;
-      }
     }
+}
 
     @media screen and (max-width: 1080px) {
       width: 100%;
@@ -120,4 +120,24 @@ export const SubTitle = styled.strong`
   font-size: 18px;
   margin-bottom: 10px;
   font-weight: bold;
+`;
+
+export const Popup = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  button,
+  input[type="file"] {
+    width: 100%;
+  }
 `;
