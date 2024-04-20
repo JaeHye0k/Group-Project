@@ -73,7 +73,6 @@ export const Items = styled.div`
       }
     }
     .l-txt {
-      cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -89,8 +88,11 @@ export const Items = styled.div`
         font-size: 30px;
       }
     }
-    .l-txt h2:hover {
-      color: #ff9900;
+    .l-txt h2 {
+      cursor: pointer;
+      &:hover {
+       color: #ff9900;
+      }
     }
 
     @media screen and (max-width: 1080px) {
