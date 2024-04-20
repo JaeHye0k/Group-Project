@@ -50,11 +50,15 @@ const UserSignIn = () => {
       );
 
       navigate("/");
-    } catch (e) {
-      console.log(e);
-      setError("회원 가입을 해주세요");
-    } finally {
+    } catch (error) {
       setIsLoading(false);
+      if (error.code === "auth/wrong-password") {
+        setError("암호가 올바르지 않습니다.");
+      } else if (error.code === "auth/user-not-found") {
+        setError("가입되지 않은 이메일입니다.");
+      } else {
+        setError("로그인하는데 문제가 발생했습니다.");
+      }
     }
   };
 
