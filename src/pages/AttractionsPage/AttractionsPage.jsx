@@ -12,7 +12,6 @@ import Button from "../../common/Button";
 import Loading from "../../common/Loading";
 import useIntersectionObserver from "../../common/attractionCard/Intersection/UseIntersection";
 const AttractionsPage = () => {
-
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
 
@@ -27,10 +26,10 @@ const AttractionsPage = () => {
 
   const query = searchParams.get("query") || "";
 
-  //query
-  const getQueryAttraction = () => {
-    dispatch(fetchQueryAttraction(query));
-  };
+  //query // 선애님 코드
+  // const getQueryAttraction = () => {
+  //   dispatch(fetchQueryAttraction(query));
+  // };
 
   useEffect(() => {
     if (query) {
@@ -52,7 +51,6 @@ const AttractionsPage = () => {
   const getAttraction = () => {
     dispatch(fetchAttractions());
   };
- 
 
   //위치 가져오기 비동기 함수이므로 비동기처리.
   // const getCurrentLocation = async () => {
@@ -71,14 +69,14 @@ const AttractionsPage = () => {
     getCurrentLocation((lat, lon));
   }, []);
 
-  //query
-  const getQueryAttraction = () => {
-    if (query == "") {
-      return dispatch(fetchAttractions());
-    } else if (query !== "" && query !== undefined) {
-      return dispatch(fetchQueryAttraction(query));
-    }
-  };
+  //query // 준영님 코드
+  // const getQueryAttraction = () => {
+  //   if (query == "") {
+  //     return dispatch(fetchAttractions());
+  //   } else if (query !== "" && query !== undefined) {
+  //     return dispatch(fetchQueryAttraction(query));
+  //   }
+  // };
 
   //위치 가져오기 비동기 함수이므로 비동기처리.
   const getCurrentLocation = async () => {
@@ -92,7 +90,7 @@ const AttractionsPage = () => {
     // return { lat, lng };
     return { lat: setLat(lat), lon: setLon(lon) };
   };
-  
+
   //정렬
   const sortHandler = (sortChange) => {
     setSortSelect(sortChange);
@@ -113,21 +111,20 @@ const AttractionsPage = () => {
         }
       }
     }
-    
   }, [sortSelect]);
 
   // }
-  if(sortSelect !== ""){
-    attractionData?.sort((a,b)=>{
-      if(sortSelect === "수정일순"){
-        console.log(sortSelect)
-        return console.log(a.modifiedtime)
-//   if (sortSelect) {
-//     filterData.sort((a, b) => {
-//       if (sortSelect === "수정일순") {
-//         return b.modifiedtime - a.modifiedtime;
-//       } else if (sortSelect === "등록일순") {
-//         return b.createdtime - a.createdtime;
+  if (sortSelect !== "") {
+    attractionData?.sort((a, b) => {
+      if (sortSelect === "수정일순") {
+        console.log(sortSelect);
+        return console.log(a.modifiedtime);
+        //   if (sortSelect) {
+        //     filterData.sort((a, b) => {
+        //       if (sortSelect === "수정일순") {
+        //         return b.modifiedtime - a.modifiedtime;
+        //       } else if (sortSelect === "등록일순") {
+        //         return b.createdtime - a.createdtime;
       }
     });
   }
@@ -142,7 +139,7 @@ const AttractionsPage = () => {
   }, [attractionList?.response]);
   // // 값이 변경될때마다 리렌더링
   useEffect(() => {
-    if(query){
+    if (query) {
       getQueryAttraction();
     }
     console.log("ddd", filterData);
@@ -166,7 +163,7 @@ const AttractionsPage = () => {
           </span>
         </div>
         <div className="att-search-box">
-         <input
+          <input
             type="text"
             placeholder="지역을 입력하세요."
             defaultValue={query} // 입력 필드에 현재 검색어를 표시합니다.
