@@ -9,7 +9,9 @@ const UserBookMark = () => {
       <Inner>
         <Title>
           <strong>북마크</strong>
-          <Link to="/">지도로 보기</Link>
+          <Link to="/" className="map-link">
+            지도로 보기
+          </Link>
         </Title>
         <Grid>
           <UserBookMarkItems />

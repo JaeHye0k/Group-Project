@@ -20,14 +20,40 @@
   padding: 0;
 }
 #map-sidebar .location-info {
-  height: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & .location-name1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  & .location-name2 {
+    font-size: 1.5rem;
+  }
+}
+#map-sidebar .top {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
+  padding-bottom: 1rem;
 }
 #map-sidebar .bottom {
   overflow-y: scroll;
-  height: 83vh;
+  height: 87vh;
+}
+
+.bottom::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.bottom::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #abadac;
+}
+.bottom::-webkit-scrollbar-track-piece {
+  background: #e5e5e5;
 }
 
 #map-sidebar .btn-fold {
@@ -62,23 +88,36 @@
   border: 0;
 }
 
-#map-sidebar .weather-image {
-  width: 30px;
+#map-sidebar .weather {
+  padding-right: 10px;
+  & .weather-content {
+    display: grid;
+    grid-template-rows: 30px auto auto;
+    grid-template-columns: repeat(1, auto);
+    justify-items: center;
+
+    & .description {
+      grid-column: 1 / 2;
+    }
+
+    & .weather-image {
+      grid-column: 1 / 2;
+      max-height: 100px;
+      height: 20vw;
+    }
+
+    & .weather-min-max {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      justify-content: space-around;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+  }
 }
 
-#map-sidebar .weather-rt {
-  display: flex;
-}
-
-/* #map-sidebar .weather-min-max {
-
-}
-
-#map-sidebar .sun-set {
-
-} */
-
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1000px) {
   #map-sidebar {
     bottom: 0;
     width: 100%;
@@ -102,8 +141,12 @@
   #map-sidebar.folded {
     transform: translateY(100%);
   }
-  #mpa-sidebar .category-buttons-wrapper {
-    width: 100%;
-    padding: 0 40px;
+  #map-sidebar .top {
+    grid-template-rows: 1fr auto;
+  }
+  #map-sidebar .category-buttons-wrapper {
+    width: 100vw;
+    padding: 0 20px;
+    grid-column: 1/3;
   }
 }

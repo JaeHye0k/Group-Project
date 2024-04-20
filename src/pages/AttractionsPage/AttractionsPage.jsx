@@ -8,38 +8,77 @@ import "./attractionsPage.style.css";
 import { Form } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 import AttractionCard from "../../common/attractionCard/AttractionCard";
-import { render } from "react-dom";
+import Button from "../../common/Button";
 import Loading from "../../common/Loading";
 import useIntersectionObserver from "../../common/attractionCard/Intersection/UseIntersection";
 const AttractionsPage = () => {
-  const [query, setQuery] = useState("");
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch();
+
+  // const [query, setQuery] = useState("");
   const [sortSelect, setSortSelect] = useState("");
   const [attractionData, setAttractionData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
   let attractionList = useSelector((state) => state.attraction.attractionList);
+  let data = attractionList.response?.body.items.item;
+
+  const query = searchParams.get("query") || "";
+
+  //query
+  const getQueryAttraction = () => {
+    dispatch(fetchQueryAttraction(query));
+  };
+
+  useEffect(() => {
+    if (query) {
+      // URL에 쿼리 파라미터가 있으면 해당 쿼리로 검색합니다.
+      getQueryAttraction(query);
+    } else {
+      // URL에 쿼리 파라미터가 없으면 모든 관광지 정보를 가져옵니다.
+      dispatch(fetchAttractions());
+    }
+  }, [query, dispatch]);
+
+  // 검색 함수: 입력된 검색어를 URL 쿼리 파라미터로 설정합니다.
+  const handleSearch = (newQuery) => {
+    setSearchParams({ query: newQuery });
+  };
+
   let loading = useSelector((state) => state.attraction.isLoading);
-  let data = attractionList?.response?.body.items.item;
-  let dispatch = useDispatch();
   //All
   const getAttraction = () => {
     dispatch(fetchAttractions());
   };
+ 
+
+  //위치 가져오기 비동기 함수이므로 비동기처리.
+  // const getCurrentLocation = async () => {
+  //   const promise = new Promise((resolve, reject) => {
+  //     navigator.geolocation.getCurrentPosition(resolve, reject);
+  //   });
+  //   const data = await promise;
+  //   const lat = data?.coords.latitude; // 위도 y (0~90)
+  //   const lng = data?.coords.longitude; // 경도 x (0~180)
+
+  //   return { lat, lng };
+  // };
 
   useEffect(() => {
     getAttraction();
     getCurrentLocation((lat, lon));
   }, []);
 
-  //query
-  const getQueryAttraction = () => {
-    if (query == "") {
-      return dispatch(fetchAttractions());
-    } else if (query !== "" && query !== undefined) {
-      return dispatch(fetchQueryAttraction(query));
-    }
-  };
+  // //query
+  // const getQueryAttraction = () => {
+  //   if (query == "") {
+  //     return dispatch(fetchAttractions());
+  //   } else if (query !== "" && query !== undefined) {
+  //     return dispatch(fetchQueryAttraction(query));
+  //   }
+  // };
 
   //위치 가져오기 비동기 함수이므로 비동기처리.
   const getCurrentLocation = async () => {
@@ -53,6 +92,7 @@ const AttractionsPage = () => {
     // return { lat, lng };
     return { lat: setLat(lat), lon: setLon(lon) };
   };
+  
   //정렬
   const sortHandler = (sortChange) => {
     setSortSelect(sortChange);
@@ -76,12 +116,18 @@ const AttractionsPage = () => {
     
   }, [sortSelect]);
 
-  if (sortSelect) {
-    filterData.sort((a, b) => {
-      if (sortSelect === "수정일순") {
-        return b.modifiedtime - a.modifiedtime;
-      } else if (sortSelect === "등록일순") {
-        return b.createdtime - a.createdtime;
+  // }
+  if(sortSelect !== ""){
+    attractionData?.sort((a,b)=>{
+      if(sortSelect === "수정일순"){
+        console.log(sortSelect)
+        return console.log(a.modifiedtime)
+//   if (sortSelect) {
+//     filterData.sort((a, b) => {
+//       if (sortSelect === "수정일순") {
+//         return b.modifiedtime - a.modifiedtime;
+//       } else if (sortSelect === "등록일순") {
+//         return b.createdtime - a.createdtime;
       }
     });
   }
@@ -120,17 +166,28 @@ const AttractionsPage = () => {
           </span>
         </div>
         <div className="att-search-box">
-          <input
-            onChange={(event) => setQuery(event.target.value)}
+         <input
             type="text"
             placeholder="지역을 입력하세요."
+            defaultValue={query} // 입력 필드에 현재 검색어를 표시합니다.
           />
-          <button
-            onClick={() => getQueryAttraction()}
+          <Button
+            onClick={(e) => handleSearch(e.target.previousElementSibling.value)}
             className="black search-btn"
           >
             검색
-          </button>
+          </Button>
+        </div>
+        <div className="att-search-box">
+          <input type="text" placeholder="검색어을 입력하세요." />
+          <Button className="search-btn">검색</Button>
+        </div>
+      </div>
+      <div className="att-filter-container">
+        <div className="data-count">
+          <span>
+            총데이터 수<span className="orange">{data?.length}</span> 개
+          </span>
         </div>
         <div className="att-filter-box">
           <Form.Select

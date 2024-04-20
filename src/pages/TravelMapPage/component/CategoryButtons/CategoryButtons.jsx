@@ -1,6 +1,7 @@
 import React from "react";
 import { filterdCategoryCode } from "../../../../constants/categoryCode";
 import CategoryButton from "../MapSideBar/component/CategoryButton/CategoryButton";
+import MyPositionButton from "../KakaoMap/component/MyPositionButton/MyPositionButton";
 import "./CategoryButtons.style.css";
 
 const category_images = {
@@ -20,25 +21,37 @@ const category_images = {
 
 const CategoryButtons = () => {
   return (
-    <ul className="category-list">
-      <li className="category-title">
-        <div>카테고리 선택</div>
-      </li>
-      <div className="category-buttons">
-        {Object.entries(filterdCategoryCode).map(([code, name], idx) => (
+    <>
+      <ul className="category-list">
+        <li className="category-title">
+          <div>카테고리 선택</div>
+        </li>
+        <div className="category-buttons">
+          {Object.entries(filterdCategoryCode).map(([code, name], idx) => (
+            <div key={idx}>
+              <li>
+                <img
+                  src={category_images[code]}
+                  alt={`${name} 아이콘`}
+                  className="category-icon"
+                />
+                <CategoryButton categoryName={name} categoryCode={code} />
+              </li>
+            </div>
+          ))}
           <div>
-            <li key={idx}>
+            <li>
               <img
-                src={category_images[code]}
-                alt={`${name} 아이콘`}
+                src="/images/TravelMapPageImage/my-position.png"
+                alt="current-location"
                 className="category-icon"
-              />
-              <CategoryButton categoryName={name} categoryCode={code} />
+              ></img>
+              <MyPositionButton />
             </li>
           </div>
-        ))}
-      </div>
-    </ul>
+        </div>
+      </ul>
+    </>
   );
 };
 
