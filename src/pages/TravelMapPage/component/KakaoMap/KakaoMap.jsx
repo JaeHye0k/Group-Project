@@ -8,7 +8,8 @@ import {
   selectCode,
   setWeather,
   setCenter,
-  setInitialMap,
+  setCurrentLocation,
+  setIsClickMyPosition,
 } from "../../../../redux/TravelMapStore/kakaoMapSlice";
 
 const { kakao } = window;
@@ -32,6 +33,12 @@ const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
+  // const currentLocationState = useSelector(
+  //   (state) => state.kakaoMap.currentLocation
+  // );
+  const isClickMyPosition = useSelector(
+    (state) => state.kakaoMap.isClickMyPosition
+  );
 
   // 카카오 맵 객체를 생성하는 함수입니다
   const getKakaoMap = ({ lat, lng }) => {
@@ -116,7 +123,7 @@ const KakaoMap = () => {
     dispatch(setCenter(location));
   };
 
-  const onClickMyPosition = async () => {
+  const onClickMyPosition = () => {
     map.setCenter(
       new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng)
     );
@@ -131,7 +138,6 @@ const KakaoMap = () => {
       const location = await getCurrentLocaition();
       // kakao map 객체 생성
       const map = getKakaoMap(location);
-      dispatch(setInitialMap(map));
       // 마커 생성
       const markerPostiion = new kakao.maps.LatLng(location.lat, location.lng);
       const marker = new kakao.maps.Marker({
@@ -193,7 +199,9 @@ const KakaoMap = () => {
         listenerFlag = true;
       }
     };
-    showKakaoMap();
+    if (currentLocation) {
+      showKakaoMap();
+    }
     return () => {
       if (listenerFlag) {
         kakao.maps.event.removeListener(map, "dragend", updateMarkers);
@@ -202,6 +210,10 @@ const KakaoMap = () => {
     };
   }, [selectedCode]);
 
+  if (isClickMyPosition) {
+    onClickMyPosition();
+    dispatch(setIsClickMyPosition(false));
+  }
   return (
     <div id="kakao-map">
       <MyPositionButton onClickMyPosition={onClickMyPosition} />
