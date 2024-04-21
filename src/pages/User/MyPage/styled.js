@@ -36,6 +36,7 @@ export const Items = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .l-title {
       position: relative;
       margin-bottom: 50px;
@@ -46,6 +47,7 @@ export const Items = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+
       em {
         width: 36px;
         height: 36px;
@@ -58,6 +60,7 @@ export const Items = styled.div`
         justify-content: center;
         align-items: center;
         cursor: pointer;
+
         &::after {
           content: "";
           display: block;
@@ -69,44 +72,60 @@ export const Items = styled.div`
       }
 
       figure {
-        max-width: 100px;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
     }
+
     .l-txt {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      
+
       span {
         display: block;
         color: #333;
         font-size: 20px;
-        
       }
+
       strong {
         font-size: 30px;
       }
     }
+
     .l-txt h2 {
       cursor: pointer;
+
       &:hover {
-       color: #ff9900;
+        color: #ff9900;
+      }
     }
-}
 
     @media screen and (max-width: 1080px) {
       width: 100%;
     }
   }
+
   &.right {
     width: 70%;
     background: #fff;
+
     @media screen and (max-width: 1080px) {
       width: 100%;
     }
+
     .title {
       margin-bottom: 20px;
+
       h2 {
         font-size: 24px;
         font-weight: bold;
@@ -136,6 +155,7 @@ export const Popup = styled.div`
   gap: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 10;
+
   button,
   input[type="file"] {
     width: 100%;
