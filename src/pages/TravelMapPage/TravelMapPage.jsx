@@ -60,13 +60,16 @@ const TravelMapPage = () => {
     if (clickedLocation) refetch();
   }, [clickedLocation]);
 
+  if (isClickMyPosition) {
+    window.location.reload();
+  }
   if (isLoading) {
     return <Loading />;
   }
   if (!weather) {
     weather = currentWeather;
   }
-  console.log("locationBasedList", locationBasedList, "weather", weather);
+
   return (
     <div id="travel-map-page" className={pathname ? "overflow-hidden" : ""}>
       <KakaoMap isClickMyPosition={isClickMyPosition} />
