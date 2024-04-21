@@ -11,6 +11,9 @@ import { clearUser } from "../../../redux/user/auth/authSlice";
 import PasswordChangeForm from "./PasswordChangeForm";
 import ProfileImageUpdater from "./ProfileImageUpdater";
 import ProfileImageManager from "./ProfileImageManager";
+import forgparkImg from "../../../img/forgpark.png";
+import busanImg from "../../../img/busanImg.png";
+import roadImg from "../../../img/road.png";
 
 const MyPage = () => {
   const auth = getAuth();
@@ -161,38 +164,29 @@ const [isPasswordEditing, setIsPasswordEditing] = useState(false);
               <div className="content">
                 <div className="recent-item">
                   <figure>
-                    <img src="" alt="" />
+                    <img src={forgparkImg} alt="img" />
                   </figure>
                   <div className="txt">
-                    <strong>오래된 나무</strong>
-                    <p>
-                      충청남도 어쩌구충청남도 어쩌구충청남도 어쩌구충청남도
-                      어쩌구충청남도 어쩌구충청남도 어쩌구
-                    </p>
+                    <strong>밤밭청개구리공원</strong>
+                    <p>경기 수원시 장안구 율전동 124-1</p>
                   </div>
                 </div>
                 <div className="recent-item">
                   <figure>
-                    <img src="" alt="" />
+                    <img src={busanImg} alt="부산항축제" />
                   </figure>
                   <div className="txt">
-                    <strong>오래된 나무</strong>
-                    <p>
-                      충청남도 어쩌구충청남도 어쩌구충청남도 어쩌구충청남도
-                      어쩌구충청남도 어쩌구충청남도 어쩌구
-                    </p>
+                    <strong>부산항축제</strong>
+                    <p>부산광역시 동구 충장대로 206 부산항 국제여객터미널</p>
                   </div>
                 </div>
                 <div className="recent-item">
                   <figure>
-                    <img src="" alt="" />
+                    <img src={roadImg} alt="" />
                   </figure>
                   <div className="txt">
-                    <strong>오래된 나무</strong>
-                    <p>
-                      충청남도 어쩌구충청남도 어쩌구충청남도 어쩌구충청남도
-                      어쩌구충청남도 어쩌구충청남도 어쩌구
-                    </p>
+                    <strong>아름다운순례길</strong>
+                    <p>전북특별자치도 전주시 완산구</p>
                   </div>
                 </div>
               </div>

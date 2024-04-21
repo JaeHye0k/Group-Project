@@ -16,7 +16,6 @@ export const Content = styled.div`
   display: flex;
   justify-content: center;
   gap: 35px;
-
   @media screen and (max-width: 1080px) {
     flex-direction: column;
     align-items: center;
@@ -28,7 +27,6 @@ export const Items = styled.div`
   border-radius: 10px;
   box-shadow: 3px 2px 12px rgba(0, 0, 0, 0.2);
   background: #fff;
-
   &.left {
     width: 30%;
     height: 400px;
@@ -36,7 +34,6 @@ export const Items = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     .l-title {
       position: relative;
       margin-bottom: 50px;
@@ -47,96 +44,87 @@ export const Items = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-
       em {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #c9c9c9;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  &::after {
-    content: "";
-    display: block;
-    background: url(/images/ico/ico-setting.png) no-repeat center;
-    background-size: cover;
-    width: 16px;
-    height: 16px;
-    filter: none;
-  }
-}
-
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #c9c9c9;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        &::after {
+          content: "";
+          display: block;
+          background: url(/images/ico/ico-setting.png) no-repeat center;
+          background-size: cover;
+          width: 16px;
+          height: 16px;
+          filter: none;
+        }
+      }
       figure {
         width: 100%;
         height: 100%;
         border-radius: 50%;
         overflow: hidden;
-
         img {
           width: 100%;
           height: 100%;
           object-fit: cover;
           border-radius: 50%;
-          
         }
       }
     }
-
-    
     .l-txt {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
-
       span {
         display: block;
         color: #333;
         font-size: 20px;
         margin-bottom: -10px;
       }
-
       strong {
         font-size: 30px;
-         margin-bottom: 10px;
+        margin-bottom: 10px;
       }
     }
-
     .l-txt h2 {
       font-size: 20px;
-      font-weight: bold; 
+      font-weight: bold;
       cursor: pointer;
-
       &:hover {
         color: #ff9900;
       }
     }
-
     @media screen and (max-width: 1080px) {
       width: 100%;
     }
   }
-
   &.right {
     width: 70%;
     background: #fff;
-
     @media screen and (max-width: 1080px) {
       width: 100%;
     }
-
     .title {
       margin-bottom: 20px;
-
       h2 {
         font-size: 24px;
         font-weight: bold;
       }
+    }
+    .recent-item figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 5%;
     }
   }
 `;
@@ -162,7 +150,6 @@ export const Popup = styled.div`
   gap: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 10;
-
   button,
   input[type="file"] {
     width: 100%;
