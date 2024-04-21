@@ -8,21 +8,18 @@ import {
   selectCode,
   setWeather,
   setCenter,
-  setCurrentLocation,
   setIsClickMyPosition,
+  setContentType,
 } from "../../../../redux/TravelMapStore/kakaoMapSlice";
+import { fetchContentType } from "../../../../utils/tourApi/tourApi";
+import { useQuery } from "@tanstack/react-query";
 
 const { kakao } = window;
 const baseUrl = `https://dapi.kakao.com/v2/local`;
 
 // latitude = 위도 (0 ~ 90) y축
 // longitude = 경도 (0 ~ 180) x축
-// selectedCode 가 변경될 때마다 리렌더링 된다.
 
-// 마커가 갱신되는 상황
-// 1. 지도가 드래그 되었을 때
-// 2. 지도를 클릭했을 때
-// 3. 내 위치 버튼을 클릭했을 때
 const categoryMarkers = [];
 let listenerFlag = false;
 export let clickedLocation = null;
@@ -33,12 +30,16 @@ const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
-  // const currentLocationState = useSelector(
-  //   (state) => state.kakaoMap.currentLocation
-  // );
   const isClickMyPosition = useSelector(
     (state) => state.kakaoMap.isClickMyPosition
   );
+  const contentType = useSelector((state) => state.kakaoMap.contentType);
+  const { data } = useQuery({
+    queryKey: ["category-type"],
+    queryFn: () => fetchContentType(),
+    enabled: !Object.keys(contentType).length,
+    refetchOnReconnect: false,
+  });
 
   // 카카오 맵 객체를 생성하는 함수입니다
   const getKakaoMap = ({ lat, lng }) => {
@@ -215,6 +216,15 @@ const KakaoMap = () => {
     onClickMyPosition();
     dispatch(setIsClickMyPosition(false));
   }
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      data?.response?.body.items.item.map(({ code, name }) => {
+        dispatch(setContentType({ code, name }));
+      });
+    }
+  }, [data]);
+
   return (
     <div id="kakao-map">
       <MyPositionButton onClickMyPosition={onClickMyPosition} />

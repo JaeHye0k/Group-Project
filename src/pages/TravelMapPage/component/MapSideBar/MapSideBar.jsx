@@ -9,6 +9,7 @@ import { clickedLocation } from "../KakaoMap/KakaoMap";
 import { fetchLocationBasedList } from "../../../../utils/tourApi/tourApi";
 import CategoryButtons from "../CategoryButtons/CategoryButtons";
 import useWindowDimensions from "../../../../hooks/useWindowDimension";
+import Loading from "../../../../common/Loading";
 
 const MapSideBar = () => {
   // console.log("render");
@@ -32,7 +33,11 @@ const MapSideBar = () => {
   });
 
   // 위치 기반 근처 관광지 정보를 불러옵니다
-  const { data: locationBasedList, refetch } = useQuery({
+  const {
+    data: locationBasedList,
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["location-based-list"],
     queryFn: () =>
       fetchLocationBasedList(clickedLocation.lng, clickedLocation.lat),
@@ -40,19 +45,18 @@ const MapSideBar = () => {
   });
 
   useEffect(() => {
+    console.log("useEffect!", locationBasedList);
     const datas = locationBasedList?.response?.body.items.item;
-    // console.log("useEffect", datas, locationBasedList);
-    // refetchLocation();
     if (datas) {
       locationName.current = datas[0].addr1?.split(" ").slice(0, 3);
-      console.log(locationName.current);
     }
 
-    if (clickedLocation) {
-      refetch();
-    }
+    if (clickedLocation) refetch();
   }, [clickedLocation]);
 
+  if (isLoading) {
+    return <Loading />;
+  }
   if (!weather) {
     weather = currentWeather;
   }

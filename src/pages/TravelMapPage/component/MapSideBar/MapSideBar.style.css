@@ -41,7 +41,7 @@
 }
 #map-sidebar .bottom {
   overflow-y: scroll;
-  height: 87vh;
+  height: 79vh;
 }
 
 .bottom::-webkit-scrollbar {

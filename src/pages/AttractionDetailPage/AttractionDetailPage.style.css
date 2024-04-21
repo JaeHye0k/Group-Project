@@ -75,3 +75,33 @@
 .slider-img img{
     width: 100px;
 }
+.detail-info-box{
+
+}
+@media screen and (max-width:880px) {
+  .att-flex-box{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .detail-info-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    
+  }
+  .info-text-box{
+    width: 100%;
+  }
+  .content-article{
+    width: 100%;
+  }
+  .att-flex-box{
+    margin-bottom: 10%;
+  }
+  .nav-btn{
+    bottom: 1%;
+    right: 35%;
+  }
+}
