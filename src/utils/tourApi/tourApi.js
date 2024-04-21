@@ -1,7 +1,7 @@
 const API_KEY = process.env.REACT_APP_TOUR_API_KEY;
-const baseUrl = "http://apis.data.go.kr/B551011/KorService1";
-const MobileOS = "WIN";
-const MobileApp = "Trip-Korea";
+const baseUrl = "https://apis.data.go.kr/B551011/KorService1";
+const MobileOS = "ETC";
+const MobileApp = "test";
 
 // 지역 코드와, 지역명을 매칭하기 위한 기능
 export const fetchAreaCode = async () => {

@@ -31,7 +31,7 @@ const AttractionsPage = () => {
   //All
   const getAttraction = () => {
     dispatch(fetchAttractions());
-    console.log(attractionList)
+    console.log(attractionList);
   };
 
   useEffect(() => {
@@ -84,7 +84,6 @@ useEffect(()=>{
         }
       }
     }
-    
   }, [sortSelect]);
 
   if (sortSelect) {
@@ -107,7 +106,6 @@ useEffect(()=>{
   }, [attractionList?.response]);
   // // 값이 변경될때마다 리렌더링
   useEffect(() => {
-    
       getQueryAttraction();
     
     console.log("ddd", filterData);
@@ -160,7 +158,7 @@ useEffect(()=>{
       </div>
       <section className="card-container">
         {/* {data?.map((item=><AttractionCard />))} */}
-        {filterData?.map((item,index) => (
+        {filterData?.map((item, index) => (
           <AttractionCard item={item} key={index} />
         ))}
       </section>
