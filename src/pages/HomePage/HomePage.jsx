@@ -9,7 +9,6 @@ import HomeCard from "./homecard/HomeCard";
 import HomeMap from "./homemap/HomeMap";
 import Loading from "../../common/Loading";
 
-
 const HomePage = () => {
   const settings = {
     dots: true,
@@ -37,7 +36,7 @@ const HomePage = () => {
               <br />
               봄꽃여행지 추천
             </div>
-            <Link to="/">자세히 보기</Link>
+            <Link to="/attractions?query=꽃">자세히 보기</Link>
           </div>
         </div>
         <div className="info">
@@ -51,7 +50,7 @@ const HomePage = () => {
               <br />
               함께하는 추억 만들기
             </div>
-            <Link to="/">자세히 보기</Link>
+            <Link to="/attractions?query=가족">자세히 보기</Link>
           </div>
         </div>
 
@@ -66,7 +65,7 @@ const HomePage = () => {
               <br />
               부산으로 가자
             </div>
-            <Link to="/">자세히 보기</Link>
+            <Link to="/attractions?query=부산">자세히 보기</Link>
           </div>
         </div>
 
@@ -77,11 +76,11 @@ const HomePage = () => {
           <div className="InfoBox">
             <div className="decoBox" />
             <div className="InfoText">
-              보라색으로 물든
+              사랑하는 연인과
               <br />
-              안성 팜랜드
+              노을 데이트
             </div>
-            <Link to="/">자세히 보기</Link>
+            <Link to="/attractions?query=노을">자세히 보기</Link>
           </div>
         </div>
       </Slider>
