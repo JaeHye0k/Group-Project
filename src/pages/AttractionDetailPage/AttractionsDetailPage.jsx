@@ -1,68 +1,66 @@
 import React, { useEffect } from "react";
+import { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAttractionDetail } from "../../redux/AttractionPage/attractionsSlice";
 import "./AttractionDetailPage.style.css";
 import { useNavigate } from "react-router-dom";
+import { useDetail } from "../../hooks/useAttractionDetail";
+import {useDetailImage} from "../../hooks/useAttractionDetailImage";
 
 const AttractionsDetailPage = () => {
-  const detailData = useSelector((state) => state.attraction.attractionDetail);
+  let { contentId } = useParams();
+  const { data, isLoading, isError } = useDetail({ contentId });
+  const [contentTypeId, setContentTypeId] =useState("")
+  const {data:imageData} = useDetailImage({contentId,contentTypeId})
+  const detailData = data?.response.body.items.item[0]
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  let { id } = useParams();
-  console.log({ id });
-  const getAttractionDetail = () => {
-    dispatch(fetchAttractionDetail(id));
-    console.log(detailData);
-  };
-  useEffect(() => {
-    if (detailData) {
-      getAttractionDetail();
-      console.log(detailData);
+  console.log(detailData?.contenttypeid);
+  console.log(contentTypeId);
+  console.log(imageData);
+  
+  useEffect(()=>{
+    if(detailData){
+
+      setContentTypeId(detailData?.contenttypeid)
     }
-  }, [detailData]);
+  
+  },[detailData])
+  // const imageDb = imageData?.response.body.items.item[0]
+  
+  ;
+  // }, [detailData]);
   return (
     <div className="att-container">
       <div className="att-detail-container">
         <div className="att-flex-box">
           <div className="img-box">
-            <img src="https://tong.visitkorea.or.kr/cms/resource/83/3029683_image2_1.jpg" />
-            <div className="att-slider-img">
-                <img src="https://tong.visitkorea.or.kr/cms/resource/83/3029683_image2_1.jpg" />
-                <img src="https://tong.visitkorea.or.kr/cms/resource/83/3029683_image2_1.jpg" />
-                <img src="https://tong.visitkorea.or.kr/cms/resource/83/3029683_image2_1.jpg" />
-            </div>
+            <img src={detailData?.firstimage} />
+            {/* <div className="att-slider-img">
+              <img src="https://tong.visitkorea.or.kr/cms/resource/83/3029683_image2_1.jpg" />
+              <img src="https://tong.visitkorea.or.kr/cms/resource/83/3029683_image2_1.jpg" />
+              <img src="https://tong.visitkorea.or.kr/cms/resource/83/3029683_image2_1.jpg" />
+            </div> */}
           </div>
 
           <div className="detail-info-box">
-            <h3>제목</h3>
+            <h3>{detailData?.title}</h3>
             <div className="info-text-box">
               <div className="title-box">
                 <div className="att-title">우편번호</div>
-                <div className="att-article">내용</div>
+                <div className="att-article">{detailData?.zipcode}</div>
               </div>
               <div className="title-box">
                 <div className="att-title">제목</div>
-                <div className="att-article">내용</div>
+                <div className="att-article">{detailData?.title}</div>
               </div>
               <div className="title-box">
                 <div className="att-title">주소</div>
-                <div className="att-article">내용</div>
+                <div className="att-article">{detailData?.addr1}</div>
               </div>
             </div>
             <div className="content-article">
-              개요가 어쩌구 저쩌구 우곡 박신윤 선생의 효행와 학덕을 기리기 위해
-              세웠고 조정에 상소를 했는데 건립을 했다가 말았다가 폐원을 했다가
-              막 그랬다가 어쩌구 아들이 뭘 설치를 했는데 뭔 참배를 하고 이런저런
-              이야기가 있는 곳이니까 찾아와서 놀다가도록 해라 개요가 어쩌구
-              저쩌구 우곡 박신윤 선생의 효행와 학덕을 기리기 위해 세웠고 조정에
-              상소를 했는데 건립을 했다가 말았다가 폐원을 했다가 막 그랬다가
-              어쩌구 아들이 뭘 설치를 했는데 뭔 참배를 하고 이런저런 이야기가
-              있는 곳이니까 찾아와서 놀다가도록 해라개요가 어쩌구 저쩌구 우곡
-              박신윤 선생의 효행와 학덕을 기리기 위해 세웠고 조정에 상소를
-              했는데 건립을 했다가 말았다가 폐원을 했다가 막 그랬다가 어쩌구
-              아들이 뭘 설치를 했는데 뭔 참배를 하고 이런저런 이야기가 있는
-              곳이니까 찾아와서 놀다가도록 해라
+             {detailData?.overview}
             </div>
           </div>
         </div>

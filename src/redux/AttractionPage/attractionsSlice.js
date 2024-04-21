@@ -1,30 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const API_KEY = process.env.REACT_APP_TOUR_API_KEY
+const API_KEY = process.env.REACT_APP_TOUR_API_KEY;
 
-let initialState = {
+const initialState = {
   attractionList: [],
-  attractionDetail: null,
+  attractionDetail:{},
   isLoading: false,
   error: null,
-  attractionDetail:[]
 };
 
 export const fetchAttractions = createAsyncThunk(
   "fetchAll",
   // {lat,lon}
-  async (thunkApi) => {
+  async (page, thunkApi) => {
     try {
-      //시조회
-      // let url = `https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=${API_KEY}&MobileOS=win&MobileApp=test&_type=json`;
-      let url = `https://apis.data.go.kr/B551011/KorService1/areaBasedSyncList1?numOfRows=40&MobileOS=ETC&MobileApp=test&serviceKey=${API_KEY}&_type=json&arrange=R수정일`;
-    //내위치
-        //  let url = `https://apis.data.go.kr/B551011/KorService1/locationBasedList1?MobileOS=WIN&MobileApp=test&_type=json&mapX=${lon}&mapY=${lat}&radius=100000&serviceKey=${API_KEY}`
-        //검색
-          //  let url = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=48&MobileOS=ETC&MobileApp=test&keyword=${query}&serviceKey=${API_KEY}&_type=json`;
+      let url = `https://apis.data.go.kr/B551011/KorService1/areaBasedSyncList1?numOfRows=48&MobileOS=ETC&MobileApp=test&serviceKey=${API_KEY}&_type=json&arrange=R수정일&pageNo=${page}`;
       let response = await fetch(url);
-    
-    return await response.json()
-    
+
+      return await response.json();
     } catch (error) {
       thunkApi.rejectWithValue(error.message);
     }
@@ -33,47 +25,45 @@ export const fetchAttractions = createAsyncThunk(
 
 export const fetchQueryAttraction = createAsyncThunk(
   "query",
-  async (query,thunkApi) =>{
-    try{
-        let url = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=48&MobileOS=ETC&MobileApp=test&keyword=${query}&serviceKey=${API_KEY}&_type=json`;
-        let response = await fetch(url);
-    
-        return await response.json()
-        
-        } catch (error) {
-          thunkApi.rejectWithValue(error.message);
-        }
-      }
-)
+  async (query,thunkApi) => {
+    try {
+      let url = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=48&MobileOS=ETC&MobileApp=test&keyword=${query}&serviceKey=${API_KEY}&_type=json`;
+      let response = await fetch(url);
+
+      return await response.json();
+    } catch (error) {
+      thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
 
 export const fetchLocationAttraction = createAsyncThunk(
   "location",
-  async ({lat,lon},thunkApi) =>{
-    try{
-          let url = `https://apis.data.go.kr/B551011/KorService1/locationBasedList1?MobileOS=WIN&MobileApp=test&_type=json&mapX=${lon}&mapY=${lat}&radius=20000&serviceKey=${API_KEY}`
-        let response = await fetch(url);
-    
-        return await response.json()
-        
-        } catch (error) {
-          thunkApi.rejectWithValue(error.message);
-        }
-      }
-)
+  async ({ lat, lon }, thunkApi) => {
+    try {
+      let url = `https://apis.data.go.kr/B551011/KorService1/locationBasedList1?MobileOS=WIN&MobileApp=test&_type=json&mapX=${lon}&mapY=${lat}&radius=20000&serviceKey=${API_KEY}`;
+      let response = await fetch(url);
+
+      return await response.json();
+    } catch (error) {
+      thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
 export const fetchAttractionDetail = createAsyncThunk(
   "Detail",
-  async (contentid,thunkApi) =>{
-    try{
-          let url = `https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=test&contentId=${contentid}&serviceKey=${API_KEY}`
-        let response = await fetch(url);
-    
-        return await response.json()
-        
-        } catch (error) {
-          thunkApi.rejectWithValue(error.message);
-        }
-      }
-)
+  async (contentId, thunkApi) => {
+    try {
+      let url = `https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=test&contentId=${contentId}&serviceKey=${API_KEY}_type=json`;
+      // let url = "https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=test&contentId=1011938&serviceKey=IAAeRa4GMZwfSJUumlCcnX5%252FWOnq0XU5NDiH33I1cGu5Ncmci%252FpbWde1GbsW%252Bq4io1mjSgY33ERcNKOgp9sc%252Fw%253D%253D";
+      let response = await fetch(url);
+
+      return await response.json();
+    } catch (error) {
+      thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
 const attractionsSlice = createSlice({
   name: "attraction",
   initialState,
@@ -91,8 +81,8 @@ const attractionsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-      //fetchQuery
-      builder
+    //fetchQuery
+    builder
       .addCase(fetchQueryAttraction.pending, (state) => {
         state.isLoading = false;
       })
@@ -104,8 +94,8 @@ const attractionsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-      //location
-      builder
+    //location
+    builder
       .addCase(fetchLocationAttraction.pending, (state) => {
         state.isLoading = true;
       })
@@ -117,8 +107,8 @@ const attractionsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-      //detail
-      builder
+    //detail
+    builder
       .addCase(fetchAttractionDetail.pending, (state) => {
         state.isLoading = true;
       })

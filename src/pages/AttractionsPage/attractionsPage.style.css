@@ -90,6 +90,46 @@
   /* justify-content: space-between; */
 }
 
+.pagination {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  background-color: #fff;
+  padding: 5%;
+  > * {
+    cursor: pointer;
+  }
+}
+.page-wrap{
+  width: 100% !important;
+}
+.pagination__link {
+  transition: all 0.25s;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.3rem;
+}
+.page-item {
+  background-color: #fff;
+}
+.page-link-b {
+  background-color: #fff;
+  border: none;
+  color: #ff9900;
+}
+.active {
+  background-color: #ff9900;
+  color: #fff;
+  padding: 2px 8px;
+}
+.link-active {
+  background-color: #ff9900;
+  color: #fff;
+}
+
+
+
 @media screen and (max-width: 1280px) {
   .card-container {
     grid-template-columns: repeat(3, 1fr);
