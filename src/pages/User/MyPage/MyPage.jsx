@@ -19,6 +19,7 @@ const MyPage = () => {
   const user = useSelector((state) => state.auth.currentUser);
   const [showPopup, setShowPopup] = useState(false);
   const [profileImageUrl, setProfileImageUrl] = useState(null); // 이 줄만 남기고 아래 중복 선언 부분은 제거
+const [isPasswordEditing, setIsPasswordEditing] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -117,7 +118,10 @@ const MyPage = () => {
               <div className="input-box">
                 <input type="email" placeholder={user && user.email} disabled />
               </div>
-              <PasswordChangeForm user={user} />
+              <PasswordChangeForm
+                user={user}
+                setIsPasswordEditing={setIsPasswordEditing}
+              />
             </div>
 
             <div className="bookmark">

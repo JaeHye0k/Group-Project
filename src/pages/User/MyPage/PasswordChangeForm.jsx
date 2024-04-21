@@ -1,5 +1,5 @@
 // PasswordChangeForm.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -7,13 +7,17 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-const PasswordChangeForm = ({ user }) => {
+const PasswordChangeForm = ({
+  user,
+  setIsPasswordEditing: setIsPasswordEditingProps,
+}) => {
   const auth = getAuth();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
+  const [isPasswordEditing, setIsPasswordEditing] = useState(false);
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -57,6 +61,16 @@ const PasswordChangeForm = ({ user }) => {
     }
   };
 
+  useEffect(() => {
+    if (password !== "") {
+      setIsPasswordEditing(true);
+      setIsPasswordEditingProps(true);
+    } else {
+      setIsPasswordEditing(false);
+      setIsPasswordEditingProps(false);
+    }
+  }, [password, setIsPasswordEditingProps]);
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -67,11 +81,20 @@ const PasswordChangeForm = ({ user }) => {
             onChange={handlePasswordChange}
             value={password}
             disabled={isPasswordCorrect}
+            onFocus={() => setIsPasswordEditing(true)}
+            onBlur={() => setIsPasswordEditing(false)}
           />
         </div>
         {!isPasswordCorrect && (
           <div className="input-box">
-            <input type="submit" value="수정하기" />
+            <input
+              type="submit"
+              value="수정하기"
+              style={{
+                background: isPasswordEditing ? "#FF9900" : "#000",
+                color: isPasswordEditing ? "#FFF" : "#FFF",
+              }}
+            />
           </div>
         )}
       </form>

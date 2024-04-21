@@ -49,27 +49,27 @@ export const Items = styled.div`
       align-items: center;
 
       em {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: #c9c9c9;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-
-        &::after {
-          content: "";
-          display: block;
-          background: url(/images/ico/ico-setting.png) no-repeat center;
-          background-size: cover;
-          width: 16px;
-          height: 16px;
-        }
-      }
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: ${({ isPasswordEditing }) => (isPasswordEditing ? "#FF9900" : "#000")};
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &::after {
+    content: "";
+    display: block;
+    background: url(/images/ico/ico-setting.png) no-repeat center;
+    background-size: cover;
+    width: 16px;
+    height: 16px;
+    filter: ${({ isPasswordEditing }) => (isPasswordEditing ? "invert(1)" : "none")};
+  }
+}
 
       figure {
         width: 100%;
