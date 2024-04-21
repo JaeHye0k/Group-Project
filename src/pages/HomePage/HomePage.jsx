@@ -9,6 +9,7 @@ import HomeCard from "./homecard/HomeCard";
 import HomeMap from "./homemap/HomeMap";
 import Loading from "../../common/Loading";
 
+
 const HomePage = () => {
   const settings = {
     dots: true,

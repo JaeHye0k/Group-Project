@@ -53,10 +53,13 @@ function App() {
         <Route path="/" element={<AppLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/map" element={<TravelMapPage />} />
+
           <Route path="/attractions">
             <Route index element={<AttractionsPage />} />
             <Route path=":id" element={<AttractionsDetailPage />} />
-          </Route>
+            
+          </Route>         
+          
 
           {/* user */}
           <Route path="/signup" element={<UserSignUp />} />

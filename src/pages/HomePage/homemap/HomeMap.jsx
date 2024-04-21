@@ -36,7 +36,7 @@ const HomeMap = () => {
           </div>
         </div>
         <div className="homepageMap">
-          <KakaoMap />
+          {/* <KakaoMap /> */}
         </div>
       </div>
     </div>

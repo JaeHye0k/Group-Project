@@ -88,7 +88,7 @@ const AppLayout = () => {
         
         <div className="search_login">
           {currentUser && (
-            <div className="moblieLoginBtn">
+            <div className="welcom">
               {currentUser.displayName}님, 반가워요!　
             </div>
           )}
@@ -114,7 +114,9 @@ const AppLayout = () => {
               ) : (
               <Button onClick={() => navigateTo("/signin")}>로그인</Button> // 로그인 상태가 아닐 때 로그인 버튼 표시
               )}
+              
           </div>
+
     
         {/* 모바일 화면 */}
         <div className={`menu ${isMenuOpen ? "open" : ""}`}>
