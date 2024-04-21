@@ -4,7 +4,6 @@ const initialState = {
   selectedCode: null,
   weather: null,
   center: {},
-  locationName: null,
   currentLocation: null,
   isClickMyPosition: false,
   contentType: {},
@@ -23,9 +22,6 @@ export const kakaoMapSlice = createSlice({
     setCenter: (state, action) => {
       state.center = action.payload;
     },
-    setLocationName: (state, action) => {
-      state.currentLocation = action.payload;
-    },
     setCurrentLocation: (state, action) => {
       state.currentLocation = action.payload;
     },
@@ -42,7 +38,6 @@ export const {
   selectCode,
   setWeather,
   setCenter,
-  setLocationName,
   setCurrentLocation,
   setIsClickMyPosition,
   setContentType,
