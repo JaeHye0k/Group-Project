@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase";
 import { Form, Logo, Wrapper } from "./styled";
 import UserTitle from "../components/UserTitle";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../../src/redux/user/auth/authSlice";
 
 const UserSignUp = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -33,16 +36,25 @@ const UserSignUp = () => {
 
     try {
       setIsLoading(true);
-      const create = await createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      await updateProfile(create.user, {
+      await updateProfile(userCredential.user, {
         displayName: name,
       });
+      dispatch(
+        setUser({
+          email: userCredential.user.email,
+          uid: userCredential.user.uid,
+          displayName: name,
+          // 다른 필요한 사용자 정보를 여기에 포함시킬 수 있습니다.
+        })
+      );
+
       navigate("/");
-      console.log(create.user);
+      // console.log(create.user);
     } catch (e) {
       if (e.code === "auth/email-already-in-use") {
         setError("이 이메일은 이미 사용 중입니다.");

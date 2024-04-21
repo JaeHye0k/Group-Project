@@ -1,29 +1,53 @@
-.cardPosition{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 1400px;
-    padding-top: 60px;
-    margin: auto;
-    position: relative; 
-    /* border: 1px solid black; */
+.homecard-responsive {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
+.homecard-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  margin-top: 5vh;
 }
-.mid-title{
-    position: absolute;
-    left: 0;
-    
+.homecard-wrapper::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
-.homeCards{
-    width: 100%;
-    height: 500px;   
-    background-color: rgb(212, 212, 212);
+.homecard-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #abadac;
 }
-.cards{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+.homecard-wrapper::-webkit-scrollbar-track-piece {
+  background: #e5e5e5;
+}
+
+.homecard-wrapper .mid-title {
+  position: static;
+}
+.cardPosition {
+  display: flex;
+}
+.cardPosition .common-card {
+  width: 200px;
+  height: 100%;
+}
+
+.mid-title {
+  margin-bottom: 60px;
+  position: absolute;
+  left: 0;
+}
+.homeCards {
+  width: 100%;
+  height: 500px;
+  background-color: rgb(212, 212, 212);
+}
+.cards {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 /* .Attractionpage-container > div {
   .card-container {
@@ -37,11 +61,11 @@
   }
 } */
 @media (max-width: 600px) {
-    .cards{ 
-        width: 75%;
-        flex-wrap: wrap;
-    }
-    .cardPosition{
-        width: 80%;
-    }
+  .cards {
+    width: 75%;
+    flex-wrap: wrap;
+  }
+  .cardPosition {
+    width: 80%;
+  }
 }

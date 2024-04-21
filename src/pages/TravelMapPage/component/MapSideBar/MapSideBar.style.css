@@ -26,11 +26,11 @@
   align-items: center;
 
   & .location-name1 {
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: bold;
   }
   & .location-name2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 }
 #map-sidebar .top {
@@ -41,7 +41,7 @@
 }
 #map-sidebar .bottom {
   overflow-y: scroll;
-  height: 87vh;
+  height: 79vh;
 }
 
 .bottom::-webkit-scrollbar {
@@ -129,14 +129,14 @@
     width: 59px;
     height: 104px;
     top: -81px;
-    right: 50%;
+    right: 55%;
   }
   #map-sidebar.folded .btn-fold {
     transform: rotate(-90deg) translateY(50%);
     width: 59px;
     height: 104px;
     top: -81px;
-    right: 50%;
+    right: 55%;
   }
   #map-sidebar.folded {
     transform: translateY(100%);
@@ -149,4 +149,29 @@
     padding: 0 20px;
     grid-column: 1/3;
   }
+}
+
+@media screen and (max-width: 600px) {
+  #map-sidebar .top {
+    grid-template-rows: auto;
+  }
+  /* #map-sidebar .weather .weather-content .weather-min-max {
+    display: none;
+  }
+  #map-sidebar .location-info {
+    & .location-name1 {
+      font-size: 1.5rem;
+    }
+    & .location-name2 {
+      font-size: 1rem;
+    }
+  }
+  #map-sidebar .weather {
+    & .weather-content {
+      & .weather-image {
+        grid-column: 1 / 2;
+        height: 40px;
+      }
+    }
+  } */
 }

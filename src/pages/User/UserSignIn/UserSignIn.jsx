@@ -6,16 +6,17 @@ import { useSelector } from "react-redux";
 import { Wrapper } from "../UserSignUp/styled";
 import { Form, Logo } from "../UserSignUp/styled";
 import UserTitle from "../components/UserTitle";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../../src/redux/user/auth/authSlice";
 
 const UserSignIn = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.auth.currentUser);
-  console.log(user);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const onChange = (e) => {
     const {
@@ -35,14 +36,28 @@ const UserSignIn = () => {
 
     try {
       setIsLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      dispatch(
+        setUser({
+          email: userCredential.user.email,
+          uid: userCredential.user.uid,
+          displayName: userCredential.user.displayName,
+        })
+      );
+
       navigate("/");
     } catch (e) {
       console.log(e);
+      setError("회원 가입을 해주세요");
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
     <Wrapper>
       <Logo onClick={() => navigate("/")}>
@@ -69,6 +84,11 @@ const UserSignIn = () => {
           value={isLoading ? "로그인중 입니다.." : "로그인"}
         />
       </Form>
+      {error && (
+        <p style={{ color: "red", marginTop: "1rem", textAlign: "center" }}>
+          {error}
+        </p>
+      )}
       <span>
         계정이 필요하신가요? <Link to="/signup">회원가입</Link>
       </span>

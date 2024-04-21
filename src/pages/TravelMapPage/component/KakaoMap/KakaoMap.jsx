@@ -3,42 +3,37 @@ import "./KakaoMap.style.css";
 import { getCurrentMapArea } from "../../../../utils/kakaoMap/getCurrentMapArea";
 import { getCurrentLocaition } from "../../../../utils/kakaoMap/getCurrentLocation";
 import { useSelector, useDispatch } from "react-redux";
-import MyPositionButton from "./component/MyPositionButton/MyPositionButton";
 import {
   selectCode,
   setWeather,
   setCenter,
-  setCurrentLocation,
-  setIsClickMyPosition,
+  setContentType,
 } from "../../../../redux/TravelMapStore/kakaoMapSlice";
+import { fetchContentType } from "../../../../utils/tourApi/tourApi";
+import { useQuery } from "@tanstack/react-query";
 
 const { kakao } = window;
 const baseUrl = `https://dapi.kakao.com/v2/local`;
 
 // latitude = 위도 (0 ~ 90) y축
 // longitude = 경도 (0 ~ 180) x축
-// selectedCode 가 변경될 때마다 리렌더링 된다.
 
-// 마커가 갱신되는 상황
-// 1. 지도가 드래그 되었을 때
-// 2. 지도를 클릭했을 때
-// 3. 내 위치 버튼을 클릭했을 때
 const categoryMarkers = [];
 let listenerFlag = false;
 export let clickedLocation = null;
 let currentLocation = null;
 
 const KakaoMap = () => {
-  console.log("render");
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
-  // const currentLocationState = useSelector(
-  //   (state) => state.kakaoMap.currentLocation
-  // );
-  const isClickMyPosition = useSelector(
-    (state) => state.kakaoMap.isClickMyPosition
-  );
+  const contentType = useSelector((state) => state.kakaoMap.contentType);
+  const { data } = useQuery({
+    queryKey: ["category-type"],
+    queryFn: () => fetchContentType(),
+    enabled: !Object.keys(contentType).length,
+    refetchOnReconnect: false,
+  });
 
   // 카카오 맵 객체를 생성하는 함수입니다
   const getKakaoMap = ({ lat, lng }) => {
@@ -48,7 +43,8 @@ const KakaoMap = () => {
       center: new kakao.maps.LatLng(lat, lng), //지도의 중심좌표.
       level: 3, //지도의 레벨(확대, 축소 정도)
     };
-    const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    const map =
+      kakao && kakao.maps ? new kakao.maps.Map(container, options) : null;
     return map;
   };
 
@@ -121,15 +117,6 @@ const KakaoMap = () => {
     dispatch(setWeather({ weather }));
     dispatch(selectCode({ categoryCode: null }));
     dispatch(setCenter(location));
-  };
-
-  const onClickMyPosition = () => {
-    map.setCenter(
-      new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng)
-    );
-    map.setLevel(3);
-    clearMarkers();
-    showMarker(currentLocation);
   };
 
   // 페이지에 처음 들어왔을 때 실행됩니다
@@ -209,16 +196,15 @@ const KakaoMap = () => {
       }
     };
   }, [selectedCode]);
+  useEffect(() => {
+    if (data) {
+      data?.response?.body.items.item.map(({ code, name }) => {
+        dispatch(setContentType({ code, name }));
+      });
+    }
+  }, [data]);
 
-  if (isClickMyPosition) {
-    onClickMyPosition();
-    dispatch(setIsClickMyPosition(false));
-  }
-  return (
-    <div id="kakao-map">
-      <MyPositionButton onClickMyPosition={onClickMyPosition} />
-    </div>
-  );
+  return <div id="kakao-map"></div>;
 };
 
 export default KakaoMap;
