@@ -8,14 +8,11 @@ import "./attractionsPage.style.css";
 import { Form } from "react-bootstrap";
 import AttractionCard from "../../common/attractionCard/AttractionCard";
 import Loading from "../../common/Loading";
-import useIntersectionObserver from "../../common/attractionCard/Intersection/UseIntersection";
+import { useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import "bootstrap/dist/css/bootstrap.min.css";
 const AttractionsPage = () => {
-  console.log("render");
-  const [query, setQuery] = useState("");
   const [sortSelect, setSortSelect] = useState("");
-  const [attractionData, setAttractionData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
@@ -24,14 +21,14 @@ const AttractionsPage = () => {
   let loading = useSelector((state) => state.attraction.isLoading);
   let data = attractionList?.response?.body.items.item;
   let dispatch = useDispatch();
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navQuery = searchParams.get("query");
   const handlePageClick = ({ selected }) => {
     setPage(selected + 1);
   };
   //All
   const getAttraction = () => {
     dispatch(fetchAttractions());
-    console.log(attractionList);
   };
 
   useEffect(() => {
@@ -45,10 +42,10 @@ const AttractionsPage = () => {
   }, [page]);
   //query
   const getQueryAttraction = () => {
-    if (query == "") {
+    if (navQuery == "") {
       return dispatch(fetchAttractions());
-    } else if (query !== "" && query !== undefined) {
-      return dispatch(fetchQueryAttraction(query));
+    } else if (navQuery !== "" && navQuery !== undefined) {
+      return dispatch(fetchQueryAttraction(navQuery));
     }
   };
 
@@ -60,14 +57,11 @@ const AttractionsPage = () => {
     const data = await promise;
     const lat = data?.coords.latitude; // 위도 y (0~90)
     const lon = data?.coords.longitude; // 경도 x (0~180)
-
-    // return { lat, lng };
     return { lat: setLat(lat), lon: setLon(lon) };
   };
   //정렬
   const sortHandler = (sortChange) => {
     setSortSelect(sortChange);
-    // getCurrentLocation((lat, lon));
     console.log(sortChange);
   };
   useEffect(() => {
@@ -107,21 +101,17 @@ const AttractionsPage = () => {
   // // 값이 변경될때마다 리렌더링
   useEffect(() => {
     getQueryAttraction();
-
-    console.log("ddd", filterData);
   }, []);
   if (loading) {
     return <Loading />;
   }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getQueryAttraction();
+  };
   return (
     <div className="att-container">
-      <div className="att-search-container">
-        {/*  */}
-        {/* <div className="att-search-box">
-          <input type="text" placeholder="검색어을 입력하세요." />
-          <button className="search-btn">검색</button>
-        </div> */}
-      </div>
+      <div className="att-search-container"></div>
       <div className="att-filter-container">
         <div className="data-count">
           <span>
@@ -132,19 +122,21 @@ const AttractionsPage = () => {
             개
           </span>
         </div>
-        <div className="att-search-box">
+        {/* <form className="att-search-box" onSubmit={handleSubmit}>
           <input
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => setSearchParams({ query: event.target.value })}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.target.value = "";
+              }
+            }}
             type="text"
             placeholder="지역을 입력하세요."
           />
-          <button
-            onClick={() => getQueryAttraction()}
-            className="black search-btn"
-          >
+          <button type="submit" className="black search-btn">
             검색
           </button>
-        </div>
+        </form> */}
         <div className="att-filter-box">
           <Form.Select
             className="att-filter-select"

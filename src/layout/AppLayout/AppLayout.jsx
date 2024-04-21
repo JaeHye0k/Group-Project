@@ -10,13 +10,17 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { clearUser } from "../../redux/user/auth/authSlice";
+import { useSearchParams } from "react-router-dom";
+import { fetchAttractions } from "../../redux/AttractionPage/attractionsSlice";
+import { fetchQueryAttraction } from "../../redux/AttractionPage/attractionsSlice";
 
 const AppLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const currentUser = useSelector((state) => state.auth.currentUser); // 현재 사용자 상태를 가져온다.
-  // console.log("유저상태",currentUser)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navQuery = searchParams.get("query");
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -27,11 +31,12 @@ const AppLayout = () => {
     setIsMenuOpen(false); // 메뉴 선택 후 메뉴 닫기
   };
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const onSearch = () => {
-    navigate(`/attractions?query=${searchQuery}`);
-    setSearchQuery("");
-    setIsFocused(false);
+  const getQueryAttraction = () => {
+    if (navQuery == "") {
+      return dispatch(fetchAttractions());
+    } else if (navQuery !== "" && navQuery !== undefined) {
+      return dispatch(fetchQueryAttraction(navQuery));
+    }
   };
 
   const handleLogout = () => {
@@ -47,6 +52,12 @@ const AppLayout = () => {
   // useEffect(() => {
   //  console.log("현재 사용자 상태:", currentUser ? "로그인" : "로그아웃");
   // }, [currentUser]); // currentUser를 의존성 배열에 추가하여 상태 변화 감지
+  const submitHandler = (e) => {
+    e.preventDefault();
+    navigate(`/attractions?query=${navQuery}`);
+    getQueryAttraction();
+    setIsFocused(false);
+  };
 
   return (
     <div className="app-layout">
@@ -87,23 +98,25 @@ const AppLayout = () => {
               {currentUser.displayName}님, 반가워요!　
             </div>
           )}
-          <div className={`searchbox ${isFocused ? "searchbox-focused" : ""}`}>
+          <form
+            className={`searchbox ${isFocused ? "searchbox-focused" : ""}`}
+            onSubmit={submitHandler}
+          >
             <input
               className="input"
-              placeholder="검색어를 입력하세요"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="키워드를 입력하세요"
+              onChange={(e) => setSearchParams({ query: e.target.value })}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  onSearch();
+                  e.target.value = "";
                 }
               }}
               onFocus={() => setIsFocused(true)} // 포커스가 되면 상태를 true로 설정
               onBlur={() => setIsFocused(false)} // 포커스가 해제되면 상태를 false로 설정
             ></input>
 
-            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={onSearch} />
-          </div>
+            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={submitHandler} />
+          </form>
           <div className="moblieLoginBtn">
             {" "}
             {/* 모바일때 메뉴 안보이게 하는 css */}
