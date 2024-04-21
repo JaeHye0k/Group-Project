@@ -5,8 +5,7 @@ import MapSideBar from "./component/MapSideBar/MapSideBar";
 import { useLocation } from "react-router-dom";
 import CategoryButtons from "./component/CategoryButtons/CategoryButtons";
 import useWindowDimensions from "../../hooks/useWindowDimension";
-import { useSelector, useDispatch } from "react-redux";
-import { setIsClickMyPosition } from "../../redux/TravelMapStore/kakaoMapSlice";
+import { useSelector } from "react-redux";
 import Weather from "./component/MapSideBar/component/Weather/Weather";
 import LocationName from "./component/MapSideBar/component/LocationName/LocationName";
 import { getCurrentLocaition } from "../../utils/kakaoMap/getCurrentLocation";
@@ -21,14 +20,6 @@ const TravelMapPage = () => {
   const { pathname } = useLocation();
   const { width, height } = useWindowDimensions();
   let weather = useSelector((state) => state.kakaoMap.weather);
-
-  const dispatch = useDispatch();
-  const isClickMyPosition = useSelector(
-    (state) => state.kakaoMap.isClickMyPosition
-  );
-  if (isClickMyPosition === true) {
-    dispatch(setIsClickMyPosition(false));
-  }
 
   // 내 위치를 불러옵니다.
   const { data: currentLocation } = useQuery({
@@ -60,9 +51,6 @@ const TravelMapPage = () => {
     if (clickedLocation) refetch();
   }, [clickedLocation]);
 
-  if (isClickMyPosition) {
-    window.location.reload();
-  }
   if (isLoading) {
     return <Loading />;
   }
@@ -72,13 +60,9 @@ const TravelMapPage = () => {
 
   return (
     <div id="travel-map-page" className={pathname ? "overflow-hidden" : ""}>
-      <KakaoMap isClickMyPosition={isClickMyPosition} />
+      <KakaoMap />
       {locationBasedList ? (
-        <MapSideBar
-          isClickMyPosition={isClickMyPosition}
-          weather={weather}
-          locationBasedList={locationBasedList}
-        />
+        <MapSideBar weather={weather} locationBasedList={locationBasedList} />
       ) : (
         ""
       )}

@@ -23,7 +23,7 @@ let listenerFlag = false;
 export let clickedLocation = null;
 let currentLocation = null;
 
-const KakaoMap = ({ isClickMyPosition }) => {
+const KakaoMap = () => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
@@ -119,15 +119,6 @@ const KakaoMap = ({ isClickMyPosition }) => {
     dispatch(setCenter(location));
   };
 
-  const onClickMyPosition = () => {
-    map.setCenter(
-      new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng)
-    );
-    map.setLevel(3);
-    clearMarkers();
-    showMarker(currentLocation);
-  };
-
   // 페이지에 처음 들어왔을 때 실행됩니다
   useEffect(() => {
     const showKakaoMap = async () => {
@@ -205,10 +196,6 @@ const KakaoMap = ({ isClickMyPosition }) => {
       }
     };
   }, [selectedCode]);
-
-  if (isClickMyPosition) {
-    onClickMyPosition();
-  }
   useEffect(() => {
     if (data) {
       data?.response?.body.items.item.map(({ code, name }) => {
