@@ -9,25 +9,25 @@ import { Form } from "react-bootstrap";
 import AttractionCard from "../../common/attractionCard/AttractionCard";
 import Loading from "../../common/Loading";
 import useIntersectionObserver from "../../common/attractionCard/Intersection/UseIntersection";
-import ReactPaginate from 'react-paginate';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import ReactPaginate from "react-paginate";
+import "bootstrap/dist/css/bootstrap.min.css";
 const AttractionsPage = () => {
+  console.log("render");
   const [query, setQuery] = useState("");
   const [sortSelect, setSortSelect] = useState("");
   const [attractionData, setAttractionData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
   let attractionList = useSelector((state) => state.attraction.attractionList);
   let loading = useSelector((state) => state.attraction.isLoading);
   let data = attractionList?.response?.body.items.item;
   let dispatch = useDispatch();
 
-  const handlePageClick = ({selected})=>{
-    setPage(selected+1)
-    
-  }
+  const handlePageClick = ({ selected }) => {
+    setPage(selected + 1);
+  };
   //All
   const getAttraction = () => {
     dispatch(fetchAttractions());
@@ -38,11 +38,11 @@ const AttractionsPage = () => {
     getAttraction();
     getCurrentLocation((lat, lon));
   }, []);
-useEffect(()=>{
-  if(page){
-    dispatch(fetchAttractions(page))
-  }
-},[page])
+  useEffect(() => {
+    if (page) {
+      dispatch(fetchAttractions(page));
+    }
+  }, [page]);
   //query
   const getQueryAttraction = () => {
     if (query == "") {
@@ -106,8 +106,8 @@ useEffect(()=>{
   }, [attractionList?.response]);
   // // 값이 변경될때마다 리렌더링
   useEffect(() => {
-      getQueryAttraction();
-    
+    getQueryAttraction();
+
     console.log("ddd", filterData);
   }, []);
   if (loading) {
@@ -125,7 +125,11 @@ useEffect(()=>{
       <div className="att-filter-container">
         <div className="data-count">
           <span>
-            총데이터 수<span className="orange">{attractionList?.response?.body?.totalCount}</span> 개
+            총데이터 수
+            <span className="orange">
+              {attractionList?.response?.body?.totalCount}
+            </span>{" "}
+            개
           </span>
         </div>
         <div className="att-search-box">
@@ -182,10 +186,8 @@ useEffect(()=>{
         activeClassName="active"
         activeLinkClassName="link-active"
         renderOnZeroPageCount={null}
-        forcePage={page-1}
-        
+        forcePage={page - 1}
       />
-     
     </div>
   );
 };

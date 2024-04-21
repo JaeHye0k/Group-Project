@@ -3,7 +3,7 @@ const API_KEY = process.env.REACT_APP_TOUR_API_KEY;
 
 const initialState = {
   attractionList: [],
-  attractionDetail:{},
+  attractionDetail: {},
   isLoading: false,
   error: null,
 };
@@ -15,7 +15,6 @@ export const fetchAttractions = createAsyncThunk(
     try {
       let url = `https://apis.data.go.kr/B551011/KorService1/areaBasedSyncList1?numOfRows=48&MobileOS=ETC&MobileApp=test&serviceKey=${API_KEY}&_type=json&arrange=R수정일&pageNo=${page}`;
       let response = await fetch(url);
-
       return await response.json();
     } catch (error) {
       thunkApi.rejectWithValue(error.message);
@@ -25,7 +24,7 @@ export const fetchAttractions = createAsyncThunk(
 
 export const fetchQueryAttraction = createAsyncThunk(
   "query",
-  async (query,thunkApi) => {
+  async (query, thunkApi) => {
     try {
       let url = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=48&MobileOS=ETC&MobileApp=test&keyword=${query}&serviceKey=${API_KEY}&_type=json`;
       let response = await fetch(url);
