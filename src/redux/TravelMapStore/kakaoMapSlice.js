@@ -7,6 +7,7 @@ const initialState = {
   locationName: null,
   currentLocation: null,
   isClickMyPosition: false,
+  contentType: {},
 };
 
 export const kakaoMapSlice = createSlice({
@@ -30,7 +31,9 @@ export const kakaoMapSlice = createSlice({
     },
     setIsClickMyPosition: (state, action) => {
       state.isClickMyPosition = action.payload;
-      console.log(state.isClickMyPosition);
+    },
+    setContentType: (state, action) => {
+      state.contentType[action.payload.code] = action.payload.name;
     },
   },
 });
@@ -42,5 +45,6 @@ export const {
   setLocationName,
   setCurrentLocation,
   setIsClickMyPosition,
+  setContentType,
 } = kakaoMapSlice.actions;
 export default kakaoMapSlice.reducer;
