@@ -40,14 +40,7 @@ const CategoryButtons = () => {
             </div>
           ))}
           <div>
-            <li>
-              <img
-                src="/images/TravelMapPageImage/my-position.png"
-                alt="current-location"
-                className="category-icon"
-              ></img>
-              <MyPositionButton />
-            </li>
+            <MyPositionButton />
           </div>
         </div>
       </ul>

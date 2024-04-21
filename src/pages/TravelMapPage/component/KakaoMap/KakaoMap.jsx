@@ -3,12 +3,10 @@ import "./KakaoMap.style.css";
 import { getCurrentMapArea } from "../../../../utils/kakaoMap/getCurrentMapArea";
 import { getCurrentLocaition } from "../../../../utils/kakaoMap/getCurrentLocation";
 import { useSelector, useDispatch } from "react-redux";
-import MyPositionButton from "./component/MyPositionButton/MyPositionButton";
 import {
   selectCode,
   setWeather,
   setCenter,
-  setIsClickMyPosition,
   setContentType,
 } from "../../../../redux/TravelMapStore/kakaoMapSlice";
 import { fetchContentType } from "../../../../utils/tourApi/tourApi";
@@ -25,14 +23,10 @@ let listenerFlag = false;
 export let clickedLocation = null;
 let currentLocation = null;
 
-const KakaoMap = () => {
-  console.log("render");
+const KakaoMap = ({ isClickMyPosition }) => {
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
-  const isClickMyPosition = useSelector(
-    (state) => state.kakaoMap.isClickMyPosition
-  );
   const contentType = useSelector((state) => state.kakaoMap.contentType);
   const { data } = useQuery({
     queryKey: ["category-type"],
@@ -214,7 +208,6 @@ const KakaoMap = () => {
 
   if (isClickMyPosition) {
     onClickMyPosition();
-    dispatch(setIsClickMyPosition(false));
   }
   useEffect(() => {
     if (data) {
