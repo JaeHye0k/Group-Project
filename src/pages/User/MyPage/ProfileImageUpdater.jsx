@@ -23,15 +23,22 @@ const ProfileImageUpdater = ({ user, setProfileImageUrl, togglePopup }) => {
       reader.readAsDataURL(selectedImage);
     }
   };
-
-  return (
-    <div>
-      <input type="file" accept="image/*" onChange={handleImageChange} />
-      <button onClick={handleImageUpload} disabled={uploading}>
-        {uploading ? "Uploading..." : "Upload"}
-      </button>
-    </div>
-  );
-};
-
+return (
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+    <input 
+      type="file" 
+      accept="image/*" 
+      onChange={handleImageChange} 
+      style={{ fontSize: '12px' }} // 파일 선택 입력 폰트 사이즈 조정
+    />
+    <button 
+      onClick={handleImageUpload} 
+      disabled={uploading} 
+      style={{ fontSize: '12px', padding: '1px 4px' }} // 버튼 내부 폰트와 패딩 조정
+    >
+      {uploading ? "Uploading..." : "Upload"}
+    </button>
+  </div>
+);
+}
 export default ProfileImageUpdater;
