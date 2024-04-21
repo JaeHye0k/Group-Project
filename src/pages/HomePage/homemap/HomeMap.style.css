@@ -1,57 +1,56 @@
-.mapPosition{
-     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 1400px;
-    padding-top: 60px;
-    margin: auto;
-    position: relative;  
+.mapPosition {
+  overflow: hidden;
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  padding-top: 60px;
+  margin: auto;
+  position: relative;
 }
-.map-mid-title{
-    position: absolute;
-    left: 0;
+.map-mid-title {
+  position: absolute;
+  left: 0;
 }
 
-.homepageMap{
-    width: 100%;
-    height: 500px;   
-    background-color: rgb(255, 231, 211);
+.homepageMap {
+  width: 100%;
+  height: 500px;
+  background-color: rgb(255, 231, 211);
 }
-.mapbtnBox{
-    display: flex;
-
+.mapbtnBox {
+  display: flex;
 }
-.mapbtn{
-    background-color: #767676;
-    color: white;
-    width: 350px;
-    height: 40px;
-    border-right: 1px solid white;
-    text-align: center;
-    align-content: center;    
+.mapbtn {
+  background-color: #767676;
+  color: white;
+  width: 350px;
+  height: 40px;
+  border-right: 1px solid white;
+  text-align: center;
+  align-content: center;
 }
-.mapbtn:hover{
-    background-color: #ff9900;
-    color: white;
+.mapbtn:hover {
+  background-color: #ff9900;
+  color: white;
 }
-.btnPosition{
-    display: flex;
-    justify-content: space-between;
+.btnPosition {
+  display: flex;
+  justify-content: space-between;
 }
 @media (max-width: 600px) {
-    
-    .homepageMap{
-    height: 300px;   
-    
-    }
-    .btnPosition{
-        width: 100%;
-    }
-    .mapbtn{
+  .homepageMap {
+    height: 300px;
+  }
+  .btnPosition {
+    width: 100%;
+  }
+  .mapbtn {
     width: 103px;
-    }
-    .mapPosition{
-        width: 80%;
-    }
+  }
+  .mapPosition {
+    width: 80%;
+  }
 }

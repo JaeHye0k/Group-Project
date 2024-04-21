@@ -225,11 +225,7 @@ const KakaoMap = () => {
     }
   }, [data]);
 
-  return (
-    <div id="kakao-map">
-      <MyPositionButton onClickMyPosition={onClickMyPosition} />
-    </div>
-  );
+  return <div id="kakao-map"></div>;
 };
 
 export default KakaoMap;
