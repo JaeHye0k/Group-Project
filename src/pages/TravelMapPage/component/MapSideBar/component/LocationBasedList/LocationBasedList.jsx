@@ -7,7 +7,6 @@ import LocationItem from "./LocationItem/LocationItem";
 const LocationBasedList = ({ locationBasedList }) => {
   const data = locationBasedList;
   const datas = data?.response?.body.items.item;
-  console.log("render!");
   return (
     <ul className="location-based-list">
       {datas?.map((item, key) => {

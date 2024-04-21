@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./MapSideBar.style.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import LocationBasedList from "./component/LocationBasedList/LocationBasedList";
 import { getCurrentLocaition } from "../../../../utils/kakaoMap/getCurrentLocation";
@@ -10,16 +10,17 @@ import { fetchLocationBasedList } from "../../../../utils/tourApi/tourApi";
 import CategoryButtons from "../CategoryButtons/CategoryButtons";
 import useWindowDimensions from "../../../../hooks/useWindowDimension";
 import Loading from "../../../../common/Loading";
+import { setLocationName } from "../../../../redux/TravelMapStore/kakaoMapSlice";
+import LocationName from "./component/LocationName/LocationName";
 
 const MapSideBar = () => {
-  // console.log("render");
   let weather = useSelector((state) => state.kakaoMap.weather);
   const { height, width } = useWindowDimensions();
   const locationName = useRef(null);
   const [isFolded, setIsFolded] = useState(false);
 
   // 내 위치를 불러옵니다.
-  const { data: currentLocation, refetch: refetchLocation } = useQuery({
+  const { data: currentLocation } = useQuery({
     queryKey: ["current-Location"],
     queryFn: () => getCurrentLocaition(),
     refetchOnReconnect: false,
@@ -45,12 +46,6 @@ const MapSideBar = () => {
   });
 
   useEffect(() => {
-    console.log("useEffect!", locationBasedList);
-    const datas = locationBasedList?.response?.body.items.item;
-    if (datas) {
-      locationName.current = datas[0].addr1?.split(" ").slice(0, 3);
-    }
-
     if (clickedLocation) refetch();
   }, [clickedLocation]);
 
@@ -64,12 +59,11 @@ const MapSideBar = () => {
   return (
     <div id="map-sidebar" className={`${isFolded ? "folded" : ""}`}>
       <div className="top">
-        <div className="location-info">
-          <div className="location-name1">{locationName?.current?.[0]}</div>
-          <div className="location-name2">
-            {locationName?.current?.[1]} {locationName?.current?.[2]}
-          </div>
-        </div>
+        {locationBasedList ? (
+          <LocationName locationBasedList={locationBasedList} />
+        ) : (
+          ""
+        )}
         <div className="weather">
           <div className="weather-content">
             <div className="description">
