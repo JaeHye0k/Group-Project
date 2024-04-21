@@ -73,8 +73,7 @@
 .slider-img img {
   width: 100px;
 }
-.detail-info-box {
-}
+
 @media screen and (max-width: 880px) {
   .att-flex-box {
     display: flex;
