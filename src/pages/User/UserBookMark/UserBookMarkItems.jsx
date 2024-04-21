@@ -26,7 +26,6 @@ const Item = styled.div`
     }
   }
   figure {
-    height: 300px;
     border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
