@@ -211,7 +211,6 @@ const KakaoMap = ({ isClickMyPosition }) => {
   }
   useEffect(() => {
     if (data) {
-      console.log(data);
       data?.response?.body.items.item.map(({ code, name }) => {
         dispatch(setContentType({ code, name }));
       });

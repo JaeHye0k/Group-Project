@@ -13,46 +13,9 @@ import Loading from "../../../../common/Loading";
 import LocationName from "./component/LocationName/LocationName";
 import Weather from "./component/Weather/Weather";
 
-const MapSideBar = ({ isClickMyPosition }) => {
-  let weather = useSelector((state) => state.kakaoMap.weather);
+const MapSideBar = ({ isClickMyPosition, weather, locationBasedList }) => {
   const { height, width } = useWindowDimensions();
   const [isFolded, setIsFolded] = useState(false);
-  // 내 위치를 불러옵니다.
-  const { data: currentLocation } = useQuery({
-    queryKey: ["current-Location"],
-    queryFn: () => getCurrentLocaition(),
-    refetchOnReconnect: false,
-  });
-
-  // 내 위치의 날씨를 불러옵니다
-  const { data: currentWeather } = useQuery({
-    queryKey: ["current-weather"],
-    queryFn: () => getCurrentWeather(currentLocation.lat, currentLocation.lng),
-    refetchOnReconnect: false,
-  });
-
-  // 위치 기반 근처 관광지 정보를 불러옵니다
-  const {
-    data: locationBasedList,
-    refetch,
-    isLoading,
-  } = useQuery({
-    queryKey: ["location-based-list"],
-    queryFn: () =>
-      fetchLocationBasedList(clickedLocation.lng, clickedLocation.lat),
-    refetchOnReconnect: false,
-  });
-
-  useEffect(() => {
-    if (clickedLocation) refetch();
-  }, [clickedLocation]);
-
-  if (isLoading) {
-    return <Loading />;
-  }
-  if (!weather) {
-    weather = currentWeather;
-  }
 
   return (
     <div id="map-sidebar" className={`${isFolded ? "folded" : ""}`}>
