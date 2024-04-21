@@ -49,7 +49,6 @@ const UserSignUp = () => {
           email: userCredential.user.email,
           uid: userCredential.user.uid,
           displayName: name,
-          // 다른 필요한 사용자 정보를 여기에 포함시킬 수 있습니다.
         })
       );
 

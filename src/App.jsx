@@ -53,8 +53,9 @@ function App() {
         <Route path="/" element={<AppLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/map" element={<TravelMapPage />} />
+
           <Route path="/attractions">
-            <Route index element={<AttractionsPage />} />
+            <Route index element={<AttractionsPage />} />      
             <Route path=":contentId" element={<AttractionsDetailPage />} />
           </Route>
 

@@ -1,28 +1,96 @@
-import React from "react";
-import { useSelector } from "react-redux";
+// MyPage.js
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../../firebase";
+import { auth, storage } from "../../../firebase";
+import { getAuth, signOut } from "firebase/auth";
+import { ref, getDownloadURL } from "firebase/storage";
 import "./style/MyPages.style.css";
 import { Container, Content, Items, SubTitle, Wrapper } from "./styled";
+import { clearUser } from "../../../redux/user/auth/authSlice";
+import PasswordChangeForm from "./PasswordChangeForm";
+import ProfileImageUpdater from "./ProfileImageUpdater";
+import ProfileImageManager from "./ProfileImageManager";
 
 const MyPage = () => {
+  const auth = getAuth();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
+  const [showPopup, setShowPopup] = useState(false);
+  const [profileImageUrl, setProfileImageUrl] = useState(null); // 이 줄만 남기고 아래 중복 선언 부분은 제거
+const [isPasswordEditing, setIsPasswordEditing] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      const storedImageData = localStorage.getItem("imageData");
+      if (storedImageData) {
+        const parsedImageData = JSON.parse(storedImageData);
+        const userImageData = parsedImageData.find(
+          (data) => data.email === user.email
+        );
+        if (userImageData) {
+          setProfileImageUrl(userImageData.imageUrl);
+        }
+      }
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (profileImageUrl && user) {
+      const storedImageData = localStorage.getItem("imageData") || "[]";
+      const parsedImageData = JSON.parse(storedImageData);
+      const updatedImageData = parsedImageData.filter(
+        (data) => data.email !== user.email
+      );
+      updatedImageData.push({ email: user.email, imageUrl: profileImageUrl });
+      localStorage.setItem("imageData", JSON.stringify(updatedImageData));
+    }
+  }, [profileImageUrl, user]);
 
   const logOut = () => {
-    auth.signOut();
+    dispatch(clearUser());
+    localStorage.removeItem("profileImage");
+    localStorage.removeItem("profileImageEmail");
+    setProfileImageUrl(""); // 프로필 이미지 상태 초기화
+    auth.signOut().then(() => {
+      navigate("/");
+    });
   };
+
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
+
   return (
     <Container>
       <Wrapper>
         <Content>
           <Items className="left">
-            <div className="l-title">
+            <div className="l-title" onClick={togglePopup}>
               <figure>
-                <img src="/images/ico/ico-user.png" alt="기본프로필이미지" />
+                {profileImageUrl ? (
+                  <img src={profileImageUrl} alt="프로필 이미지" />
+                ) : (
+                  <img src="/images/ico/ico-user.png" alt="기본프로필이미지" />
+                )}
+                <em></em>
               </figure>
-              <em></em>
             </div>
+            {showPopup && (
+              <div className="popup">
+                <ProfileImageUpdater
+                  user={user}
+                  setProfileImageUrl={setProfileImageUrl}
+                  togglePopup={togglePopup}
+                />
+              </div>
+            )}
+            <ProfileImageManager
+              user={user}
+              profileImageUrl={profileImageUrl}
+              setProfileImageUrl={setProfileImageUrl}
+            />
             <div className="l-txt">
               <span>반가워요</span>
               <strong>{user && user.displayName} 님</strong>
@@ -50,12 +118,10 @@ const MyPage = () => {
               <div className="input-box">
                 <input type="email" placeholder={user && user.email} disabled />
               </div>
-              <div className="input-box">
-                <input type="password" placeholder="*******" />
-              </div>
-              <div className="input-box">
-                <input type="submit" value="수정하기" />
-              </div>
+              <PasswordChangeForm
+                user={user}
+                setIsPasswordEditing={setIsPasswordEditing}
+              />
             </div>
 
             <div className="bookmark">
@@ -135,16 +201,6 @@ const MyPage = () => {
         </Content>
       </Wrapper>
     </Container>
-    // <div>
-    //   {user ? (
-    //     <div>
-    //       <p>{user.displayName} 님</p>
-    //       <button onClick={logOut}>로그아웃</button>
-    //     </div>
-    //   ) : (
-    //     <button>로그인</button>
-    //   )}
-    // </div>
   );
 };
 
