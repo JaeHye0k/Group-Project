@@ -1,15 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import "./MapSideBar.style.css";
-import { useSelector, useDispatch } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
 import LocationBasedList from "./component/LocationBasedList/LocationBasedList";
-import { getCurrentLocaition } from "../../../../utils/kakaoMap/getCurrentLocation";
-import { getCurrentWeather } from "../../../../utils/kakaoMap/getCurrentWeather";
-import { clickedLocation } from "../KakaoMap/KakaoMap";
-import { fetchLocationBasedList } from "../../../../utils/tourApi/tourApi";
 import CategoryButtons from "../CategoryButtons/CategoryButtons";
 import useWindowDimensions from "../../../../hooks/useWindowDimension";
-import Loading from "../../../../common/Loading";
 import LocationName from "./component/LocationName/LocationName";
 import Weather from "./component/Weather/Weather";
 
