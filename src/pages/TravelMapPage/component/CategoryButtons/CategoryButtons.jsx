@@ -40,7 +40,7 @@ const CategoryButtons = () => {
             </div>
           ))}
           <div>
-              <MyPositionButton />
+            <MyPositionButton />
           </div>
         </div>
       </ul>
