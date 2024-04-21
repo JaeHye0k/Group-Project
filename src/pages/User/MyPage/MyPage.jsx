@@ -72,7 +72,7 @@ const [isPasswordEditing, setIsPasswordEditing] = useState(false);
                 {profileImageUrl ? (
                   <img src={profileImageUrl} alt="프로필 이미지" />
                 ) : (
-                  <img src="/images/ico/ico-user.png" alt="기본프로필이미지" />
+                  <img src="./images/ico/ico-user.png" alt="기본프로필이미지" />
                 )}
                 <em></em>
               </figure>

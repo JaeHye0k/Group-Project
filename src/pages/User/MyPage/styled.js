@@ -52,7 +52,7 @@ export const Items = styled.div`
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: ${({ isPasswordEditing }) => (isPasswordEditing ? "#FF9900" : "#000")};
+  background: #c9c9c9;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -67,7 +67,7 @@ export const Items = styled.div`
     background-size: cover;
     width: 16px;
     height: 16px;
-    filter: ${({ isPasswordEditing }) => (isPasswordEditing ? "invert(1)" : "none")};
+    filter: none;
   }
 }
 
@@ -81,10 +81,13 @@ export const Items = styled.div`
           width: 100%;
           height: 100%;
           object-fit: cover;
+          border-radius: 50%;
+          
         }
       }
     }
 
+    
     .l-txt {
       display: flex;
       flex-direction: column;
@@ -95,14 +98,18 @@ export const Items = styled.div`
         display: block;
         color: #333;
         font-size: 20px;
+        margin-bottom: -10px;
       }
 
       strong {
         font-size: 30px;
+         margin-bottom: 10px;
       }
     }
 
     .l-txt h2 {
+      font-size: 20px;
+      font-weight: bold; 
       cursor: pointer;
 
       &:hover {
