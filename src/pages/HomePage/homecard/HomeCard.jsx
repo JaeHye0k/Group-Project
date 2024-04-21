@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import "./HomeCard.style.css";
 import AttractionCard from "../../../common/attractionCard/AttractionCard";
@@ -10,8 +11,6 @@ const HomeCard = () => {
   );
   const data = attractionList?.response?.body.items.item;
   const dispatch = useDispatch();
-
-  //   console.log("home card", attractionList, data);
   if (attractionList?.length === 0) {
     dispatch(fetchAttractions());
   }
