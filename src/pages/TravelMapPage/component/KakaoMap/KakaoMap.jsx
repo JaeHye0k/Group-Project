@@ -3,12 +3,10 @@ import "./KakaoMap.style.css";
 import { getCurrentMapArea } from "../../../../utils/kakaoMap/getCurrentMapArea";
 import { getCurrentLocaition } from "../../../../utils/kakaoMap/getCurrentLocation";
 import { useSelector, useDispatch } from "react-redux";
-import MyPositionButton from "./component/MyPositionButton/MyPositionButton";
 import {
   selectCode,
   setWeather,
   setCenter,
-  setIsClickMyPosition,
   setContentType,
 } from "../../../../redux/TravelMapStore/kakaoMapSlice";
 import { fetchContentType } from "../../../../utils/tourApi/tourApi";
@@ -26,13 +24,9 @@ export let clickedLocation = null;
 let currentLocation = null;
 
 const KakaoMap = () => {
-  console.log("render");
   const selectedCode = useSelector((state) => state.kakaoMap.selectedCode);
   const [map, setMap] = useState(null);
   const dispatch = useDispatch();
-  const isClickMyPosition = useSelector(
-    (state) => state.kakaoMap.isClickMyPosition
-  );
   const contentType = useSelector((state) => state.kakaoMap.contentType);
   const { data } = useQuery({
     queryKey: ["category-type"],
@@ -125,15 +119,6 @@ const KakaoMap = () => {
     dispatch(setCenter(location));
   };
 
-  const onClickMyPosition = () => {
-    map.setCenter(
-      new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng)
-    );
-    map.setLevel(3);
-    clearMarkers();
-    showMarker(currentLocation);
-  };
-
   // 페이지에 처음 들어왔을 때 실행됩니다
   useEffect(() => {
     const showKakaoMap = async () => {
@@ -211,14 +196,8 @@ const KakaoMap = () => {
       }
     };
   }, [selectedCode]);
-
-  if (isClickMyPosition) {
-    onClickMyPosition();
-    dispatch(setIsClickMyPosition(false));
-  }
   useEffect(() => {
     if (data) {
-      console.log(data);
       data?.response?.body.items.item.map(({ code, name }) => {
         dispatch(setContentType({ code, name }));
       });
