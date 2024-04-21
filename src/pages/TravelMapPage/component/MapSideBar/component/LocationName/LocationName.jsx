@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const LocationName = ({ locationBasedList }) => {
   const datas = locationBasedList?.response?.body.items.item;
   const locationName = datas[0].addr1?.split(" ").slice(0, 3);
+  useEffect(() => {}, [locationBasedList]);
   return (
     <div className="location-info">
       <div className="location-name1">{locationName[0]}</div>
