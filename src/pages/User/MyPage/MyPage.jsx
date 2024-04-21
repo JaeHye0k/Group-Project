@@ -1,29 +1,20 @@
-import React, { useState, useEffect } from "react";
+// MyPage.js
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase";
-import {
-  getAuth,
-  signOut,
-  signInWithEmailAndPassword,
-  updatePassword,
-} from "firebase/auth";
-import { getStorage, getDownloadURL, ref } from "firebase/storage";
+import { getAuth, signOut } from "firebase/auth";
 import "./style/MyPages.style.css";
-import { Container, Content, Items, SubTitle, Wrapper, } from "./styled";
+import { Container, Content, Items, SubTitle, Wrapper } from "./styled";
+import { clearUser } from "../../../redux/user/auth/authSlice";
+import PasswordChangeForm from "./PasswordChangeForm";
 import ProfileImageUpdater from "./ProfileImageUpdater";
-import { setUser, clearUser } from "../../../redux/user/auth/authSlice";
 
 const MyPage = () => {
   const auth = getAuth();
-  const storage = getStorage();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
   const logOut = () => {
@@ -32,83 +23,8 @@ const MyPage = () => {
     });
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleNewPasswordChange = (e) => {
-    setNewPassword(e.target.value);
-  };
-
-  const handleConfirmNewPasswordChange = (e) => {
-    setConfirmNewPassword(e.target.value);
-  };
-
-  const handleEdit = () => {
-    signInWithEmailAndPassword(auth, user.email, password)
-      .then(() => {
-        // 올바른 암호를 입력한 경우
-        setIsPasswordCorrect(true);
-        setPassword("");
-      })
-      .catch((error) => {
-        alert("올바른 암호가 아닙니다.");
-        setPassword("");
-      });
-  };
-
-  const handleSubmitNewPassword = async () => {
-    if (newPassword === confirmNewPassword) {
-      try {
-        // 새 암호로 업데이트를 시도합니다.
-        await updatePassword(auth.currentUser, newPassword);
-        alert("암호가 변경되었습니다. 다시 로그인해주세요.");
-        // 업데이트 성공 후 로그아웃을 진행합니다.
-        await signOut(auth);
-        navigate("/signin"); // 사용자를 로그인 페이지로 리다이렉트합니다.
-      } catch (error) {
-        // 암호 업데이트 과정에서 오류가 발생한 경우
-        alert("암호 변경에 실패했습니다. 다시 시도해주세요.");
-      }
-    } else {
-      // 입력한 두 암호가 일치하지 않는 경우
-      alert("암호가 일치하지 않습니다.");
-      setNewPassword("");
-      setConfirmNewPassword("");
-    }
-  };
-
   const togglePopup = () => {
     setShowPopup(!showPopup);
-  };
-
-useEffect(() => {
-  const fetchStorage = async () => {
-    if (user && user.uid) {
-      const storage = getStorage();
-      if (storage) {
-        await updateProfileImage(storage);
-      }
-    }
-  };
-
-  fetchStorage();
-}, [user, dispatch]);
-
-  const updateProfileImage = async (storage) => {
-    if (user && user.uid) {
-      const profileImageRef = ref(storage, `users/${user.uid}/profile.jpg`);
-      try {
-        const downloadURL = await getDownloadURL(profileImageRef);
-        const updatedUser = {
-          ...user,
-          photoURL: downloadURL,
-        };
-        dispatch(setUser(updatedUser));
-      } catch (error) {
-        console.log("프로필 이미지를 가져오는 중 에러 발생:", error);
-      }
-    }
   };
 
   return (
@@ -118,26 +34,13 @@ useEffect(() => {
           <Items className="left">
             <div className="l-title" onClick={togglePopup}>
               <figure>
-                {user?.photoURL ? (
-                  <img
-                    src={user.photoURL}
-                    alt="프로필 이미지"
-                    style={{
-                      objectFit: "cover",
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "50%",
-                    }}
-                  />
-                ) : (
-                  <img src="/images/ico/ico-user.png" alt="기본프로필이미지" />
-                )}
+                <img src="/images/ico/ico-user.png" alt="기본프로필이미지" />
                 <em></em>
               </figure>
             </div>
             {showPopup && (
               <div className="popup">
-                <ProfileImageUpdater auth={auth} storage={storage} />
+                <ProfileImageUpdater />
               </div>
             )}
             <div className="l-txt">
@@ -167,47 +70,7 @@ useEffect(() => {
               <div className="input-box">
                 <input type="email" placeholder={user && user.email} disabled />
               </div>
-              <div className="input-box">
-                <input
-                  type="password"
-                  placeholder="암호를 입력하세요"
-                  onChange={handlePasswordChange}
-                  value={password}
-                  disabled={isPasswordCorrect}
-                />
-              </div>
-              {isPasswordCorrect && (
-                <>
-                  <div className="input-box">
-                    <input
-                      type="password"
-                      placeholder="새로운 암호를 입력하세요"
-                      onChange={handleNewPasswordChange}
-                      value={newPassword}
-                    />
-                  </div>
-                  <div className="input-box">
-                    <input
-                      type="password"
-                      placeholder="동일한 암호를 입력하세요"
-                      onChange={handleConfirmNewPasswordChange}
-                      value={confirmNewPassword}
-                    />
-                  </div>
-                  <div className="input-box">
-                    <input
-                      type="submit"
-                      value="수정하기"
-                      onClick={handleSubmitNewPassword}
-                    />
-                  </div>
-                </>
-              )}
-              {!isPasswordCorrect && (
-                <div className="input-box">
-                  <input type="submit" value="수정하기" onClick={handleEdit} />
-                </div>
-              )}
+              <PasswordChangeForm user={user} />
             </div>
 
             <div className="bookmark">
@@ -287,16 +150,6 @@ useEffect(() => {
         </Content>
       </Wrapper>
     </Container>
-    // <div>
-    //   {user ? (
-    //     <div>
-    //       <p>{user.displayName} 님</p>
-    //       <button onClick={logOut}>로그아웃</button>
-    //     </div>
-    //   ) : (
-    //     <button>로그인</button>
-    //   )}
-    // </div>
   );
 };
 

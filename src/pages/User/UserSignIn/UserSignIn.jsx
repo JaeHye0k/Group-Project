@@ -22,7 +22,6 @@ const UserSignIn = () => {
     const {
       target: { name, value },
     } = e;
-
     if (name === "email") {
       setEmail(value);
     } else if (name === "password") {
@@ -33,7 +32,6 @@ const UserSignIn = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (isLoading || email === "" || password === "") return;
-
     try {
       setIsLoading(true);
       const userCredential = await signInWithEmailAndPassword(
@@ -48,11 +46,10 @@ const UserSignIn = () => {
           displayName: userCredential.user.displayName,
         })
       );
-
       navigate("/");
     } catch (e) {
       console.log(e);
-      setError("로그인에 실패하였습니다. 다시 시도해 주세요");
+      setError("입력하신 정보를 확인하고 다시 시도해 주세요");
     } finally {
       setIsLoading(false);
     }
