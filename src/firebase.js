@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  apiKey: import.meta.env.VITE_FIREBASE_KEY,
   authDomain: "reacttrip-7b060.firebaseapp.com",
   projectId: "reacttrip-7b060",
   storageBucket: "reacttrip-7b060.appspot.com",
