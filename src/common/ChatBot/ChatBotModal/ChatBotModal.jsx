@@ -16,7 +16,7 @@ const ChatbotModal = () => {
     scrollToBottom();
   }, [messages]);
 
-  const apiKey = process.env.REACT_APP_GPT;
+  const apiKey = import.meta.env.VITE_GPT;
   const apiEndpoint = "https://api.openai.com/v1/chat/completions";
 
   const addMessage = (sender, message) => {

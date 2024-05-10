@@ -50,7 +50,11 @@ const KakaoMap = () => {
 
   const getCurrentWeather = async () => {
     if (clickedLocation === null) return null;
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${clickedLocation.lat}&lon=${clickedLocation.lng}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${
+      clickedLocation.lat
+    }&lon=${clickedLocation.lng}&appid=${
+      import.meta.env.VITE_WEATHER_API_KEY
+    }&units=metric`;
     const response = await fetch(url);
     const data = await response.json();
     return data;
@@ -62,7 +66,7 @@ const KakaoMap = () => {
     const url = `${baseUrl}/search/category?category_group_code=${selectedCode}&rect=${rect}`;
     const response = await fetch(url, {
       headers: {
-        Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY_REST}`,
+        Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_API_KEY_REST}`,
       },
     });
     const data = await response.json();
